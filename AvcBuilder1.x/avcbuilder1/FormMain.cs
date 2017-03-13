@@ -21,7 +21,7 @@ namespace avcbuilder1
     /// <summary>
     /// 1号界面
     /// </summary>
-    public partial class FormMain : DevExpress.XtraEditors.XtraForm
+    public partial class FormMain : XtraForm
     {
         ILog log;
         
@@ -99,18 +99,19 @@ namespace avcbuilder1
                 sql = "select id,name,feedid as pid from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
                 LoadTbl(sql, 4, "线路电容器");
                 sql = "select id,name,feedid as pid from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
-                LoadTbl(sql, 8, "配电电容器");
+                LoadTbl(sql, 5, "配电电容器");
 
                 sql = "select id,name,FEEDCAPACITORID as pid from tblfeedcapacitoritem";
-                LoadTbl(sql, 5, "电容器子组");
+                LoadTbl(sql, 8, "电容器子组");
 
                 sql = "select id,name,FEEDID as pid from tblfeedtrans";
                 LoadTbl(sql,6, "配电变压器");
 
                 sql = "select id,name,FEEDID as pid from tblfeedvoltageregulator";
                 LoadTbl(sql,7, "线路调压器");
-                treeList1.EndUpdate();
                 treeList1.ExpandAll();
+                treeList1.BestFitColumns();
+                treeList1.EndUpdate();
             }
             catch (Exception ex)
             {

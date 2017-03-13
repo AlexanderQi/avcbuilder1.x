@@ -92,10 +92,9 @@
             // 
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
-            this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1034, 537);
+            this.xtraTabControl1.Size = new System.Drawing.Size(905, 417);
             this.xtraTabControl1.TabIndex = 0;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -106,16 +105,14 @@
             // xtraTabPage1
             // 
             this.xtraTabPage1.Controls.Add(this.splitContainer1);
-            this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(1032, 503);
+            this.xtraTabPage1.Size = new System.Drawing.Size(903, 389);
             this.xtraTabPage1.Text = "数据中心";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -125,9 +122,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1032, 503);
-            this.splitContainer1.SplitterDistance = 285;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(903, 389);
+            this.splitContainer1.SplitterDistance = 249;
             this.splitContainer1.TabIndex = 0;
             // 
             // treeList1
@@ -138,7 +134,6 @@
             this.treeList1.ColumnsImageList = this.imageCollection1;
             this.treeList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeList1.Location = new System.Drawing.Point(0, 0);
-            this.treeList1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.treeList1.Name = "treeList1";
             this.treeList1.BeginUnboundLoad();
             this.treeList1.AppendNode(new object[] {
@@ -169,7 +164,7 @@
             this.treeList1.OptionsClipboard.AllowCopy = DevExpress.Utils.DefaultBoolean.True;
             this.treeList1.OptionsClipboard.CopyNodeHierarchy = DevExpress.Utils.DefaultBoolean.True;
             this.treeList1.SelectImageList = this.imageCollection1;
-            this.treeList1.Size = new System.Drawing.Size(285, 503);
+            this.treeList1.Size = new System.Drawing.Size(249, 389);
             this.treeList1.StateImageList = this.imageCollection1;
             this.treeList1.TabIndex = 0;
             this.treeList1.ToolTipController = this.toolTipController1;
@@ -222,16 +217,16 @@
             this.imageCollection1.Images.SetKeyName(2, "resetmodeldifferences_16x16.png");
             this.imageCollection1.InsertGalleryImage("topdown_16x16.png", "images/direction/topdown_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/direction/topdown_16x16.png"), 3);
             this.imageCollection1.Images.SetKeyName(3, "topdown_16x16.png");
-            this.imageCollection1.InsertGalleryImage("gaugestylethreeforthcircular_16x16.png", "images/gauges/gaugestylethreeforthcircular_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/gauges/gaugestylethreeforthcircular_16x16.png"), 4);
-            this.imageCollection1.Images.SetKeyName(4, "gaugestylethreeforthcircular_16x16.png");
-            this.imageCollection1.InsertGalleryImage("copymodeldifferences_16x16.png", "images/data/copymodeldifferences_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/data/copymodeldifferences_16x16.png"), 5);
-            this.imageCollection1.Images.SetKeyName(5, "copymodeldifferences_16x16.png");
-            this.imageCollection1.InsertGalleryImage("piebubble_16x16.png", "images/maps/piebubble_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/maps/piebubble_16x16.png"), 6);
-            this.imageCollection1.Images.SetKeyName(6, "piebubble_16x16.png");
+            this.imageCollection1.InsertGalleryImage("merge_16x16.png", "images/actions/merge_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/merge_16x16.png"), 4);
+            this.imageCollection1.Images.SetKeyName(4, "merge_16x16.png");
+            this.imageCollection1.InsertGalleryImage("math&trig_16x16.png", "images/function%20library/math&trig_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/function%20library/math&trig_16x16.png"), 5);
+            this.imageCollection1.Images.SetKeyName(5, "math&trig_16x16.png");
+            this.imageCollection1.InsertGalleryImage("alignverticalcenter2_16x16.png", "images/alignment/alignverticalcenter2_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/alignment/alignverticalcenter2_16x16.png"), 6);
+            this.imageCollection1.Images.SetKeyName(6, "alignverticalcenter2_16x16.png");
             this.imageCollection1.InsertGalleryImage("enableclustering_16x16.png", "images/maps/enableclustering_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/maps/enableclustering_16x16.png"), 7);
             this.imageCollection1.Images.SetKeyName(7, "enableclustering_16x16.png");
-            this.imageCollection1.InsertGalleryImage("createmodeldifferences_16x16.png", "images/data/createmodeldifferences_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/data/createmodeldifferences_16x16.png"), 8);
-            this.imageCollection1.Images.SetKeyName(8, "createmodeldifferences_16x16.png");
+            this.imageCollection1.InsertGalleryImage("refresh_16x16.png", "images/actions/refresh_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/refresh_16x16.png"), 8);
+            this.imageCollection1.Images.SetKeyName(8, "refresh_16x16.png");
             // 
             // toolTipController1
             // 
@@ -242,7 +237,6 @@
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -250,19 +244,17 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.xtraTabControl_element);
             this.splitContainer2.Panel2Collapsed = true;
-            this.splitContainer2.Size = new System.Drawing.Size(742, 503);
+            this.splitContainer2.Size = new System.Drawing.Size(650, 389);
             this.splitContainer2.SplitterDistance = 443;
-            this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
             // xtraTabControl_element
             // 
             this.xtraTabControl_element.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl_element.Location = new System.Drawing.Point(0, 0);
-            this.xtraTabControl_element.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl_element.Name = "xtraTabControl_element";
             this.xtraTabControl_element.SelectedTabPage = this.xtraTabPage_state;
-            this.xtraTabControl_element.Size = new System.Drawing.Size(742, 503);
+            this.xtraTabControl_element.Size = new System.Drawing.Size(650, 389);
             this.xtraTabControl_element.TabIndex = 0;
             this.xtraTabControl_element.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage_state,
@@ -278,93 +270,80 @@
             // 
             // xtraTabPage_state
             // 
-            this.xtraTabPage_state.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_state.Name = "xtraTabPage_state";
-            this.xtraTabPage_state.Size = new System.Drawing.Size(740, 469);
+            this.xtraTabPage_state.Size = new System.Drawing.Size(648, 361);
             this.xtraTabPage_state.Text = "状态";
             // 
             // xtraTabPage_limit
             // 
-            this.xtraTabPage_limit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_limit.Name = "xtraTabPage_limit";
-            this.xtraTabPage_limit.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_limit.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_limit.Text = "限值";
             // 
             // xtraTabPage_protect
             // 
-            this.xtraTabPage_protect.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_protect.Name = "xtraTabPage_protect";
-            this.xtraTabPage_protect.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_protect.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_protect.Text = "保护";
             // 
             // xtraTabPage_yc
             // 
-            this.xtraTabPage_yc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yc.Name = "xtraTabPage_yc";
-            this.xtraTabPage_yc.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_yc.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_yc.Text = "遥测";
             // 
             // xtraTabPage_yx
             // 
-            this.xtraTabPage_yx.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yx.Name = "xtraTabPage_yx";
-            this.xtraTabPage_yx.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_yx.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_yx.Text = "遥信";
             // 
             // xtraTabPage_yk
             // 
-            this.xtraTabPage_yk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yk.Name = "xtraTabPage_yk";
-            this.xtraTabPage_yk.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_yk.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_yk.Text = "遥控";
             // 
             // xtraTabPage_yt
             // 
-            this.xtraTabPage_yt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yt.Name = "xtraTabPage_yt";
-            this.xtraTabPage_yt.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_yt.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_yt.Text = "遥调";
             // 
             // xtraTabPage_num
             // 
-            this.xtraTabPage_num.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_num.Name = "xtraTabPage_num";
-            this.xtraTabPage_num.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage_num.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage_num.Text = "动作次数";
             // 
             // xtraTabPage1_time
             // 
-            this.xtraTabPage1_time.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_time.Name = "xtraTabPage1_time";
-            this.xtraTabPage1_time.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage1_time.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage1_time.Text = "运行时间";
             // 
             // xtraTabPage1_param
             // 
-            this.xtraTabPage1_param.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_param.Name = "xtraTabPage1_param";
-            this.xtraTabPage1_param.Size = new System.Drawing.Size(740, 434);
+            this.xtraTabPage1_param.Size = new System.Drawing.Size(647, 363);
             this.xtraTabPage1_param.Text = "铭牌参数";
             // 
             // xtraTabPage2
             // 
-            this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1032, 468);
+            this.xtraTabPage2.Size = new System.Drawing.Size(903, 390);
             this.xtraTabPage2.Text = "拓扑管理";
             // 
             // xtraTabPage3
             // 
-            this.xtraTabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage3.Name = "xtraTabPage3";
-            this.xtraTabPage3.Size = new System.Drawing.Size(1032, 468);
+            this.xtraTabPage3.Size = new System.Drawing.Size(903, 390);
             this.xtraTabPage3.Text = "通信管理";
             // 
             // xtraTabPage4
             // 
-            this.xtraTabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage4.Name = "xtraTabPage4";
-            this.xtraTabPage4.Size = new System.Drawing.Size(1032, 468);
+            this.xtraTabPage4.Size = new System.Drawing.Size(903, 390);
             this.xtraTabPage4.Text = "专家系统";
             // 
             // popupMenu1
@@ -435,32 +414,28 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.barDockControlTop.Size = new System.Drawing.Size(1034, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(905, 0);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 537);
-            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.barDockControlBottom.Size = new System.Drawing.Size(1034, 35);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 417);
+            this.barDockControlBottom.Size = new System.Drawing.Size(905, 28);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 537);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 417);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1034, 0);
-            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 537);
+            this.barDockControlRight.Location = new System.Drawing.Point(905, 0);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 417);
             // 
             // repositoryItemTrackBar1
             // 
@@ -470,16 +445,15 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 572);
+            this.ClientSize = new System.Drawing.Size(905, 445);
             this.Controls.Add(this.xtraTabControl1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AVC Builder 0.1";

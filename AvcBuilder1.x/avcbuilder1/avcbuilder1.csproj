@@ -89,11 +89,17 @@
     <Compile Include="tblForms\FormBase.Designer.cs">
       <DependentUpon>FormBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="tblForms\FormState.cs">
+    <Compile Include="tblForms\FormQueryBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="tblForms\FormState.Designer.cs">
-      <DependentUpon>FormState.cs</DependentUpon>
+    <Compile Include="tblForms\FormQueryBase.Designer.cs">
+      <DependentUpon>FormQueryBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tblForms\FormQueryState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormQueryState.Designer.cs">
+      <DependentUpon>FormQueryState.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -114,8 +120,8 @@
     <EmbeddedResource Include="tblForms\FormBase.resx">
       <DependentUpon>FormBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="tblForms\FormState.resx">
-      <DependentUpon>FormState.cs</DependentUpon>
+    <EmbeddedResource Include="tblForms\FormQueryBase.resx">
+      <DependentUpon>FormQueryBase.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>

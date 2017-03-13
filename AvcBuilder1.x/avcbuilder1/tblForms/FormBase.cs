@@ -15,24 +15,7 @@ namespace avcbuilder1.tblForms
 {
     public partial class FormBase : DevExpress.XtraEditors.XtraForm
     {
-
         protected ILog log;
-        protected string avc_conn = "";
-        protected mysqlDAO MysqlDao;
-        protected static FormBase instance = null;
-        protected myConnInfo conninfo;
-
-        public static FormBase Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new FormBase();
-                }
-                return instance;
-            }
-        }
         protected FormBase()
         {
             lock (this)
@@ -51,9 +34,6 @@ namespace avcbuilder1.tblForms
             owner.Tag = this;
             this.Show();
         }
-
-        virtual public void Query(String sql) { }
- 
 
         protected void MsgBox(string msg)
         {

@@ -110,6 +110,7 @@ namespace avcbuilder1
                 sql = "select id,name,FEEDID as pid from tblfeedvoltageregulator";
                 LoadTbl(sql,7, "线路调压器");
                 treeList1.EndUpdate();
+                treeList1.ExpandAll();
             }
             catch (Exception ex)
             {
@@ -209,13 +210,16 @@ namespace avcbuilder1
             }
         }
 
-        private void callQuery(string sql)
+        private void callQuery(string ElementId)
         {
             XtraTabPage p = xtraTabControl_element.SelectedTabPage;
-            FormBase frm = (FormBase)p.Tag;
+            FormQueryBase frm = (FormQueryBase)p.Tag;
             if (frm != null)
             {
-                frm.Query(null);
+                if (ElementId == null)
+                    frm.QueryBySql(null);
+                else
+                    frm.QueryById(ElementId);
             }
         }
 
@@ -233,7 +237,7 @@ namespace avcbuilder1
 
         public void IniForms()
         {
-            FormBase frm = FormState.Instance;
+            FormQueryBase frm = FormQueryState.Instance;
             frm.ShowInControl(xtraTabPage_state);
 
         }
@@ -247,18 +251,17 @@ namespace avcbuilder1
         {
             if (treeList1.FocusedNode == null) return;
             string str = treeList1.FocusedNode["info"].ToString();
+            string element_id = treeList1.FocusedNode["ID"].ToString();
             switch (str)
             {
                 case "配电电容器":
-                    { break; }
                 case "线路电容器":
-                    { break; }
                 case "线路调压器":
-                    { break; }
                 case "配电变压器":
-                    { break; }
                 case "电容器子组":
-                    { break; }
+                    {
+                        callQuery(element_id);
+                        break; }
                 case "馈线":
                     {
                         callQuery(null);
@@ -266,8 +269,7 @@ namespace avcbuilder1
                     }
                 default:
                     {
-
-                       // callQuery(null);
+                       
                         break;
                     }
             }

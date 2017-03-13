@@ -23,9 +23,13 @@ namespace avcbuilder1
             Application.SetCompatibleTextRenderingDefault(false);
             BonusSkins.Register();
             SkinManager.EnableFormSkins();
-            UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
+            //UserLookAndFeel.Default.SetSkinStyle("Visual Studio 2013 Dark");
             InitLog();
             log.Debug("AvcBuilder started.");
+
+            //Application.Run(new FormMain());
+
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-Hans");//zh-Hans
             Application.Run(new FormMain());
         }
 

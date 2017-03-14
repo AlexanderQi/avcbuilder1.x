@@ -23,11 +23,33 @@ namespace avcbuilder1.tblForms
             }
         }
 
-        private FormQueryState()
+        private FormQueryState():base()
         {
+            
             instance = this;
             InitializeComponent();
+            gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
+            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+             
+           // gridView1.InitNewRow += GridView1_InitNewRow;
         }
+
+        public override void DataLoadedHandle()
+        {
+            base.DataLoadedHandle();
+        }
+
+        public override void DataClosedHandle()
+        {
+            base.DataClosedHandle();
+        }
+
+        //private void GridView1_InitNewRow(object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
+        //{
+        //    DataRow dr = gridView1.GetDataRow(e.RowHandle);
+        //    dr["名称"] = "New State";
+        //}
 
         static private string QueryString = @"select t.ID,t.name 名称,e.CONTROLSTATE 控制状态,e.HANDUNLOCKPROTECTIONSTATE 人工保护,e.AUTOUNLOCKPROTECTIONSTATE 自动保护, e.EXCEPTIONSTATE 异常状态,
              e.ACTIONOUTSTATE 动作次数, e.BELOCKSTATE 闭锁状态, e.LOCKSTARTTIME 闭锁时间,
@@ -35,13 +57,17 @@ e.FAILURELOCKSEC 失败闭锁时间, e.SLIPTAPLOCKSEC 滑档闭锁时间, e.REPE
 e.REPEATEDFAILURECOUNT 连续失败次数, e.MAXREPEATEDFAILURECOUNT 最大连续失败次数
  from tblelement t left join tblelementstate e on t.id = e.ELEMENTID";
 
-        //       static private string Sql = @"select t.ID, t.name 名称,e.ADVICELOCKSEC 建议闭锁时间,e.PREPARLOCKSEC 预置闭锁时间,e.SUCCESSLOCKSEC 成功闭锁时间,
-        //e.FAILURELOCKSEC 失败闭锁时间, e.SLIPTAPLOCKSEC 滑档闭锁时间, e.REPEATEDFAILURELOCKSEC 连续失败闭锁时间,
-        //e.REPEATEDFAILURECOUNT 连续失败次数, e.MAXREPEATEDFAILURECOUNT 最大连续失败次数
-        //from tblelement t  left join tblelementstate e on t.id = e.ELEMENTID";
+        public override void QueryByFeedId(string FeedId)
+        {
+            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            string sql = QueryString + " where t.FEEDID =" + FeedId;
+            QueryBySql(sql);
+        }
+
         public override void QueryById(string id)
         {
-            string sql = QueryString + " where id=" + id;
+            
+            string sql = QueryString + " where t.id=" + id;
             QueryBySql(sql);
         }
 

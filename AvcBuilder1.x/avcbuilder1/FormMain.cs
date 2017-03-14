@@ -24,7 +24,7 @@ namespace avcbuilder1
     public partial class FormMain : XtraForm
     {
         ILog log;
-        
+       // List<FormQueryBase> frms = new List<FormQueryBase>();
         public FormMain()
         {
             InitializeComponent();
@@ -38,7 +38,8 @@ namespace avcbuilder1
         /// </summary>
         DataTable TreeTable = null;
         DataRow root;
-        private void IniTreeTable() {
+        private void IniTreeTable()
+        {
             if (TreeTable != null)
             {
                 TreeTable.Columns.Clear();
@@ -48,7 +49,7 @@ namespace avcbuilder1
                 TreeTable = new DataTable();
             treeList1.Nodes.Clear();
             treeList1.DataSource = null;
-            
+
             TreeTable.Columns.Add("ImageIndex", typeof(int));
             TreeTable.Columns.Add("ID", typeof(string));
             TreeTable.Columns.Add("ParentID", typeof(string));
@@ -67,6 +68,8 @@ namespace avcbuilder1
             root["info"] = "未连接";
             root["tag"] = 0;
             TreeTable.Rows.Add(root);
+
+            FormQueryState.Instance.DataClosedHandle();
         }
 
         /// <summary>
@@ -74,12 +77,12 @@ namespace avcbuilder1
         /// </summary>
         /// <param name="tag">备用</param>
         mysqlDAO mdao = null;
-        private void TreeLoad(int tag)
+        private void TreeLoad()
         {
             try
             {
                 mdao = FormConnectSrv.Instance.Open();
-                if(mdao == null)
+                if (mdao == null)
                 {
                     return;
                 }
@@ -89,7 +92,7 @@ namespace avcbuilder1
 
                 string sql = "select id,name from tblsubcontrolarea";
                 LoadTbl(sql, -1, 1, "管理单位");
-                
+
                 sql = "select id,name,SUBCONTROLAREAID as pid from tblsubstation;";
                 LoadTbl(sql, 2, "变电站");
 
@@ -105,10 +108,10 @@ namespace avcbuilder1
                 LoadTbl(sql, 8, "电容器子组");
 
                 sql = "select id,name,FEEDID as pid from tblfeedtrans";
-                LoadTbl(sql,6, "配电变压器");
+                LoadTbl(sql, 6, "配电变压器");
 
                 sql = "select id,name,FEEDID as pid from tblfeedvoltageregulator";
-                LoadTbl(sql,7, "线路调压器");
+                LoadTbl(sql, 7, "线路调压器");
                 treeList1.ExpandAll();
                 treeList1.BestFitColumns();
                 treeList1.EndUpdate();
@@ -118,7 +121,7 @@ namespace avcbuilder1
                 log.Error(ex.Message);
                 XtraMessageBox.Show(ex.Message);
             }
-          
+
         }
 
         /// <summary>
@@ -144,9 +147,9 @@ namespace avcbuilder1
                         dr["ParentID"] = pid;
                     else
                         dr["ParentID"] = i["pid"];
-                    dr["name"] = i["name"].ToString()+ "【"+id+"】";
+                    dr["name"] = i["name"].ToString() + "【" + id + "】";
                     dr["info"] = info;
-                   
+
                     TreeTable.Rows.Add(dr);
                 }
             }
@@ -172,8 +175,8 @@ namespace avcbuilder1
         {
             IniTreeTable();
             if (barButtonItem_connect.Caption.Equals("连接..."))
-                TreeLoad(0);
-            
+                TreeLoad();
+
         }
 
         private void treeList1_MouseUp(object sender, MouseEventArgs e)
@@ -206,21 +209,24 @@ namespace avcbuilder1
                         popupMenu1.ShowPopup(p);
                         return;
                     }
-                   
+
                 }
             }
         }
 
-        private void callQuery(string ElementId)
+        private void callQuery(string Id,AvcIdType idt)
         {
             XtraTabPage p = xtraTabControl_element.SelectedTabPage;
             FormQueryBase frm = (FormQueryBase)p.Tag;
             if (frm != null)
             {
-                if (ElementId == null)
+                if (Id == null)  //call form's default query
                     frm.QueryBySql(null);
-                else
-                    frm.QueryById(ElementId);
+                else if (idt == AvcIdType.ElementId)
+                    frm.QueryById(Id);
+                else if (idt == AvcIdType.FeedId)
+                    frm.QueryByFeedId(Id);
+                frm.DataLoadedHandle();
             }
         }
 
@@ -231,7 +237,7 @@ namespace avcbuilder1
             TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.ControlMousePosition);
             if (hitInfo.Node != null)
             {
-                e.Info = new DevExpress.Utils.ToolTipControlInfo(treeList1, hitInfo.Node["name"].ToString()+" ID:"+hitInfo.Node["ID"].ToString());
+                e.Info = new DevExpress.Utils.ToolTipControlInfo(treeList1, hitInfo.Node["name"].ToString() + " ID:" + hitInfo.Node["ID"].ToString());
             }
         }
 
@@ -245,14 +251,14 @@ namespace avcbuilder1
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
         {
-            
+
         }
 
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
             if (treeList1.FocusedNode == null) return;
             string str = treeList1.FocusedNode["info"].ToString();
-            string element_id = treeList1.FocusedNode["ID"].ToString();
+            string Id = treeList1.FocusedNode["ID"].ToString();
             switch (str)
             {
                 case "配电电容器":
@@ -261,19 +267,32 @@ namespace avcbuilder1
                 case "配电变压器":
                 case "电容器子组":
                     {
-                        callQuery(element_id);
-                        break; }
+                        callQuery(Id,AvcIdType.ElementId);
+                        break;
+                    }
                 case "馈线":
                     {
-                        callQuery(null);
+                        callQuery(Id,AvcIdType.FeedId);
                         break;
                     }
                 default:
                     {
-                       
+                        callQuery(null,AvcIdType.OtherId);
                         break;
                     }
             }
         }
+
+        private bool tree_findpanel_visible = false;
+        private void barButtonItem_tree_find_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tree_findpanel_visible) 
+                treeList1.HideFindPanel();
+            else
+                treeList1.ShowFindPanel();
+            tree_findpanel_visible = !tree_findpanel_visible;
+        }
     }
+
+    public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, OtherId = 4 };
 }

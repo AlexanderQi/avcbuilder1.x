@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MySql.Data.MySqlClient;
 using System.Data;
 using log4net;
-using log4net.Appender;
-
+using System.Reflection;
+using System.Text;
 namespace mysqlDao_v1
 {
-   
+
 
     public class myConnInfo
     {
@@ -63,7 +60,8 @@ namespace mysqlDao_v1
             connStr = connectString;
             try
             {
-                conn = new MySqlConnection(connStr);
+                conn = new MySqlConnection(connectString);
+
                 //log.Debug("*** 新建数据源: "+conn.ConnectionString);
             }
             catch (Exception ex)
@@ -73,7 +71,7 @@ namespace mysqlDao_v1
             }
         }
 
-        
+
 
 
         private bool Ping()
@@ -113,7 +111,7 @@ namespace mysqlDao_v1
             {
                 if (conn.State == ConnectionState.Closed)
                     conn.Open();
-                int r = MySqlHelper.ExecuteNonQuery(conn, sql, null);               
+                int r = MySqlHelper.ExecuteNonQuery(conn, sql, null);
                 return r;
             }
             catch (Exception ex)
@@ -159,7 +157,7 @@ namespace mysqlDao_v1
                     MySqlDataAdapter mda = new MySqlDataAdapter(sql, conn);
                     dt = new DataTable();
                     mda.Fill(dt);
-                    
+
                     return dt;
                 }
                 catch (Exception ex)
@@ -174,7 +172,7 @@ namespace mysqlDao_v1
             }
         }
 
-        public DataTable Query(String sql,ref DataTable dt)
+        public DataTable Query(String sql, ref DataTable dt)
         {
             lock (this)
             {
@@ -185,7 +183,7 @@ namespace mysqlDao_v1
                         conn.Open();
                     MySqlDataAdapter mda = new MySqlDataAdapter(sql, conn);
                     dt.Columns.Clear();
-                    dt.Clear();                  
+                    dt.Clear();
                     mda.Fill(dt);
                     return dt;
                 }
@@ -201,5 +199,130 @@ namespace mysqlDao_v1
             }
         }
 
+        public static string getInsertSql(object poco)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("INSERT INTO ");
+            Type t = poco.GetType();
+            sb.Append(t.Name).Append(" (");
+            PropertyInfo[] pros = t.GetProperties();
+            for (int i = 0; i < pros.Length; i++)
+            {
+                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (i > 0) { sb.Append(","); }
+                sb.Append(pros[i].Name);
+            }
+            sb.Append(") VALUES (");
+            for (int i = 0; i < pros.Length; i++)
+            {
+
+                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (i > 0) { sb.Append(","); }
+
+                object val = pros[i].GetValue(poco, null);
+                if (val == null)
+                {
+                    sb.Append("NULL");
+                }
+                else if (pros[i].PropertyType == typeof(string) ||
+                    pros[i].PropertyType == typeof(DateTime) ||
+                    pros[i].PropertyType == typeof(Nullable<DateTime>))
+                {
+                    sb.Append("'").Append(val.ToString()).Append("'");
+                }
+                else { sb.Append(val.ToString()); }
+            }
+            sb.Append(");");
+            return sb.ToString();
+        }
+
+        public static string getDeleteSql(object poco, string pk_name, object pk_value)
+        {
+            //DELETE FROM `pwavc1`.`tblalarm` WHERE  `ID`=1000;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("DELETE FROM ");
+            Type t = poco.GetType();
+            PropertyInfo pr = t.GetProperty(pk_name);
+            if (pr == null) return null;
+
+            sb.Append(t.Name);
+            if (pk_name == null && pk_value == null) { return sb.ToString(); }// All data will be deleted.
+
+            sb.Append(" WHERE ").Append(pk_name).Append(" = ");
+            if (pr.PropertyType == typeof(string) ||
+                    pr.PropertyType == typeof(DateTime) ||
+                    pr.PropertyType == typeof(Nullable<DateTime>))
+            {
+                sb.Append("'").Append(pk_value).Append("'");
+            }
+            else
+            {
+                sb.Append(pk_value);
+            }
+            return sb.ToString();
+        }
+
+        public static string getDeleteSql(object poco, string String_After_WHERE)
+        {
+            //DELETE FROM `pwavc1`.`tblalarm` WHERE  `ID`=1000;
+            if (String_After_WHERE == null || String_After_WHERE.Equals("")) return null;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("DELETE FROM ");
+            Type t = poco.GetType();
+            sb.Append(t.Name);
+            sb.Append(" WHERE ").Append(String_After_WHERE);
+           
+            return sb.ToString();
+        }
+
+        public static string getQuerySql(object poco, string pk_name, object pk_value)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT ");
+            Type t = poco.GetType();
+            PropertyInfo pr = t.GetProperty(pk_name);
+            if (pr == null) return null;
+
+            PropertyInfo[] pros = t.GetProperties();
+            for (int i = 0; i < pros.Length; i++)
+            {
+                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (i > 0) { sb.Append(","); }
+                sb.Append(pros[i].Name);
+            }
+            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(pk_name).Append(" = ");
+            if (pr.PropertyType == typeof(string) ||
+                    pr.PropertyType == typeof(DateTime) ||
+                    pr.PropertyType == typeof(Nullable<DateTime>))
+            {
+                sb.Append("'").Append(pk_value).Append("'");
+            }
+            else
+            {
+                sb.Append(pk_value);
+            }
+            return sb.ToString();
+        }
+
+        public static string getQuerySql(object poco, string String_After_WHERE)
+        {
+            if (String_After_WHERE == null || String_After_WHERE.Equals(""))
+                String_After_WHERE = "true;";
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT ");
+            Type t = poco.GetType();
+
+            PropertyInfo[] pros = t.GetProperties();
+            for (int i = 0; i < pros.Length; i++)
+            {
+                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (i > 0) { sb.Append(","); }
+                sb.Append(pros[i].Name);
+            }
+            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(String_After_WHERE);
+
+            return sb.ToString();
+        }
     }
 }

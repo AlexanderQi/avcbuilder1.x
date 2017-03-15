@@ -40,7 +40,6 @@
     <Reference Include="DevExpress.Printing.v15.2.Core, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v15.2" />
     <Reference Include="DevExpress.Sparkline.v15.2.Core" />
-    <Reference Include="DevExpress.Xpo.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v15.2" />
     <Reference Include="DevExpress.XtraGrid.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -69,6 +68,121 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="entities\hissoe.cs" />
+    <Compile Include="entities\tblalarm.cs" />
+    <Compile Include="entities\tblbreaker.cs" />
+    <Compile Include="entities\tblbreakermeasure.cs" />
+    <Compile Include="entities\tblbus.cs" />
+    <Compile Include="entities\tblbusmeasure.cs" />
+    <Compile Include="entities\tblcapacitor.cs" />
+    <Compile Include="entities\tblcapacitoritem.cs" />
+    <Compile Include="entities\tblcapacitoritemmeasure.cs" />
+    <Compile Include="entities\tblcapacitormeasure.cs" />
+    <Compile Include="entities\tblcmdcheck.cs" />
+    <Compile Include="entities\tblcommand.cs" />
+    <Compile Include="entities\tblcommandrecord.cs" />
+    <Compile Include="entities\tblcommonlistcode.cs" />
+    <Compile Include="entities\tblcommontreecode.cs" />
+    <Compile Include="entities\tblconductortype.cs" />
+    <Compile Include="entities\tblcurvedetail.cs" />
+    <Compile Include="entities\tbldepartment.cs" />
+    <Compile Include="entities\tbldisconnector.cs" />
+    <Compile Include="entities\tbldisconnectormeasure.cs" />
+    <Compile Include="entities\tbldistributionzone.cs" />
+    <Compile Include="entities\tblelement.cs" />
+    <Compile Include="entities\tblelementaction.cs" />
+    <Compile Include="entities\tblelementlimit.cs" />
+    <Compile Include="entities\tblelementruntime.cs" />
+    <Compile Include="entities\tblelementstate.cs" />
+    <Compile Include="entities\tblelementstyle.cs" />
+    <Compile Include="entities\tblenergyconsumer.cs" />
+    <Compile Include="entities\tblenergyconsumermeasure.cs" />
+    <Compile Include="entities\tblfeedapf.cs" />
+    <Compile Include="entities\tblfeedapfmeasure.cs" />
+    <Compile Include="entities\tblfeedbus.cs" />
+    <Compile Include="entities\tblfeedbusmeasure.cs" />
+    <Compile Include="entities\tblfeedcapacitor.cs" />
+    <Compile Include="entities\tblfeedcapacitorcontrol.cs" />
+    <Compile Include="entities\tblfeedcapacitoritem.cs" />
+    <Compile Include="entities\tblfeedcapacitoritemmeasure.cs" />
+    <Compile Include="entities\tblfeedcapacitormeasure.cs" />
+    <Compile Include="entities\tblfeeder.cs" />
+    <Compile Include="entities\tblfeedermeasure.cs" />
+    <Compile Include="entities\tblfeedgraph.cs" />
+    <Compile Include="entities\tblfeedgraphmeasure.cs" />
+    <Compile Include="entities\tblfeedline.cs" />
+    <Compile Include="entities\tblfeedlinemeasure.cs" />
+    <Compile Include="entities\tblfeedlinesegment.cs" />
+    <Compile Include="entities\tblfeedlinesegmentmeasure.cs" />
+    <Compile Include="entities\tblfeedpowerquality.cs" />
+    <Compile Include="entities\tblfeedpowerqualitymeasure.cs" />
+    <Compile Include="entities\tblfeedssts.cs" />
+    <Compile Include="entities\tblfeedsstsmeasure.cs" />
+    <Compile Include="entities\tblfeedsvg.cs" />
+    <Compile Include="entities\tblfeedsvgmeasure.cs" />
+    <Compile Include="entities\tblfeedswitch.cs" />
+    <Compile Include="entities\tblfeedswitchmeasure.cs" />
+    <Compile Include="entities\tblfeedtpunbalance.cs" />
+    <Compile Include="entities\tblfeedtpunbalancemeasure.cs" />
+    <Compile Include="entities\tblfeedtrans.cs" />
+    <Compile Include="entities\tblfeedtransmeasure.cs" />
+    <Compile Include="entities\tblfeedtsf.cs" />
+    <Compile Include="entities\tblfeedtsfitem.cs" />
+    <Compile Include="entities\tblfeedtsfitemmeasure.cs" />
+    <Compile Include="entities\tblfeedtsfmeasure.cs" />
+    <Compile Include="entities\tblfeedvoltageregulator.cs" />
+    <Compile Include="entities\tblfeedvoltageregulatormeasure.cs" />
+    <Compile Include="entities\tblformula.cs" />
+    <Compile Include="entities\tblformulabname.cs" />
+    <Compile Include="entities\tblformulaparent.cs" />
+    <Compile Include="entities\tblformulasources.cs" />
+    <Compile Include="entities\tblgenerator.cs" />
+    <Compile Include="entities\tblgeneratormeasure.cs" />
+    <Compile Include="entities\tblgraphfile.cs" />
+    <Compile Include="entities\tblgraphtopoterminal.cs" />
+    <Compile Include="entities\tbljunction.cs" />
+    <Compile Include="entities\tblline.cs" />
+    <Compile Include="entities\tbllinemeasure.cs" />
+    <Compile Include="entities\tbllinesegment.cs" />
+    <Compile Include="entities\tbllinesegmentmeasure.cs" />
+    <Compile Include="entities\tblloadforecast.cs" />
+    <Compile Include="entities\tblloginuser.cs" />
+    <Compile Include="entities\tbllva.cs" />
+    <Compile Include="entities\tbllvameter.cs" />
+    <Compile Include="entities\tblnetjoint.cs" />
+    <Compile Include="entities\tblnetjointmeasure.cs" />
+    <Compile Include="entities\tbloperationrecord.cs" />
+    <Compile Include="entities\tblparammgr.cs" />
+    <Compile Include="entities\tblpermission.cs" />
+    <Compile Include="entities\tblposition.cs" />
+    <Compile Include="entities\tblprogram.cs" />
+    <Compile Include="entities\tblprogrammgr.cs" />
+    <Compile Include="entities\tblprotection.cs" />
+    <Compile Include="entities\tblreactor.cs" />
+    <Compile Include="entities\tblreactoritem.cs" />
+    <Compile Include="entities\tblreactoritemmeasure.cs" />
+    <Compile Include="entities\tblreactormeasure.cs" />
+    <Compile Include="entities\tblrole.cs" />
+    <Compile Include="entities\tblsequencenumber.cs" />
+    <Compile Include="entities\tblsoe.cs" />
+    <Compile Include="entities\tblstorageconfig.cs" />
+    <Compile Include="entities\tblsubcontrolarea.cs" />
+    <Compile Include="entities\tblsubcontrolareameasure.cs" />
+    <Compile Include="entities\tblsubstation.cs" />
+    <Compile Include="entities\tblsubstationmeasure.cs" />
+    <Compile Include="entities\tblswitchtype.cs" />
+    <Compile Include="entities\tbltapchangertype.cs" />
+    <Compile Include="entities\tbltransformer.cs" />
+    <Compile Include="entities\tbltransformermeasure.cs" />
+    <Compile Include="entities\tbltransformertype.cs" />
+    <Compile Include="entities\tbluser.cs" />
+    <Compile Include="entities\tbluserlogin.cs" />
+    <Compile Include="entities\tblvoltagelevel.cs" />
+    <Compile Include="entities\tblycvalue.cs" />
+    <Compile Include="entities\tblykparam.cs" />
+    <Compile Include="entities\tblymvalue.cs" />
+    <Compile Include="entities\tblytparam.cs" />
+    <Compile Include="entities\tblyxvalue.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +266,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

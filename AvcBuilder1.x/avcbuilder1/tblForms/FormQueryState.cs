@@ -23,6 +23,8 @@ namespace avcbuilder1.tblForms
             }
         }
 
+        DataSet ds;
+       
         private FormQueryState():base()
         {
             
@@ -73,7 +75,6 @@ e.REPEATEDFAILURECOUNT 连续失败次数, e.MAXREPEATEDFAILURECOUNT 最大连�
 
 
 
-        DataTable mdt;
         public override void QueryBySql(string sql)
         {
             MysqlDao = FormConnectSrv.Instance.MySqlDao;
@@ -84,8 +85,15 @@ e.REPEATEDFAILURECOUNT 连续失败次数, e.MAXREPEATEDFAILURECOUNT 最大连�
                 {
                     sql = QueryString;
                 }
-                mdt = MysqlDao.Query(sql);
-                gridControl1.DataSource = mdt;
+                if (ds == null)
+                {
+                    ds = new DataSet();
+                    ds.Tables.Add();
+                }
+
+                DataTable dt = ds.Tables[0];
+                MysqlDao.Query(sql,ref dt);
+                gridControl1.DataSource = dt;
                 gridView1.BeginUpdate();
                 gridView1.Columns[0].Visible = false; //id field
                 gridView1.Columns[1].BestFit();

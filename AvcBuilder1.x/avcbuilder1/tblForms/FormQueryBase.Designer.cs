@@ -47,12 +47,10 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.gridControl1.Location = new System.Drawing.Point(0, 49);
+            this.gridControl1.Location = new System.Drawing.Point(0, 38);
             this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(1009, 586);
+            this.gridControl1.Size = new System.Drawing.Size(883, 456);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.UseEmbeddedNavigator = true;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -85,9 +83,8 @@
             this.panelControl1.Controls.Add(this.simpleButton_Find);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
-            this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1009, 49);
+            this.panelControl1.Size = new System.Drawing.Size(883, 38);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton_IniData
@@ -95,9 +92,10 @@
             this.simpleButton_IniData.ImageIndex = 6;
             this.simpleButton_IniData.ImageList = this.imageCollection1;
             this.simpleButton_IniData.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_IniData.Location = new System.Drawing.Point(95, 3);
+            this.simpleButton_IniData.Location = new System.Drawing.Point(83, 2);
+            this.simpleButton_IniData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_IniData.Name = "simpleButton_IniData";
-            this.simpleButton_IniData.Size = new System.Drawing.Size(93, 42);
+            this.simpleButton_IniData.Size = new System.Drawing.Size(81, 33);
             this.simpleButton_IniData.TabIndex = 2;
             this.simpleButton_IniData.Text = "初始化数据";
             this.simpleButton_IniData.ToolTip = "自动填写默认数据，会覆盖原数据。";
@@ -125,9 +123,10 @@
             this.simpleButton_Apply.ImageIndex = 4;
             this.simpleButton_Apply.ImageList = this.imageCollection1;
             this.simpleButton_Apply.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_Apply.Location = new System.Drawing.Point(48, 3);
+            this.simpleButton_Apply.Location = new System.Drawing.Point(42, 2);
+            this.simpleButton_Apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Apply.Name = "simpleButton_Apply";
-            this.simpleButton_Apply.Size = new System.Drawing.Size(42, 42);
+            this.simpleButton_Apply.Size = new System.Drawing.Size(37, 33);
             this.simpleButton_Apply.TabIndex = 1;
             this.simpleButton_Apply.Text = "提交";
             this.simpleButton_Apply.ToolTip = "将修改内容提交数据库";
@@ -138,10 +137,11 @@
             this.simpleButton_Find.ImageIndex = 0;
             this.simpleButton_Find.ImageList = this.imageCollection1;
             this.simpleButton_Find.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_Find.Location = new System.Drawing.Point(2, 3);
+            this.simpleButton_Find.Location = new System.Drawing.Point(2, 2);
+            this.simpleButton_Find.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Find.Name = "simpleButton_Find";
             this.simpleButton_Find.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Find.Size = new System.Drawing.Size(42, 42);
+            this.simpleButton_Find.Size = new System.Drawing.Size(37, 33);
             this.simpleButton_Find.TabIndex = 0;
             this.simpleButton_Find.Text = "搜索";
             this.simpleButton_Find.ToolTip = "显示或隐藏搜索栏";
@@ -149,11 +149,11 @@
             // 
             // FormQueryBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
-            this.ClientSize = new System.Drawing.Size(1009, 635);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.ClientSize = new System.Drawing.Size(883, 494);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.panelControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormQueryBase";
             this.Text = "状态";
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();

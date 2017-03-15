@@ -9,66 +9,7 @@ using log4net.Appender;
 
 namespace mysqlDao_v1
 {
-    public class mysqlConnectPool
-    {
-        public string connString;
-        public MySqlConnection conn;
-        private List<MySqlConnection> connList = new List<MySqlConnection>();
-       
-        private int PoolMax = 3;
-        private static mysqlConnectPool instance;
-        private ILog log;
-        private mysqlConnectPool()
-        {
-            instance = this;
-            log = LogManager.GetLogger("log");
-            
-        }
-        
-        public mysqlConnectPool Instance()
-        {
-            lock (this)
-            {
-                if(instance == null)
-                {
-                    new mysqlConnectPool();
-                }
-                return instance;
-            }
-        }
-
-        public bool Init(string ConnectString,int ConnectionPoolMax=3)
-        {
-            PoolMax = ConnectionPoolMax;
-            connString = ConnectString;
-            MySqlConnection conn = new MySqlConnection(connString);
-            if (!conn.Ping())
-            {
-                log.Debug("数据库不能访问-" + connString);
-                return false;
-            }
-            connList.Add(conn);
-            if (PoolMax > 20) PoolMax = 20;
-            
-            for(int i = 1; i <= PoolMax; i++)
-            {
-                connList.Add(new MySqlConnection(connString));
-            }
-
-            return true;
-        }
-
-        public MySqlConnection getIdleConn()
-        {
-            for (int i = 0; i <= PoolMax; i++)
-            {
-                if (connList[i].State == ConnectionState.Closed)
-                    return connList[i];
-            }
-            return null;
-        }
-
-    }
+   
 
     public class myConnInfo
     {
@@ -148,12 +89,15 @@ namespace mysqlDao_v1
             {
                 conn.Close();
                 conn.Open();
-                conn.Close();
             }
             catch (Exception ex)
             {
                 log.Error(ex);
                 throw;
+            }
+            finally
+            {
+                conn.Close();
             }
 
         }
@@ -169,10 +113,28 @@ namespace mysqlDao_v1
             {
                 if (conn.State == ConnectionState.Closed)
                     conn.Open();
-                int r = MySqlHelper.ExecuteNonQuery(conn, sql, null);
-                //log.Info("*** "+conn.DataSource + conn.Database + "  " + sql + " return="+r);
-               
+                int r = MySqlHelper.ExecuteNonQuery(conn, sql, null);               
                 return r;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public object ExecuteScalar(String sql)
+        {
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                    conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return cmd.ExecuteScalar();
             }
             catch (Exception ex)
             {
@@ -195,12 +157,35 @@ namespace mysqlDao_v1
                         conn.Open();
                     //log.Debug(conn.DataSource+conn.Database+"  "+sql);
                     MySqlDataAdapter mda = new MySqlDataAdapter(sql, conn);
-                    if(dt == null)
-                    {
-                        dt = new DataTable();
-                    }
-                    dt.Clear();
+                    dt = new DataTable();
+                    mda.Fill(dt);
+                    
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        public DataTable Query(String sql,ref DataTable dt)
+        {
+            lock (this)
+            {
+                if (dt == null) return dt;
+                try
+                {
+                    if (conn.State == ConnectionState.Closed)
+                        conn.Open();
+                    MySqlDataAdapter mda = new MySqlDataAdapter(sql, conn);
                     dt.Columns.Clear();
+                    dt.Clear();                  
                     mda.Fill(dt);
                     return dt;
                 }

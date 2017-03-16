@@ -56,11 +56,22 @@ namespace avcUnitTest
         {
             tblfeedcapacitor c = new tblfeedcapacitor();
             tblfeedcapacitormeasure m = new tblfeedcapacitormeasure();
-           string  sql = mysqlDAO.getLeftJoinQuerySql(c, m, "name,feedid", "*", "id", "id", null);
+            string sql = mysqlDAO.getLeftJoinQuerySql(c, m, "name,feedid", "*", "id", "id", null);
             Console.WriteLine(sql);
             //m.QCYCID
             sql = mysqlDAO.getLeftJoinQuerySql(c, m, "name,feedid", "IYCID,QCYCID", "id", "id", null);
             Console.WriteLine(sql);
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            string comment = @" 我去年买了
+个表我不要了.";
+            Console.WriteLine(comment + "\nlen:" + comment.Length);
+            int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；' });
+            comment = comment.Substring(0, p);
+            Console.WriteLine(comment + "\nlen:"+comment.Length);
         }
     }
 }

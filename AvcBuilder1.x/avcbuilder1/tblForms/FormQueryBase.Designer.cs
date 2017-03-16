@@ -47,10 +47,10 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 38);
+            this.gridControl1.Location = new System.Drawing.Point(0, 42);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(883, 456);
+            this.gridControl1.Size = new System.Drawing.Size(883, 452);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.UseEmbeddedNavigator = true;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -58,6 +58,7 @@
             // 
             // gridView1
             // 
+            this.gridView1.ColumnPanelRowHeight = 35;
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.GroupPanelText = ".";
             this.gridView1.Name = "gridView1";
@@ -74,6 +75,7 @@
             this.gridView1.OptionsMenu.ShowAutoFilterRowItem = false;
             this.gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.RowHeight = 35;
             // 
             // panelControl1
             // 
@@ -84,64 +86,56 @@
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(883, 38);
+            this.panelControl1.Size = new System.Drawing.Size(883, 42);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton_IniData
             // 
-            this.simpleButton_IniData.ImageIndex = 6;
+            this.simpleButton_IniData.ImageIndex = 2;
             this.simpleButton_IniData.ImageList = this.imageCollection1;
-            this.simpleButton_IniData.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_IniData.Location = new System.Drawing.Point(83, 2);
+            this.simpleButton_IniData.Location = new System.Drawing.Point(154, 5);
             this.simpleButton_IniData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_IniData.Name = "simpleButton_IniData";
-            this.simpleButton_IniData.Size = new System.Drawing.Size(81, 33);
+            this.simpleButton_IniData.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_IniData.Size = new System.Drawing.Size(110, 33);
             this.simpleButton_IniData.TabIndex = 2;
             this.simpleButton_IniData.Text = "初始化数据";
             this.simpleButton_IniData.ToolTip = "自动填写默认数据，会覆盖原数据。";
             // 
             // imageCollection1
             // 
+            this.imageCollection1.ImageSize = new System.Drawing.Size(32, 32);
             this.imageCollection1.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection1.ImageStream")));
-            this.imageCollection1.InsertGalleryImage("show_32x32.png", "images/actions/show_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/show_32x32.png"), 0);
-            this.imageCollection1.Images.SetKeyName(0, "show_32x32.png");
-            this.imageCollection1.InsertGalleryImage("add_32x32.png", "images/actions/add_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/add_32x32.png"), 1);
-            this.imageCollection1.Images.SetKeyName(1, "add_32x32.png");
-            this.imageCollection1.InsertGalleryImage("remove_32x32.png", "images/actions/remove_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/remove_32x32.png"), 2);
-            this.imageCollection1.Images.SetKeyName(2, "remove_32x32.png");
-            this.imageCollection1.InsertGalleryImage("editname_32x32.png", "images/actions/editname_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/editname_32x32.png"), 3);
-            this.imageCollection1.Images.SetKeyName(3, "editname_32x32.png");
-            this.imageCollection1.InsertGalleryImage("apply_32x32.png", "images/actions/apply_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/apply_32x32.png"), 4);
-            this.imageCollection1.Images.SetKeyName(4, "apply_32x32.png");
-            this.imageCollection1.InsertGalleryImage("cancel_32x32.png", "images/actions/cancel_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/cancel_32x32.png"), 5);
-            this.imageCollection1.Images.SetKeyName(5, "cancel_32x32.png");
-            this.imageCollection1.InsertGalleryImage("bodepartment_32x32.png", "images/business%20objects/bodepartment_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/business%20objects/bodepartment_32x32.png"), 6);
-            this.imageCollection1.Images.SetKeyName(6, "bodepartment_32x32.png");
+            this.imageCollection1.InsertGalleryImage("refresh2_32x32.png", "images/actions/refresh2_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/refresh2_32x32.png"), 0);
+            this.imageCollection1.Images.SetKeyName(0, "refresh2_32x32.png");
+            this.imageCollection1.InsertGalleryImage("show_32x32.png", "images/actions/show_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/show_32x32.png"), 1);
+            this.imageCollection1.Images.SetKeyName(1, "show_32x32.png");
+            this.imageCollection1.InsertGalleryImage("topbottomrules_32x32.png", "images/conditional%20formatting/topbottomrules_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/conditional%20formatting/topbottomrules_32x32.png"), 2);
+            this.imageCollection1.Images.SetKeyName(2, "topbottomrules_32x32.png");
             // 
             // simpleButton_Apply
             // 
-            this.simpleButton_Apply.ImageIndex = 4;
+            this.simpleButton_Apply.ImageIndex = 0;
             this.simpleButton_Apply.ImageList = this.imageCollection1;
-            this.simpleButton_Apply.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_Apply.Location = new System.Drawing.Point(42, 2);
+            this.simpleButton_Apply.Location = new System.Drawing.Point(78, 5);
             this.simpleButton_Apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Apply.Name = "simpleButton_Apply";
-            this.simpleButton_Apply.Size = new System.Drawing.Size(37, 33);
+            this.simpleButton_Apply.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_Apply.Size = new System.Drawing.Size(70, 33);
             this.simpleButton_Apply.TabIndex = 1;
-            this.simpleButton_Apply.Text = "提交";
-            this.simpleButton_Apply.ToolTip = "将修改内容提交数据库";
+            this.simpleButton_Apply.Text = "刷新";
+            this.simpleButton_Apply.ToolTip = "从数据库刷新数据";
             // 
             // simpleButton_Find
             // 
             this.simpleButton_Find.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.simpleButton_Find.ImageIndex = 0;
+            this.simpleButton_Find.ImageIndex = 1;
             this.simpleButton_Find.ImageList = this.imageCollection1;
-            this.simpleButton_Find.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-            this.simpleButton_Find.Location = new System.Drawing.Point(2, 2);
+            this.simpleButton_Find.Location = new System.Drawing.Point(2, 5);
             this.simpleButton_Find.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Find.Name = "simpleButton_Find";
             this.simpleButton_Find.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Find.Size = new System.Drawing.Size(37, 33);
+            this.simpleButton_Find.Size = new System.Drawing.Size(70, 33);
             this.simpleButton_Find.TabIndex = 0;
             this.simpleButton_Find.Text = "搜索";
             this.simpleButton_Find.ToolTip = "显示或隐藏搜索栏";

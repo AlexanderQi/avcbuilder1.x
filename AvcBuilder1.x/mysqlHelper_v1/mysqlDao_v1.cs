@@ -23,7 +23,7 @@ namespace mysqlDao_v1
         private MySqlConnection conn;
         private DataTable dt;
         ILog log;
-
+        myConnInfo conInfo;
         public static myConnInfo getConnInfo(string ConnectString)
         {
             //Server=139.196.55.11;User=guest_;Password=11111111;Database=nttbl; Charset=utf8; Pooling=true; Max Pool Size=16;
@@ -61,7 +61,7 @@ namespace mysqlDao_v1
             try
             {
                 conn = new MySqlConnection(connectString);
-
+                conInfo = getConnInfo(connectString);
                 //log.Debug("*** 新建数据源: "+conn.ConnectionString);
             }
             catch (Exception ex)
@@ -198,6 +198,37 @@ namespace mysqlDao_v1
             }
         }
 
+        public DataTable GetFieldComment(string tblName)
+        {
+            string sql = @"select COLUMN_NAME ,column_comment from INFORMATION_SCHEMA.Columns where table_name = '"+tblName+"' and table_schema = '"+conInfo.DatabaseName+"'";
+            DataTable t = Query(sql);
+            foreach(DataRow dr in t.Rows)
+            {
+                string comment = dr[1].ToString().Trim();
+                int p = comment.IndexOfAny(new char[] { ',', '.', ';','\n','\t',' ','。','，','；' });
+                comment = comment.Substring(0, p);
+                dr[1] = comment;
+            }
+            t.AcceptChanges();
+            return t;
+        }
+
+        //public object FillPoco(object poco)
+        //{
+        //    try
+        //    {
+        //        string sql = getQuerySql(poco,"id","")
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+
+        //    }
+        //}
+
         public static string getInsertSql(object poco)
         {
             StringBuilder sb = new StringBuilder();
@@ -237,7 +268,7 @@ namespace mysqlDao_v1
 
         public static string getDeleteSql(object poco, string pk_name, object pk_value)
         {
-            //DELETE FROM `pwavc1`.`tblalarm` WHERE  `ID`=1000;
+            pk_name = pk_name.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
             Type t = poco.GetType();
@@ -278,6 +309,7 @@ namespace mysqlDao_v1
 
         public static string getQuerySql(object poco, string pk_name, object pk_value)
         {
+            pk_name = pk_name.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
             Type t = poco.GetType();
@@ -367,6 +399,8 @@ namespace mysqlDao_v1
             sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
             return sb.ToString();
         }
-            
     }
+
+
+
 }

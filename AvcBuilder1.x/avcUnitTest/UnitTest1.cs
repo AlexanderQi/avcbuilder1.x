@@ -44,19 +44,23 @@ namespace avcUnitTest
             Console.WriteLine(sql);
             sql = mysqlDAO.getDeleteSql(b, "ID", "asdasdf111");
             Console.WriteLine(sql);
+            sql = mysqlDAO.getQuerySql(b, "ID", "1asdasdf111");
+            Console.WriteLine(sql);
+            sql = mysqlDAO.getUpdateSql(a, "atype='dadada',ashowtag=111", "id=1");
+            Console.WriteLine(sql);
         }
 
 
         [TestMethod]
         public void TestMethod2()
         {
-            tblbreaker b = new tblbreaker();
-            b.ID = "asdasdf111";
-            b.NAME = "breaker1";
-            // b.STARTUSINGTIME = DateTime.Now;
-            string sql = mysqlDAO.getQuerySql(b, "ID", "1asdasdf111");
+            tblfeedcapacitor c = new tblfeedcapacitor();
+            tblfeedcapacitormeasure m = new tblfeedcapacitormeasure();
+           string  sql = mysqlDAO.getLeftJoinQuerySql(c, m, "name,feedid", "*", "id", "id", null);
             Console.WriteLine(sql);
-
+            //m.QCYCID
+            sql = mysqlDAO.getLeftJoinQuerySql(c, m, "name,feedid", "IYCID,QCYCID", "id", "id", null);
+            Console.WriteLine(sql);
         }
     }
 }

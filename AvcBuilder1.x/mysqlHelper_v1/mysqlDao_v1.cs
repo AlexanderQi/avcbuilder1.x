@@ -77,7 +77,6 @@ namespace mysqlDao_v1
         private bool Ping()
         {
             bool b = conn.Ping();
-            //log.Debug("Ping DB:" + conn.DataSource + conn.Database+" return=" + b);
             return b;
         }
 
@@ -259,18 +258,20 @@ namespace mysqlDao_v1
             {
                 sb.Append(pk_value);
             }
+            sb.Append(";");
             return sb.ToString();
         }
 
         public static string getDeleteSql(object poco, string String_After_WHERE)
         {
             //DELETE FROM `pwavc1`.`tblalarm` WHERE  `ID`=1000;
-            if (String_After_WHERE == null || String_After_WHERE.Equals("")) return null;
+            if (String_After_WHERE == null || String_After_WHERE.Equals(""))
+                String_After_WHERE = "TRUE";
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
             Type t = poco.GetType();
             sb.Append(t.Name);
-            sb.Append(" WHERE ").Append(String_After_WHERE);
+            sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
            
             return sb.ToString();
         }
@@ -286,7 +287,7 @@ namespace mysqlDao_v1
             PropertyInfo[] pros = t.GetProperties();
             for (int i = 0; i < pros.Length; i++)
             {
-                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (pros[i].PropertyType.IsArray) continue; //blob  field 不处理
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }
@@ -301,13 +302,14 @@ namespace mysqlDao_v1
             {
                 sb.Append(pk_value);
             }
+            sb.Append(";");
             return sb.ToString();
         }
 
         public static string getQuerySql(object poco, string String_After_WHERE)
         {
             if (String_After_WHERE == null || String_After_WHERE.Equals(""))
-                String_After_WHERE = "true;";
+                String_After_WHERE = "TRUE";
 
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
@@ -316,13 +318,55 @@ namespace mysqlDao_v1
             PropertyInfo[] pros = t.GetProperties();
             for (int i = 0; i < pros.Length; i++)
             {
-                if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (pros[i].PropertyType.IsArray) continue; //blob field 不处理
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }
-            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(String_After_WHERE);
-
+            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(String_After_WHERE).Append(";");
             return sb.ToString();
         }
+
+        public static string getUpdateSql(object poco, string String_After_SET, string String_After_WHERE)
+        {
+            if (String_After_WHERE == null || String_After_WHERE.Equals(""))
+                String_After_WHERE = "TRUE";
+            StringBuilder sb = new StringBuilder();
+            Type t = poco.GetType();
+            sb.Append("UPDATE ").Append(t.Name).Append(" SET ").Append(String_After_SET).Append(" WHERE ").Append(String_After_WHERE).Append(";");
+            return sb.ToString();
+        }
+
+        public static string getLeftJoinQuerySql(object leftPoco,object rightPoco,string leftTabFields, string rightFields, string leftPK,string rightPK, string String_After_WHERE, bool BlobField = false)
+        {
+            if (leftPK == null || leftPK.Equals("")) return null;
+            if (rightPK == null || rightPK.Equals("")) return null;
+            if (leftTabFields == null || leftTabFields.Equals("")) return null;
+            if (rightFields == null || rightPoco.Equals("")) return null;
+            if (String_After_WHERE == null || String_After_WHERE.Equals(""))
+                String_After_WHERE = "TRUE";
+            StringBuilder sb = new StringBuilder();
+            Type tleft = leftPoco.GetType();
+            Type tright = rightPoco.GetType();
+
+            sb.Append("SELECT ");
+            string[] f1 = leftTabFields.Split(',');
+            for(int i=0;i<f1.Length; i++)
+            {
+                if (i > 0)
+                    sb.Append(",");
+                sb.Append("t1.").Append(f1[i]);
+            }
+
+            string[] f2 = rightFields.Split(',');
+            for (int i = 0; i < f2.Length; i++)
+            {
+                sb.Append(",t2.").Append(f2[i]);
+            }
+            sb.Append(" FROM ").Append(tleft.Name).Append(" t1 LEFT JOIN ").Append(tright.Name).Append(" t2 ON");
+            sb.Append(" t1.").Append(leftPK).Append(" = ").Append("t2.").Append(rightPK);
+            sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
+            return sb.ToString();
+        }
+            
     }
 }

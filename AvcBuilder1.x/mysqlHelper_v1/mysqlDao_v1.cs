@@ -200,13 +200,16 @@ namespace mysqlDao_v1
 
         public DataTable GetFieldComment(string tblName)
         {
-            string sql = @"select COLUMN_NAME ,column_comment from INFORMATION_SCHEMA.Columns where table_name = '"+tblName+"' and table_schema = '"+conInfo.DatabaseName+"'";
+            string sql = @"select COLUMN_NAME ,column_comment from INFORMATION_SCHEMA.Columns where table_name = '" + tblName + "' and table_schema = '" + conInfo.DatabaseName + "'";
             DataTable t = Query(sql);
-            foreach(DataRow dr in t.Rows)
+            foreach (DataRow dr in t.Rows)
             {
                 string comment = dr[1].ToString().Trim();
-                int p = comment.IndexOfAny(new char[] { ',', '.', ';','\n','\t',' ','。','，','；' });
-                comment = comment.Substring(0, p);
+                int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；' ,':','：'});
+                if (p > 0)
+                {
+                    comment = comment.Substring(0, p);
+                }
                 dr[1] = comment;
             }
             t.AcceptChanges();
@@ -303,7 +306,7 @@ namespace mysqlDao_v1
             Type t = poco.GetType();
             sb.Append(t.Name);
             sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
-           
+
             return sb.ToString();
         }
 
@@ -368,7 +371,7 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
-        public static string getLeftJoinQuerySql(object leftPoco,object rightPoco,string leftTabFields, string rightFields, string leftPK,string rightPK, string String_After_WHERE, bool BlobField = false)
+        public static string getLeftJoinQuerySql(object leftPoco, object rightPoco, string leftTabFields, string rightFields, string leftPK, string rightPK, string String_After_WHERE, bool BlobField = false)
         {
             if (leftPK == null || leftPK.Equals("")) return null;
             if (rightPK == null || rightPK.Equals("")) return null;
@@ -382,7 +385,7 @@ namespace mysqlDao_v1
 
             sb.Append("SELECT ");
             string[] f1 = leftTabFields.Split(',');
-            for(int i=0;i<f1.Length; i++)
+            for (int i = 0; i < f1.Length; i++)
             {
                 if (i > 0)
                     sb.Append(",");

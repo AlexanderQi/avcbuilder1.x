@@ -33,8 +33,8 @@ namespace avcbuilder1.tblForms
             instance = this;
             InitializeComponent();
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
-            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-            gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 
             // gridView1.InitNewRow += GridView1_InitNewRow;
         }
@@ -49,46 +49,50 @@ namespace avcbuilder1.tblForms
             base.DataClosedHandle();
         }
 
-        //private void GridView1_InitNewRow(object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
-        //{
-        //    DataRow dr = gridView1.GetDataRow(e.RowHandle);
-        //    dr["名称"] = "New State";
-        //}
-
-        //        static private string QueryString = @"select t.ID,t.name 名称,e.CONTROLSTATE 控制状态,e.HANDUNLOCKPROTECTIONSTATE 人工保护,e.AUTOUNLOCKPROTECTIONSTATE 自动保护, e.EXCEPTIONSTATE 异常状态,
-        //             e.ACTIONOUTSTATE 动作次数, e.BELOCKSTATE 闭锁状态, e.LOCKSTARTTIME 闭锁时间,
-        //e.FAILURELOCKSEC 失败闭锁时间, e.SLIPTAPLOCKSEC 滑档闭锁时间, e.REPEATEDFAILURELOCKSEC 连续失败闭锁时间,
-        //e.REPEATEDFAILURECOUNT 连续失败次数, e.MAXREPEATEDFAILURECOUNT 最大连续失败次数
-        // from tblelement t left join tblelementstate e on t.id = e.ELEMENTID";
 
         private void IniViewColumns()
         {
-            tblelementstate t = new tblelementstate();
-            //AddGridColumn(t.CONTROLSTATE, "控制状态");
-            //AddGridColumn(t.HANDUNLOCKPROTECTIONSTATE, "人工保护");
-            //AddGridColumn(t.AUTOUNLOCKPROTECTIONSTATE, "自动保护");
-            //AddGridColumn(t.EXCEPTIONSTATE, "异常状态");
-            //AddGridColumn(t.ACTIONOUTSTATE, "动作次数状态");
 
+            if (gridView1.Columns.Count > 0) { return; }
+            if (MysqlDao == null)
+            {
+                MsgBox("未连接数据库.");
+                return;
+            }
+            gridView1.BeginUpdate();
+            GridColumn cur = AddGridColumn("name", "设备名称");
+            cur.Fixed = FixedStyle.Left;
+            cur.BestFit();
 
+            DataTable dt = MysqlDao.GetFieldComment("tblelementstate");
+            foreach (DataRow dr in dt.Rows)
+            {
+                AddGridColumn(dr[0].ToString(), dr[1].ToString());
+            }
+            gridView1.EndUpdate();
         }
 
-        private GridColumn AddGridColumn(object Field, string Caption)
+        private GridColumn AddGridColumn(string Field, string Caption)
         {
-            GridColumn col = new GridColumn();
-            col.FieldName = Field as string;
+            GridColumn col = gridView1.Columns.Add();
+            col.FieldName = Field;
             col.Caption = Caption;
-            gridView1.Columns.Add(col);
+            col.CustomizationCaption = Caption;
+
+            col.MinWidth = 70;
+            col.Visible = true;
             return col;
         }
+
+
         string curSql = "";
         public override void QueryByFeedId(string FeedId)
         {
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             tblelement ele = new tblelement();
             tblelementstate sta = new tblelementstate();
-            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "id,name", "*", "id", "elementid", "t1.feedid=" + FeedId);
-            
+            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "name", "*", "id", "elementid", "t1.feedid=" + FeedId);
+
             QueryBySql(curSql);
         }
 
@@ -96,7 +100,7 @@ namespace avcbuilder1.tblForms
         {
             tblelement ele = new tblelement();
             tblelementstate sta = new tblelementstate();
-            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "id,name", "*", "id", "elementid", "t1.id="+id );
+            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "name", "*", "id", "elementid", "t1.id=" + id);
             QueryBySql(curSql);
         }
 
@@ -104,11 +108,12 @@ namespace avcbuilder1.tblForms
 
         public override void QueryBySql(string sql)
         {
-           
+
             MysqlDao = FormConnectSrv.Instance.MySqlDao;
             if (MysqlDao == null) return;
             try
             {
+                IniViewColumns();
                 if (ds == null)
                 {
                     ds = new DataSet();
@@ -117,18 +122,12 @@ namespace avcbuilder1.tblForms
 
                 DataTable dt = ds.Tables[0];
                 MysqlDao.Query(sql, ref dt);
+                //foreach(DataColumn dc in dt.Columns)
+                //{
+                //    Console.WriteLine(dc.ColumnName);
+                //}
                 gridControl1.DataSource = dt;
-                gridView1.BeginUpdate();
-                gridView1.Columns[0].Visible = false; //id field
-                gridView1.Columns[1].BestFit();
-                gridView1.Columns[1].Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Left;  //name field
-                for (int i = 0; i < gridView1.Columns.Count; i++)
-                {
-                    if (i <= 1) continue;
-                    gridView1.Columns[i].MinWidth = 60;
-                    gridView1.Columns[i].OptionsColumn.AllowSort = DevExpress.Utils.DefaultBoolean.False;
-                }
-                gridView1.EndUpdate();
+                gridView1.BestFitColumns();
             }
             catch (Exception ex)
             {

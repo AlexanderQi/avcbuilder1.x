@@ -47,10 +47,10 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 42);
+            this.gridControl1.Location = new System.Drawing.Point(0, 50);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(883, 452);
+            this.gridControl1.Size = new System.Drawing.Size(883, 444);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.UseEmbeddedNavigator = true;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -58,24 +58,12 @@
             // 
             // gridView1
             // 
-            this.gridView1.ColumnPanelRowHeight = 35;
+            this.gridView1.ColumnPanelRowHeight = 30;
             this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.GroupPanelText = ".";
             this.gridView1.Name = "gridView1";
-            this.gridView1.NewItemRowText = "编辑此处增加新行";
-            this.gridView1.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.EditForm;
-            this.gridView1.OptionsCustomization.AllowFilter = false;
-            this.gridView1.OptionsEditForm.ShowOnF2Key = DevExpress.Utils.DefaultBoolean.False;
-            this.gridView1.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.FindClick;
             this.gridView1.OptionsFind.FindNullPrompt = "";
             this.gridView1.OptionsFind.ShowCloseButton = false;
-            this.gridView1.OptionsMenu.EnableColumnMenu = false;
-            this.gridView1.OptionsMenu.EnableFooterMenu = false;
-            this.gridView1.OptionsMenu.EnableGroupPanelMenu = false;
-            this.gridView1.OptionsMenu.ShowAutoFilterRowItem = false;
-            this.gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-            this.gridView1.OptionsView.ShowGroupPanel = false;
-            this.gridView1.RowHeight = 35;
+            this.gridView1.RowHeight = 30;
             // 
             // panelControl1
             // 
@@ -86,20 +74,19 @@
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(883, 42);
+            this.panelControl1.Size = new System.Drawing.Size(883, 50);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton_IniData
             // 
             this.simpleButton_IniData.ImageIndex = 2;
             this.simpleButton_IniData.ImageList = this.imageCollection1;
-            this.simpleButton_IniData.Location = new System.Drawing.Point(154, 5);
+            this.simpleButton_IniData.Location = new System.Drawing.Point(94, 5);
             this.simpleButton_IniData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_IniData.Name = "simpleButton_IniData";
             this.simpleButton_IniData.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_IniData.Size = new System.Drawing.Size(110, 33);
+            this.simpleButton_IniData.Size = new System.Drawing.Size(40, 40);
             this.simpleButton_IniData.TabIndex = 2;
-            this.simpleButton_IniData.Text = "初始化数据";
             this.simpleButton_IniData.ToolTip = "自动填写默认数据，会覆盖原数据。";
             // 
             // imageCollection1
@@ -117,13 +104,12 @@
             // 
             this.simpleButton_Apply.ImageIndex = 0;
             this.simpleButton_Apply.ImageList = this.imageCollection1;
-            this.simpleButton_Apply.Location = new System.Drawing.Point(78, 5);
+            this.simpleButton_Apply.Location = new System.Drawing.Point(48, 5);
             this.simpleButton_Apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Apply.Name = "simpleButton_Apply";
             this.simpleButton_Apply.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Apply.Size = new System.Drawing.Size(70, 33);
+            this.simpleButton_Apply.Size = new System.Drawing.Size(40, 40);
             this.simpleButton_Apply.TabIndex = 1;
-            this.simpleButton_Apply.Text = "刷新";
             this.simpleButton_Apply.ToolTip = "从数据库刷新数据";
             // 
             // simpleButton_Find
@@ -135,9 +121,8 @@
             this.simpleButton_Find.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Find.Name = "simpleButton_Find";
             this.simpleButton_Find.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Find.Size = new System.Drawing.Size(70, 33);
+            this.simpleButton_Find.Size = new System.Drawing.Size(40, 40);
             this.simpleButton_Find.TabIndex = 0;
-            this.simpleButton_Find.Text = "搜索";
             this.simpleButton_Find.ToolTip = "显示或隐藏搜索栏";
             this.simpleButton_Find.Click += new System.EventHandler(this.simpleButton_Find_Click);
             // 
@@ -162,10 +147,10 @@
         #endregion
         protected DevExpress.XtraEditors.PanelControl panelControl1;
         public DevExpress.XtraGrid.GridControl gridControl1;
-        public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.Utils.ImageCollection imageCollection1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Find;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_IniData;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Apply;
+        public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
     }
 }

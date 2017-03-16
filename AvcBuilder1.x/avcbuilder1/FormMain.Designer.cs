@@ -179,7 +179,7 @@
             this.treeList1.OptionsMenu.EnableColumnMenu = false;
             this.treeList1.OptionsMenu.EnableFooterMenu = false;
             this.treeList1.OptionsView.ShowIndicator = false;
-            this.treeList1.RowHeight = 35;
+            this.treeList1.RowHeight = 30;
             this.treeList1.SelectImageList = this.imageCollection1;
             this.treeList1.Size = new System.Drawing.Size(248, 389);
             this.treeList1.StateImageList = this.imageCollection1;

@@ -41,7 +41,7 @@ namespace avcbuilder1
             {
                 InitializeComponent();
                 log = LogManager.GetLogger("log");
-                
+
             }
         }
 
@@ -55,16 +55,21 @@ namespace avcbuilder1
         {
             ClearInfo();
             IEnumerator ie = ConfigurationManager.ConnectionStrings.GetEnumerator();
+            int index = 0;
             while (ie.MoveNext())
             {
                 ConnectionStringSettings cs = ie.Current as ConnectionStringSettings;
                 if (cs.Name.IndexOf("SqlServer") >= 0) continue;
-                comboBoxEdit1.Properties.Items.Add(cs.Name);
+                int i = comboBoxEdit1.Properties.Items.Add(cs.Name);
+                if (cs.Name.Equals("avcdb"))
+                {
+                    index = i;
+                }
             }
             if (comboBoxEdit1.Properties.Items.Count > 0)
             {
-                avc_conn = comboBoxEdit1.Properties.Items[0] as string;
-                comboBoxEdit1.SelectedIndex = 0;
+                avc_conn = comboBoxEdit1.Properties.Items[index] as string;
+                comboBoxEdit1.SelectedIndex = index;
             }
         }
 
@@ -98,7 +103,8 @@ namespace avcbuilder1
             if (textEdit_srv.Text.Trim().Equals(string.Empty) ||
                 textEdit_dn.Text.Trim().Equals(string.Empty) ||
                 textEdit_pw.Text.Trim().Equals(string.Empty) ||
-                textEdit_user.Text.Trim().Equals(string.Empty)){
+                textEdit_user.Text.Trim().Equals(string.Empty))
+            {
                 XtraMessageBox.Show("信息不完整，都是必填项。", "完整性检查", MessageBoxButtons.OKCancel);
                 return false;
             }

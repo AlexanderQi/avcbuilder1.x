@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using AvcDb.entities;
+using mysqlDao_v1;
 using DevExpress.XtraGrid.Columns;
 
 namespace avcbuilder1.tblForms
@@ -47,22 +48,52 @@ namespace avcbuilder1.tblForms
                 return;
             }
 
-            SaveData();
+            SaveData(ds.Tables[0], new tblelementstate(),"id");
             MsgBox("已保存");
         }
 
-        private void SaveData()
+        private void SaveData(DataTable dt, object EntityModel, string idCaption)
         {
-            DataTable dt = ds.Tables[0].GetChanges();
+            if (dt == null || dt.Rows.Count == 0) return;
+            string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
+            StringBuilder sbUpdateSet = new StringBuilder();
+            StringBuilder sb4row = new StringBuilder();
             foreach (DataRow dr in dt.Rows)
             {
-                int index = -1;
-                for (int i = 0; i < dt.Columns.Count; i++)
+                switch (dr.RowState)
                 {
-                    if(!dr[i,DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
-                    {
- Console.WriteLine(string.Format("{0},{3},cValule:{1},oValue:{2}", dr["name"], dr[i, DataRowVersion.Current], dr[i, DataRowVersion.Original],dt.Columns[i] .Caption));
-                    }
+                    case DataRowState.Added:
+                        {
+                            sbUpdateSet.Clear();
+
+                            mysqlDAO.FillPoco(EntityModel, dr);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
+                            
+                            string sql = mysqlDAO.getInsertSql(EntityModel);
+                            sb4row.Append(sql).Append("\n");
+                            break;
+                        }
+                    case DataRowState.Modified:
+                        {
+                            sbUpdateSet.Clear();
+                            for (int i = 0; i < dt.Columns.Count; i++)
+                            {
+                                string caption = dt.Columns[i].Caption;
+                                bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+                                if (!b) continue;
+                                if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
+                                {
+                                    sbUpdateSet.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
+                                }
+                            }
+                            string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbUpdateSet.ToString(), dr[idCaption].ToString());
+                            sb4row.Append(sql).Append("\n");
+                            break;
+                        }
+
+                    case DataRowState.Deleted:
+                        {
+                            break;
+                        }
                 }
             }
         }

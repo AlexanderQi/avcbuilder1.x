@@ -216,21 +216,18 @@ namespace mysqlDao_v1
             return t;
         }
 
-        //public object FillPoco(object poco)
-        //{
-        //    try
-        //    {
-        //        string sql = getQuerySql(poco,"id","")
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-
-        //    }
-        //}
+        public static object FillPoco(object poco,DataRow row)
+        {
+            Type t = poco.GetType();
+            PropertyInfo[] props = t.GetProperties();
+            for (int i = 0; i < props.Length; i++)
+            {
+                if (props[i].PropertyType.IsArray) continue;
+                var val = row[props[i].Name];
+                props[i].SetValue(poco, val, null);
+            }
+            return poco;
+        }
 
         public static string getInsertSql(object poco)
         {
@@ -369,6 +366,13 @@ namespace mysqlDao_v1
             Type t = poco.GetType();
             sb.Append("UPDATE ").Append(t.Name).Append(" SET ").Append(String_After_SET).Append(" WHERE ").Append(String_After_WHERE).Append(";");
             return sb.ToString();
+        }
+
+        public static string getUpdateSqlById(object poco, string String_After_SET, string idValue, string idCaption = "id")
+        {
+            if (idValue == null || idValue.Equals("")) return null;
+            string where_str = string.Format("{0} = '{1}';", idCaption, idValue);
+            return getUpdateSql(poco, String_After_SET, where_str);
         }
 
         public static string getLeftJoinQuerySql(object leftPoco, object rightPoco, string leftTabFields, string rightFields, string leftPK, string rightPK, string String_After_WHERE, bool BlobField = false)

@@ -73,5 +73,25 @@ namespace avcUnitTest
             comment = comment.Substring(0, p);
             Console.WriteLine(comment + "\nlen:"+comment.Length);
         }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+            string[] fields = mysqlDao_v1.myFunc.getProperties(new tblalarm());
+            foreach(string str in fields)
+            {
+                Console.WriteLine(str);
+            }
+            Console.WriteLine("------------------------------");
+            string caption = "atype";
+            int a = Array.IndexOf(fields, caption.ToUpper());
+            bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+            Console.WriteLine(caption + " Pos: "+a + " result: "+b);
+
+            caption = "ids";
+             a = Array.IndexOf(fields, caption.ToUpper());
+            b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+            Console.WriteLine(caption + " Pos: " + a + " result: " + b);
+        }
     }
 }

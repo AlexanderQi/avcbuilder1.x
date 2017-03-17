@@ -68,8 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CRUD\IFCRUD.cs" />
-    <Compile Include="CRUD\tblelementstate_op.cs" />
     <Compile Include="POCO\hissoe.cs" />
     <Compile Include="POCO\tblalarm.cs" />
     <Compile Include="POCO\tblbreaker.cs" />
@@ -268,7 +266,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CRUD\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

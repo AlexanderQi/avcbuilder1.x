@@ -3,6 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AvcDb.entities;
 using System.Reflection;
 using mysqlDao_v1;
+using System.Configuration;
+using System.Data;
+using avcbuilder1;
+
+
 namespace avcUnitTest
 {
     [TestClass]
@@ -71,14 +76,14 @@ namespace avcUnitTest
             Console.WriteLine(comment + "\nlen:" + comment.Length);
             int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；' });
             comment = comment.Substring(0, p);
-            Console.WriteLine(comment + "\nlen:"+comment.Length);
+            Console.WriteLine(comment + "\nlen:" + comment.Length);
         }
 
         [TestMethod]
         public void TestMethod4()
         {
             string[] fields = mysqlDao_v1.myFunc.getProperties(new tblalarm());
-            foreach(string str in fields)
+            foreach (string str in fields)
             {
                 Console.WriteLine(str);
             }
@@ -86,12 +91,47 @@ namespace avcUnitTest
             string caption = "atype";
             int a = Array.IndexOf(fields, caption.ToUpper());
             bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
-            Console.WriteLine(caption + " Pos: "+a + " result: "+b);
+            Console.WriteLine(caption + " Pos: " + a + " result: " + b);
 
             caption = "ids";
-             a = Array.IndexOf(fields, caption.ToUpper());
+            a = Array.IndexOf(fields, caption.ToUpper());
             b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
             Console.WriteLine(caption + " Pos: " + a + " result: " + b);
         }
+
+        [TestMethod]
+        public void TestMethod5_forDB()
+        {
+            string conn = ConfigurationManager.ConnectionStrings["avcdb"].ConnectionString;
+            mysqlDAO md = new mysqlDAO(conn);
+            DataTable dt = md.GetFieldComment("tblgraphfile");
+            foreach (DataRow dr in dt.Rows)
+            {
+                Console.WriteLine(string.Format("{0}    {1}", dr[0], dr[1]));
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod6_forDB()
+        {
+            string conn = ConfigurationManager.ConnectionStrings["avcdb"].ConnectionString;
+            mysqlDAO md = new mysqlDAO(conn);
+            //DataTable dt = md.Query("select * from tblsequencenumber");
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    Console.WriteLine(string.Format("{0}    {1}", dr[0], dr[1]));
+            //}
+            string id = AvcBuilder_func.getNewId(md);
+            Console.WriteLine(id);
+            id = AvcBuilder_func.getNewId(md);
+            Console.WriteLine(id);
+            id = AvcBuilder_func.getNewId(md);
+            Console.WriteLine(id);
+            id = AvcBuilder_func.getNewId(md);
+            Console.WriteLine(id);
+            id = AvcBuilder_func.getNewId(md);
+            Console.WriteLine(id);
+        }
+
     }
 }

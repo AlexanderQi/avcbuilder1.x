@@ -193,4 +193,15 @@ namespace avcbuilder1
             ShowInfo(avc_conn);
         }
     }
+
+    public static class AvcBuilder_func
+    {
+        public static string getNewId(mysqlDAO dao)
+        {
+            string id = null;
+            string sql = @"select `MAXVALUE`+13 newid from tblsequencenumber;update tblsequencenumber set `MAXVALUE` = `MAXVALUE`+13,  `MinVALUE` = `MinVALUE`+13 where name = 'NewID';";//里面有两个SQL语句一个查一个改。13是ID增量，可自定义。
+            id = dao.ExecuteScalar(sql).ToString();
+            return id;
+        }
+    }
 }

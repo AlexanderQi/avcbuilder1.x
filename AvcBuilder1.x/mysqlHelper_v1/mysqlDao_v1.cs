@@ -204,31 +204,133 @@ namespace mysqlDao_v1
             DataTable t = Query(sql);
             foreach (DataRow dr in t.Rows)
             {
-                string comment = dr[1].ToString().Trim();
-                int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；' ,':','：'});
-                if (p > 0)
+                if (dr.IsNull(1) || dr[1].ToString().Equals(""))
                 {
-                    comment = comment.Substring(0, p);
+
+                    dr[1] = dr[0];
                 }
-                dr[1] = comment;
+                else
+                {
+                    string comment = dr[1].ToString().Trim();
+                    int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；', ':', '：' });
+                    if (p > 0)
+                    {
+                        comment = comment.Substring(0, p);
+                    }
+                    dr[1] = comment;
+                }
             }
             t.AcceptChanges();
             return t;
         }
 
-        public static object FillPoco(object poco,DataRow row)
+
+        /// <summary>
+        /// 填充POCO 根据参数ROW
+        /// </summary>
+        /// <param name="poco">实体对象</param>
+        /// <param name="row">system.data </param>
+        /// <param name="PK_TO_UPPER">Prime key主键 必须是大写字母</param>
+        /// <param name="pkValue">主键值</param>
+        /// <returns></returns>
+        public static object fillPoco(object poco, DataRow row, string PK_TO_UPPER = null, string pkValue = null)
         {
             Type t = poco.GetType();
             PropertyInfo[] props = t.GetProperties();
+            int pkIndex = -1;
             for (int i = 0; i < props.Length; i++)
             {
                 if (props[i].PropertyType.IsArray) continue;
                 var val = row[props[i].Name];
                 props[i].SetValue(poco, val, null);
+
+                if (PK_TO_UPPER != null && props[i].Name.Equals(PK_TO_UPPER))
+                    pkIndex = i;
             }
+            if (pkIndex != -1)
+                props[pkIndex].SetValue(poco, pkValue, null);
             return poco;
         }
 
+        private string sql4newId = null;
+        public void SetSqlForNewId(string sql)
+        {
+            sql4newId = sql;
+        }
+
+        public string getNewId()
+        {
+
+            if (sql4newId == null)
+            {
+                Random rd = new Random();
+                uint default_id = (uint)(rd.NextDouble() * 1000000);
+                return "38" + default_id.ToString();
+            }
+            else
+                return ExecuteScalar(sql4newId).ToString();
+        }
+        /// <summary>
+        /// DataTable save to Database
+        /// </summary>
+        /// <param name="dt">载有要保存信息的dataTable</param>
+        /// <param name="EntityModel">实体对象</param>
+        /// <param name="PK_TO_UPPER">大写的主键名称</param>
+        public void SaveData(DataTable dt, object EntityModel, string PK_TO_UPPER)
+        {
+            if (dt == null || dt.Rows.Count == 0) return;
+            string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
+            StringBuilder sbUpdateSet = new StringBuilder();
+            StringBuilder sb4row = new StringBuilder();
+            foreach (DataRow dr in dt.Rows)
+            {
+                switch (dr.RowState)
+                {
+                    case DataRowState.Added:
+                        {
+                            sbUpdateSet.Clear();
+                            string newId = getNewId();     //AvcBuilder_func.getNewId(MysqlDao);
+                            mysqlDAO.fillPoco(EntityModel, dr, PK_TO_UPPER, newId);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
+
+                            string sql = mysqlDAO.getInsertSql(EntityModel);
+                            sb4row.Append(sql).Append("\n");
+                            break;
+                        }//case
+                    case DataRowState.Modified:
+                        {
+                            sbUpdateSet.Clear();
+                            for (int i = 0; i < dt.Columns.Count; i++)
+                            {
+                                string caption = dt.Columns[i].Caption;
+                                bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+                                if (!b) continue;
+                                if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
+                                {
+                                    sbUpdateSet.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
+                                }
+                            }//case
+                            string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbUpdateSet.ToString(), dr[PK_TO_UPPER].ToString());
+                            sb4row.Append(sql).Append("\n");
+                            break;
+                        }//case
+
+                    case DataRowState.Deleted:
+                        {
+                            break;
+                        }//case
+                }//switch
+            } //foreach
+        }//func
+
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+        /// <summary>
+        /// 获取poco的插入语句
+        /// </summary>
+        /// <param name="poco"></param>
+        /// <returns></returns>
         public static string getInsertSql(object poco)
         {
             StringBuilder sb = new StringBuilder();
@@ -265,7 +367,13 @@ namespace mysqlDao_v1
             sb.Append(");");
             return sb.ToString();
         }
-
+        /// <summary>
+        /// 根据poco信息 构建删除语句
+        /// </summary>
+        /// <param name="poco"></param>
+        /// <param name="pk_name">prime key name</param>
+        /// <param name="pk_value">prime key value</param>
+        /// <returns></returns>
         public static string getDeleteSql(object poco, string pk_name, object pk_value)
         {
             pk_name = pk_name.ToUpper();
@@ -338,6 +446,12 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="poco"></param>
+        /// <param name="String_After_WHERE"> sql语句中WHERE关键字后面的语句，不包括“WHERE" 本身</param>
+        /// <returns></returns>
         public static string getQuerySql(object poco, string String_After_WHERE)
         {
             if (String_After_WHERE == null || String_After_WHERE.Equals(""))
@@ -358,6 +472,13 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 获取更新语句
+        /// </summary>
+        /// <param name="poco"></param>
+        /// <param name="String_After_SET">sql update语句中SET关键字后面的语句，不包括“SET" 本身</param>
+        /// <param name="String_After_WHERE">...</param>
+        /// <returns></returns>
         public static string getUpdateSql(object poco, string String_After_SET, string String_After_WHERE)
         {
             if (String_After_WHERE == null || String_After_WHERE.Equals(""))

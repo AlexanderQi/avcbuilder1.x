@@ -47,7 +47,7 @@ namespace avcbuilder1.tblForms
       
         protected void SetButtonsEnable(bool value)
         {
-            simpleButton_Apply.Enabled = simpleButton_IniData.Enabled = simpleButton_Find.Enabled = value;
+            simpleButton_Save.Enabled = simpleButton_Apply.Enabled = simpleButton_IniData.Enabled = simpleButton_Find.Enabled = value;
         }
 
         virtual public void QueryByAreaId(String FeedId) { }

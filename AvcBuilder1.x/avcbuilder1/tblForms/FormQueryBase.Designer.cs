@@ -37,6 +37,7 @@
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
             this.simpleButton_Apply = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton_Find = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton_Save = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -47,10 +48,12 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 50);
+            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gridControl1.Location = new System.Drawing.Point(0, 61);
             this.gridControl1.MainView = this.gridView1;
+            this.gridControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(883, 444);
+            this.gridControl1.Size = new System.Drawing.Size(1009, 539);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.UseEmbeddedNavigator = true;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -68,24 +71,26 @@
             // panelControl1
             // 
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.simpleButton_Save);
             this.panelControl1.Controls.Add(this.simpleButton_IniData);
             this.panelControl1.Controls.Add(this.simpleButton_Apply);
             this.panelControl1.Controls.Add(this.simpleButton_Find);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(883, 50);
+            this.panelControl1.Size = new System.Drawing.Size(1009, 61);
             this.panelControl1.TabIndex = 1;
             // 
             // simpleButton_IniData
             // 
             this.simpleButton_IniData.ImageIndex = 2;
             this.simpleButton_IniData.ImageList = this.imageCollection1;
-            this.simpleButton_IniData.Location = new System.Drawing.Point(94, 5);
+            this.simpleButton_IniData.Location = new System.Drawing.Point(107, 6);
             this.simpleButton_IniData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_IniData.Name = "simpleButton_IniData";
             this.simpleButton_IniData.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_IniData.Size = new System.Drawing.Size(40, 40);
+            this.simpleButton_IniData.Size = new System.Drawing.Size(46, 49);
             this.simpleButton_IniData.TabIndex = 2;
             this.simpleButton_IniData.ToolTip = "自动填写默认数据，会覆盖原数据。";
             // 
@@ -99,16 +104,18 @@
             this.imageCollection1.Images.SetKeyName(1, "show_32x32.png");
             this.imageCollection1.InsertGalleryImage("topbottomrules_32x32.png", "images/conditional%20formatting/topbottomrules_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/conditional%20formatting/topbottomrules_32x32.png"), 2);
             this.imageCollection1.Images.SetKeyName(2, "topbottomrules_32x32.png");
+            this.imageCollection1.InsertGalleryImage("exportmodeldifferences_32x32.png", "images/data/exportmodeldifferences_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/data/exportmodeldifferences_32x32.png"), 3);
+            this.imageCollection1.Images.SetKeyName(3, "exportmodeldifferences_32x32.png");
             // 
             // simpleButton_Apply
             // 
             this.simpleButton_Apply.ImageIndex = 0;
             this.simpleButton_Apply.ImageList = this.imageCollection1;
-            this.simpleButton_Apply.Location = new System.Drawing.Point(48, 5);
+            this.simpleButton_Apply.Location = new System.Drawing.Point(55, 6);
             this.simpleButton_Apply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Apply.Name = "simpleButton_Apply";
             this.simpleButton_Apply.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Apply.Size = new System.Drawing.Size(40, 40);
+            this.simpleButton_Apply.Size = new System.Drawing.Size(46, 49);
             this.simpleButton_Apply.TabIndex = 1;
             this.simpleButton_Apply.ToolTip = "从数据库刷新数据";
             // 
@@ -117,22 +124,34 @@
             this.simpleButton_Find.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.simpleButton_Find.ImageIndex = 1;
             this.simpleButton_Find.ImageList = this.imageCollection1;
-            this.simpleButton_Find.Location = new System.Drawing.Point(2, 5);
+            this.simpleButton_Find.Location = new System.Drawing.Point(2, 6);
             this.simpleButton_Find.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButton_Find.Name = "simpleButton_Find";
             this.simpleButton_Find.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_Find.Size = new System.Drawing.Size(40, 40);
+            this.simpleButton_Find.Size = new System.Drawing.Size(46, 49);
             this.simpleButton_Find.TabIndex = 0;
             this.simpleButton_Find.ToolTip = "显示或隐藏搜索栏";
             this.simpleButton_Find.Click += new System.EventHandler(this.simpleButton_Find_Click);
             // 
+            // simpleButton_Save
+            // 
+            this.simpleButton_Save.ImageIndex = 3;
+            this.simpleButton_Save.ImageList = this.imageCollection1;
+            this.simpleButton_Save.Location = new System.Drawing.Point(159, 6);
+            this.simpleButton_Save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleButton_Save.Name = "simpleButton_Save";
+            this.simpleButton_Save.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_Save.Size = new System.Drawing.Size(46, 49);
+            this.simpleButton_Save.TabIndex = 3;
+            this.simpleButton_Save.ToolTip = "保存表格内容到数据库。";
+            // 
             // FormQueryBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.ClientSize = new System.Drawing.Size(883, 494);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.ClientSize = new System.Drawing.Size(1009, 600);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.panelControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FormQueryBase";
             this.Text = "状态";
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
@@ -152,5 +171,6 @@
         protected DevExpress.XtraEditors.SimpleButton simpleButton_IniData;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Apply;
         public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        protected DevExpress.XtraEditors.SimpleButton simpleButton_Save;
     }
 }

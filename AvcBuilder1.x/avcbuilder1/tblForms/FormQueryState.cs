@@ -33,10 +33,38 @@ namespace avcbuilder1.tblForms
             instance = this;
             InitializeComponent();
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
+            simpleButton_Save.Click += SimpleButton_Save_Click;
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
 
             // gridView1.InitNewRow += GridView1_InitNewRow;
+        }
+
+        private void SimpleButton_Save_Click(object sender, EventArgs e)
+        {
+            if (MsgBox("确定保存到数据库吗,原有数据将会被覆盖?", "保存提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            SaveData();
+            MsgBox("已保存");
+        }
+
+        private void SaveData()
+        {
+            DataTable dt = ds.Tables[0].GetChanges();
+            foreach (DataRow dr in dt.Rows)
+            {
+                int index = -1;
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    if(!dr[i,DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
+                    {
+ Console.WriteLine(string.Format("{0},{3},cValule:{1},oValue:{2}", dr["name"], dr[i, DataRowVersion.Current], dr[i, DataRowVersion.Original],dt.Columns[i] .Caption));
+                    }
+                }
+            }
         }
 
         public override void DataLoadedHandle()

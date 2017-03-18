@@ -15,6 +15,7 @@ using DevExpress.XtraTreeList;
 using DevExpress.XtraBars;
 using avcbuilder1.tblForms;
 using DevExpress.XtraTab;
+using AvcDb.entities;
 
 namespace avcbuilder1
 {
@@ -52,23 +53,23 @@ namespace avcbuilder1
             treeList1.Nodes.Clear();
             treeList1.DataSource = null;
 
-            TreeTable.Columns.Add("ImageIndex", typeof(int));
+            TreeTable.Columns.Add("IMAGEINDEX", typeof(int));
             TreeTable.Columns.Add("ID", typeof(string));
-            TreeTable.Columns.Add("ParentID", typeof(string));
-            TreeTable.Columns.Add("name", typeof(string));
-            TreeTable.Columns.Add("info", typeof(string));
-            TreeTable.Columns.Add("tag", typeof(int));
+            TreeTable.Columns.Add("PID", typeof(string));
+            TreeTable.Columns.Add("NAME", typeof(string));
+            TreeTable.Columns.Add("INFO", typeof(string));
+            //TreeTable.Columns.Add("tag", typeof(int));
             //TreeTable.Columns.Add("style", typeof(int));
 
             treeList1.DataSource = TreeTable;
 
             root = TreeTable.NewRow();
-            root["ImageIndex"] = 0;
+            root["IMAGEINDEX"] = 0;
             root["ID"] = -1;
-            root["ParentID"] = -2;
-            root["name"] = "AVC Server";
-            root["info"] = "未连接";
-            root["tag"] = 0;
+            root["PID"] = -2;
+            root["NAME"] = "AVC Server";
+            root["INFO"] = "未连接";
+            //root["tag"] = 0;
             TreeTable.Rows.Add(root);
 
             FormQueryState.Instance.DataClosedHandle();
@@ -78,41 +79,41 @@ namespace avcbuilder1
         /// 从数据库载入树形列表信息
         /// </summary>
         /// <param name="tag">备用</param>
-        mysqlDAO mdao = null;
+        mysqlDAO Dao = null;
         private void TreeLoad()
         {
             try
             {
-                mdao = FormConnectSrv.Instance.Open();
-                if (mdao == null)
+                Dao = FormConnectSrv.Instance.Open();
+                if (Dao == null)
                 {
                     return;
                 }
-                root["info"] = "已连接";
+                root["INFO"] = "已连接";
 
                 treeList1.BeginUpdate();
 
-                string sql = "select id,name from tblsubcontrolarea";
+                string sql =  "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
                 LoadTbl(sql, -1, 1, "管理单位");
 
-                sql = "select id,name,SUBCONTROLAREAID as pid from tblsubstation;";
+                sql = "select ID,NAME,SUBCONTROLAREAID as PID from tblsubstation;";
                 LoadTbl(sql, 2, "变电站");
 
-                sql = "select id,name,SUBSTATIONID as pid from tblfeeder;";
+                sql = "select ID,NAME,SUBSTATIONID as PID from tblfeeder;";
                 LoadTbl(sql, 3, "馈线");
 
-                sql = "select id,name,feedid as pid from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
+                sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
                 LoadTbl(sql, 4, "线路电容器");
-                sql = "select id,name,feedid as pid from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
+                sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
                 LoadTbl(sql, 5, "配电电容器");
 
-                sql = "select id,name,FEEDCAPACITORID as pid from tblfeedcapacitoritem";
+                sql = "select ID,NAME,FEEDCAPACITORID as PID from tblfeedcapacitoritem";
                 LoadTbl(sql, 8, "电容器子组");
 
-                sql = "select id,name,FEEDID as pid from tblfeedtrans";
+                sql = "select ID,NAME,FEEDID as PID from tblfeedtrans";
                 LoadTbl(sql, 6, "配电变压器");
 
-                sql = "select id,name,FEEDID as pid from tblfeedvoltageregulator";
+                sql = "select id,name,FEEDID as PID from tblfeedvoltageregulator";
                 LoadTbl(sql, 7, "线路调压器");
                 treeList1.ExpandAll();
                 treeList1.BestFitColumns();
@@ -138,21 +139,21 @@ namespace avcbuilder1
 
             try
             {
-                DataTable dt = mdao.Query(sql);
-                foreach (DataRow i in dt.Rows)
+                DataTable dt = Dao.Query(sql);
+                foreach (DataRow row in dt.Rows)
                 {
-                    DataRow dr = TreeTable.NewRow();
-                    dr["ImageIndex"] = ImgIndex;
-                    string id = i["id"].ToString();
-                    dr["ID"] = id;
+                    DataRow tree_row = TreeTable.NewRow();
+                    tree_row["IMAGEINDEX"] = ImgIndex;
+                    string id = row["ID"].ToString();
+                    tree_row["ID"] = id;
                     if (pid < 0)
-                        dr["ParentID"] = pid;
+                        tree_row["PID"] = pid;
                     else
-                        dr["ParentID"] = i["pid"];
-                    dr["name"] = i["name"].ToString() + "【" + id + "】";
-                    dr["info"] = info;
+                        tree_row["PID"] = row["PID"];
+                    tree_row["NAME"] = row["NAME"].ToString() + "【" + id + "】";
+                    tree_row["INFO"] = info;
 
-                    TreeTable.Rows.Add(dr);
+                    TreeTable.Rows.Add(tree_row);
                 }
             }
             catch (Exception ex)
@@ -199,7 +200,7 @@ namespace avcbuilder1
                 {
                     if (hitInfo.Node["ID"].ToString().Equals("-1"))
                     {
-                        if ((hitInfo.Node["info"] as string).Equals("未连接"))
+                        if ((hitInfo.Node["INFO"] as string).Equals("未连接"))
                         {
                             barButtonItem_connect.Caption = "连接...";
                         }
@@ -259,7 +260,7 @@ namespace avcbuilder1
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
             if (treeList1.FocusedNode == null) return;
-            string str = treeList1.FocusedNode["info"].ToString();
+            string str = treeList1.FocusedNode["INFO"].ToString();
             string Id = treeList1.FocusedNode["ID"].ToString();
             switch (str)
             {
@@ -296,9 +297,10 @@ namespace avcbuilder1
         }
 
 
-        public void showInfo(string sql)
+        public void showInfo(string info)
         {
-            richTextBox1.AppendText(sql);
+            
+            richTextBox1.AppendText(info+'\n');
             richTextBox1.HideSelection = false;
         }
 
@@ -306,6 +308,27 @@ namespace avcbuilder1
         {
             richTextBox1.BackColor = textEdit1.BackColor;
             richTextBox1.ForeColor = textEdit1.ForeColor;
+        }
+
+        private int indexOfFind = 0;
+        private void simpleButton_find_Click(object sender, EventArgs e)
+        {
+            if (textEdit1.Text.Trim().Equals("")) return;
+            indexOfFind = 0;
+            int len = richTextBox1.Text.Length;
+            indexOfFind = richTextBox1.Find(textEdit1.Text, 0, len,RichTextBoxFinds.None);
+        }
+
+        private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.F3)
+            {
+                int len = richTextBox1.Text.Length;
+                indexOfFind = richTextBox1.Find(textEdit1.Text, indexOfFind+1, len, RichTextBoxFinds.None);
+            }else if(e.KeyCode == Keys.Enter)
+            {
+                simpleButton_find_Click(this, null);
+            }
         }
     }//class
 

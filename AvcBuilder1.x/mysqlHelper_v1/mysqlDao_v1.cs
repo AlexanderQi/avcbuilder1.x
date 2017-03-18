@@ -131,6 +131,7 @@ namespace mysqlDao_v1
 
         public int Execute(String sql)
         {
+            if (sql == null) return -1;
             try
             {
                 if (conn.State == ConnectionState.Closed)
@@ -141,6 +142,7 @@ namespace mysqlDao_v1
             }
             catch (Exception ex)
             {
+                log.Error(sql);
                 log.Error(ex);
                 throw;
             }
@@ -152,6 +154,7 @@ namespace mysqlDao_v1
 
         public object ExecuteScalar(String sql)
         {
+            if (sql == null) return -1;
             try
             {
                 if (conn.State == ConnectionState.Closed)
@@ -163,6 +166,7 @@ namespace mysqlDao_v1
             }
             catch (Exception ex)
             {
+                log.Error(sql);
                 log.Error(ex);
                 throw;
             }
@@ -176,6 +180,7 @@ namespace mysqlDao_v1
         {
             lock (this)
             {
+                if (sql == null) return null;
                 try
                 {
                     if (conn.State == ConnectionState.Closed)
@@ -189,6 +194,7 @@ namespace mysqlDao_v1
                 }
                 catch (Exception ex)
                 {
+                    log.Error(sql);
                     log.Error(ex);
                     throw;
                 }
@@ -203,6 +209,7 @@ namespace mysqlDao_v1
         {
             lock (this)
             {
+                if (sql == null) return dt;
                 if (dt == null) return dt;
                 try
                 {
@@ -217,6 +224,7 @@ namespace mysqlDao_v1
                 }
                 catch (Exception ex)
                 {
+                    log.Error(sql);
                     log.Error(ex);
                     throw;
                 }
@@ -229,6 +237,7 @@ namespace mysqlDao_v1
 
         public DataTable GetFieldComment(string tblName)
         {
+            if (tblName == null) return null;
             string sql = @"select COLUMN_NAME ,column_comment from INFORMATION_SCHEMA.Columns where table_name = '" + tblName + "' and table_schema = '" + conInfo.DatabaseName + "'";
             DataTable t = Query(sql);
             foreach (DataRow dr in t.Rows)
@@ -306,13 +315,15 @@ namespace mysqlDao_v1
         /// <param name="dt">载有要保存信息的dataTable</param>
         /// <param name="EntityModel">实体对象</param>
         /// <param name="pkName">主键名称 必须大写字母</param>
-        public void SaveData(DataTable dt, object EntityModel, string pkName)
+        public int SaveData(DataTable dt, object EntityModel, string pkName)
         {
             try
             {
-                if (dt == null || dt.Rows.Count == 0) return;
+                if (dt == null || dt.Rows.Count == 0) return -1;
                 pkName = pkName.ToUpper();
                 string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
+                int p = Array.IndexOf<string>(fields, pkName);//不存在此主键 pkName;
+                if (p < 0) return -1;
                 StringBuilder sbSqlPart = new StringBuilder();
                 StringBuilder sbSqlCommand = new StringBuilder();
                 #region repeat deal for RowState
@@ -342,8 +353,9 @@ namespace mysqlDao_v1
                                     {
                                         sbSqlPart.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
                                     }
-                                }//case
-                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString());
+                                }//FOR
+                                sbSqlPart.Remove(sbSqlPart.Length - 1, 1);
+                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(),pkName);
                                 sbSqlCommand.Append(sql).Append("\n");
                                 break;
                             }//case
@@ -358,8 +370,9 @@ namespace mysqlDao_v1
                 } //foreach
                 #endregion
                 string sqls = sbSqlCommand.ToString();
-                Execute(sqls);
+                int r = Execute(sqls);
                 dt.AcceptChanges();
+                return r;
             }
             catch (Exception ex)
             {
@@ -536,11 +549,11 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
-        public static string getUpdateSqlById(object poco, string String_After_SET, string pkValue, string pkName = "ID")
+        public static string getUpdateSqlById(object poco, string String_After_SET, string pkValue, string pkName )
         {
             if (pkValue == null || pkValue.Equals("")) return null;
             pkName = pkName.ToUpper();
-            string where_str = string.Format("{0} = '{1}';", pkName, pkValue);
+            string where_str = string.Format("{0} = '{1}'", pkName, pkValue);
             return getUpdateSql(poco, String_After_SET, where_str);
         }
 

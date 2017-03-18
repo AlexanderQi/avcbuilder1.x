@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using AvcDb.entities;
 using mysqlDao_v1;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraEditors.Repository;
 
 namespace avcbuilder1.tblForms
 {
@@ -47,12 +48,17 @@ namespace avcbuilder1.tblForms
             {
                 return;
             }
-            dao.SaveData(ds.Tables[0], new tblelementstate(), "ELEMENTID");
+            int r = dao.SaveData(ds.Tables[0], new tblelementstate(), "ELEMENTID");
             //SaveData(ds.Tables[0], new tblelementstate(),"ID");
-            MsgBox("已保存");
+            if (r < 0)
+            {
+                MsgBox("发生错误，保存失败");
+            }
+            else
+                MsgBox(string.Format("保存记录 {0} 条", r));
         }
 
-        
+
 
         public override void DataLoadedHandle()
         {
@@ -79,20 +85,42 @@ namespace avcbuilder1.tblForms
             cur.Fixed = FixedStyle.Left;
             cur.BestFit();
 
+            //更换中文列名
             DataTable dt = dao.GetFieldComment("tblelementstate");
             foreach (DataRow dr in dt.Rows)
             {
-                AddGridColumn(dr[0].ToString(), dr[1].ToString());
+                GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
+                tblelementstate tbl = new tblelementstate();
+                //tbl.CONTROLSTATE
+                if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
+                {
+                    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                }
+                else if (gridCol.FieldName.Equals("CONTROLSTATE"))
+                {
+                    RepositoryItemComboBox box = new RepositoryItemComboBox();
+                    box.Items.Add("不参与计算");
+                    box.Items.Add("建议");
+                    box.Items.Add("控制");
+                    box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
+                    gridCol.ColumnEdit = box;
+                }
             }
             gridView1.EndUpdate();
         }
 
-        private GridColumn AddGridColumn(string Field, string Caption)
+        /// <summary>
+        /// 用中文名称添加视图的列
+        /// </summary>
+        /// <param name="tableField">数据库表的字段名</param>
+        /// <param name="chineseCaption">中文名来自comment注释</param>
+        /// <returns></returns>
+        private GridColumn AddGridColumn(string tableField, string chineseCaption)
         {
             GridColumn col = gridView1.Columns.Add();
-            col.FieldName = Field;
-            col.Caption = Caption;
-            col.CustomizationCaption = Caption;
+            col.FieldName = tableField;
+            col.Caption = chineseCaption;
+            col.CustomizationCaption = chineseCaption;
 
             col.MinWidth = 70;
             col.Visible = true;

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using log4net;
 using mysqlDao_v1;
+
 using System.Configuration;
 using System.Collections;
 
@@ -20,7 +21,7 @@ namespace avcbuilder1
 
         ILog log;
         private string avc_conn = "";
-        public mysqlDAO MySqlDao;
+        public mysqlDAO Dao;
         private static FormConnectSrv instance = null;
         public myConnInfo conninfo;
 
@@ -115,7 +116,7 @@ namespace avcbuilder1
         {
             LoadConnInfo();
             ShowDialog();
-            return MySqlDao;
+            return Dao;
         }
 
         private void simpleButton_cancel_Click(object sender, EventArgs e)
@@ -127,7 +128,8 @@ namespace avcbuilder1
         {
             try
             {
-                MySqlDao = new mysqlDAO(avc_conn);
+                Dao = new mysqlDAO(avc_conn);
+                Dao.OnCmdExecute += Dao_OnSqlExecute; ;
             }
             catch (Exception ex)
             {
@@ -139,6 +141,11 @@ namespace avcbuilder1
                 DialogResult = DialogResult.OK;
                 Hide();
             }
+        }
+
+        private void Dao_OnSqlExecute(object sender, EventDaoArgs args)
+        {
+            FormMain.Instance.showInfo(args.CommandInfo);
         }
 
         private void comboBoxEdit1_SelectedIndexChanged(object sender, EventArgs e)

@@ -47,8 +47,8 @@ namespace avcbuilder1.tblForms
             {
                 return;
             }
-
-            SaveData(ds.Tables[0], new tblelementstate(),"ID");
+            dao.SaveData(ds.Tables[0], new tblelementstate(), "ELEMENTID");
+            //SaveData(ds.Tables[0], new tblelementstate(),"ID");
             MsgBox("已保存");
         }
 
@@ -69,17 +69,17 @@ namespace avcbuilder1.tblForms
         {
 
             if (gridView1.Columns.Count > 0) { return; }
-            if (MysqlDao == null)
+            if (dao == null)
             {
                 MsgBox("未连接数据库.");
                 return;
             }
             gridView1.BeginUpdate();
-            GridColumn cur = AddGridColumn("name", "设备名称");
+            GridColumn cur = AddGridColumn("NAME", "设备名称");
             cur.Fixed = FixedStyle.Left;
             cur.BestFit();
 
-            DataTable dt = MysqlDao.GetFieldComment("tblelementstate");
+            DataTable dt = dao.GetFieldComment("tblelementstate");
             foreach (DataRow dr in dt.Rows)
             {
                 AddGridColumn(dr[0].ToString(), dr[1].ToString());
@@ -106,7 +106,7 @@ namespace avcbuilder1.tblForms
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             tblelement ele = new tblelement();
             tblelementstate sta = new tblelementstate();
-            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "name", "*", "id", "elementid", "t1.feedid=" + FeedId);
+            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.FEEDID=" + FeedId);
 
             QueryBySql(curSql);
         }
@@ -115,7 +115,7 @@ namespace avcbuilder1.tblForms
         {
             tblelement ele = new tblelement();
             tblelementstate sta = new tblelementstate();
-            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "name", "*", "id", "elementid", "t1.id=" + id);
+            curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.ID=" + id);
             QueryBySql(curSql);
         }
 
@@ -124,8 +124,8 @@ namespace avcbuilder1.tblForms
         public override void QueryBySql(string sql)
         {
 
-            MysqlDao = FormConnectSrv.Instance.MySqlDao;
-            if (MysqlDao == null) return;
+            dao = FormConnectSrv.Instance.Dao;
+            if (dao == null) return;
             try
             {
                 IniViewColumns();
@@ -136,7 +136,7 @@ namespace avcbuilder1.tblForms
                 }
 
                 DataTable dt = ds.Tables[0];
-                MysqlDao.Query(sql, ref dt);
+                dao.Query(sql, ref dt);
                 //foreach(DataColumn dc in dt.Columns)
                 //{
                 //    Console.WriteLine(dc.ColumnName);

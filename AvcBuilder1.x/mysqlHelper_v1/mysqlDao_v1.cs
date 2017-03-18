@@ -17,6 +17,19 @@ namespace mysqlDao_v1
         public string DatabaseType;
     }
 
+    public class EventDaoArgs : EventArgs
+    {
+        private string cmd;
+        public EventDaoArgs(string cmdInfo) : base()
+        {
+            cmd = cmdInfo;
+        }
+        public string CommandInfo
+        {
+            get { return cmd; }
+        }
+    }
+
     public class mysqlDAO
     {
         private string connStr;
@@ -24,6 +37,17 @@ namespace mysqlDao_v1
         private DataTable dt;
         ILog log;
         myConnInfo conInfo;
+
+        public delegate void CmdExecuteHandle(object sender, EventDaoArgs args);
+        public event CmdExecuteHandle OnCmdExecute;
+
+        private void eventEmit(string cmd)
+        {
+            if (OnCmdExecute == null) return;
+            EventDaoArgs ev = new EventDaoArgs(cmd);
+            OnCmdExecute(this, ev);
+        }
+
         public static myConnInfo getConnInfo(string ConnectString)
         {
             //Server=139.196.55.11;User=guest_;Password=11111111;Database=nttbl; Charset=utf8; Pooling=true; Max Pool Size=16;
@@ -62,6 +86,7 @@ namespace mysqlDao_v1
             {
                 conn = new MySqlConnection(connectString);
                 conInfo = getConnInfo(connectString);
+                eventEmit(string.Format("*{2}登录数据库:{0}//{1}", conInfo.ServerIp, conInfo.DatabaseName, conInfo.User));
                 //log.Debug("*** 新建数据源: "+conn.ConnectionString);
             }
             catch (Exception ex)
@@ -111,6 +136,7 @@ namespace mysqlDao_v1
                 if (conn.State == ConnectionState.Closed)
                     conn.Open();
                 int r = MySqlHelper.ExecuteNonQuery(conn, sql, null);
+                eventEmit(sql);
                 return r;
             }
             catch (Exception ex)
@@ -131,7 +157,9 @@ namespace mysqlDao_v1
                 if (conn.State == ConnectionState.Closed)
                     conn.Open();
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                return cmd.ExecuteScalar();
+                var obj = cmd.ExecuteScalar();
+                eventEmit(sql);
+                return obj;
             }
             catch (Exception ex)
             {
@@ -156,7 +184,7 @@ namespace mysqlDao_v1
                     MySqlDataAdapter mda = new MySqlDataAdapter(sql, conn);
                     dt = new DataTable();
                     mda.Fill(dt);
-
+                    eventEmit(sql);
                     return dt;
                 }
                 catch (Exception ex)
@@ -184,6 +212,7 @@ namespace mysqlDao_v1
                     dt.Columns.Clear();
                     dt.Clear();
                     mda.Fill(dt);
+                    eventEmit(sql);
                     return dt;
                 }
                 catch (Exception ex)
@@ -230,10 +259,10 @@ namespace mysqlDao_v1
         /// </summary>
         /// <param name="poco">实体对象</param>
         /// <param name="row">system.data </param>
-        /// <param name="PK_TO_UPPER">Prime key主键 必须是大写字母</param>
+        /// <param name="pkName">Prime key主键 必须是大写字母</param>
         /// <param name="pkValue">主键值</param>
         /// <returns></returns>
-        public static object fillPoco(object poco, DataRow row, string PK_TO_UPPER = null, string pkValue = null)
+        public static object fillPoco(object poco, DataRow row, string pkName = null, string pkValue = null)
         {
             Type t = poco.GetType();
             PropertyInfo[] props = t.GetProperties();
@@ -241,10 +270,11 @@ namespace mysqlDao_v1
             for (int i = 0; i < props.Length; i++)
             {
                 if (props[i].PropertyType.IsArray) continue;
+                if (row.IsNull(props[i].Name)) continue;
                 var val = row[props[i].Name];
                 props[i].SetValue(poco, val, null);
 
-                if (PK_TO_UPPER != null && props[i].Name.Equals(PK_TO_UPPER))
+                if (pkName != null && props[i].Name.Equals(pkName))
                     pkIndex = i;
             }
             if (pkIndex != -1)
@@ -275,51 +305,67 @@ namespace mysqlDao_v1
         /// </summary>
         /// <param name="dt">载有要保存信息的dataTable</param>
         /// <param name="EntityModel">实体对象</param>
-        /// <param name="PK_TO_UPPER">大写的主键名称</param>
-        public void SaveData(DataTable dt, object EntityModel, string PK_TO_UPPER)
+        /// <param name="pkName">主键名称 必须大写字母</param>
+        public void SaveData(DataTable dt, object EntityModel, string pkName)
         {
-            if (dt == null || dt.Rows.Count == 0) return;
-            string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
-            StringBuilder sbUpdateSet = new StringBuilder();
-            StringBuilder sb4row = new StringBuilder();
-            foreach (DataRow dr in dt.Rows)
+            try
             {
-                switch (dr.RowState)
+                if (dt == null || dt.Rows.Count == 0) return;
+                pkName = pkName.ToUpper();
+                string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
+                StringBuilder sbSqlPart = new StringBuilder();
+                StringBuilder sbSqlCommand = new StringBuilder();
+                #region repeat deal for RowState
+                foreach (DataRow dr in dt.Rows)
                 {
-                    case DataRowState.Added:
-                        {
-                            sbUpdateSet.Clear();
-                            string newId = getNewId();     //AvcBuilder_func.getNewId(MysqlDao);
-                            mysqlDAO.fillPoco(EntityModel, dr, PK_TO_UPPER, newId);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
-
-                            string sql = mysqlDAO.getInsertSql(EntityModel);
-                            sb4row.Append(sql).Append("\n");
-                            break;
-                        }//case
-                    case DataRowState.Modified:
-                        {
-                            sbUpdateSet.Clear();
-                            for (int i = 0; i < dt.Columns.Count; i++)
+                    switch (dr.RowState)
+                    {
+                        case DataRowState.Added:
                             {
-                                string caption = dt.Columns[i].Caption;
-                                bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
-                                if (!b) continue;
-                                if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
-                                {
-                                    sbUpdateSet.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
-                                }
-                            }//case
-                            string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbUpdateSet.ToString(), dr[PK_TO_UPPER].ToString());
-                            sb4row.Append(sql).Append("\n");
-                            break;
-                        }//case
+                                sbSqlPart.Clear();
+                                string newId = getNewId();
+                                mysqlDAO.fillPoco(EntityModel, dr, pkName, newId);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
 
-                    case DataRowState.Deleted:
-                        {
-                            break;
-                        }//case
-                }//switch
-            } //foreach
+                                string sql = mysqlDAO.getInsertSql(EntityModel);
+                                sbSqlCommand.Append(sql).Append("\n");
+                                break;
+                            }//case
+                        case DataRowState.Modified:
+                            {
+                                sbSqlPart.Clear();
+                                for (int i = 0; i < dt.Columns.Count; i++)
+                                {
+                                    string caption = dt.Columns[i].Caption;
+                                    bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+                                    if (!b) continue;
+                                    if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
+                                    {
+                                        sbSqlPart.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
+                                    }
+                                }//case
+                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString());
+                                sbSqlCommand.Append(sql).Append("\n");
+                                break;
+                            }//case
+                        case DataRowState.Deleted:
+                            {
+                                string sql = mysqlDAO.getDeleteSql(
+                                    EntityModel, pkName, dr[pkName, DataRowVersion.Original].ToString());
+                                sbSqlCommand.Append(sql).Append("\n");
+                                break;
+                            }//case
+                    }//switch
+                } //foreach
+                #endregion
+                string sqls = sbSqlCommand.ToString();
+                Execute(sqls);
+                dt.AcceptChanges();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                throw;
+            }
         }//func
 
 
@@ -371,31 +417,31 @@ namespace mysqlDao_v1
         /// 根据poco信息 构建删除语句
         /// </summary>
         /// <param name="poco"></param>
-        /// <param name="pk_name">prime key name</param>
-        /// <param name="pk_value">prime key value</param>
+        /// <param name="pkName">prime key name</param>
+        /// <param name="pkValue">prime key value</param>
         /// <returns></returns>
-        public static string getDeleteSql(object poco, string pk_name, object pk_value)
+        public static string getDeleteSql(object poco, string pkName, object pkValue)
         {
-            pk_name = pk_name.ToUpper();
+            pkName = pkName.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
             Type t = poco.GetType();
-            PropertyInfo pr = t.GetProperty(pk_name);
+            PropertyInfo pr = t.GetProperty(pkName);
             if (pr == null) return null;
-
+            pkName = pkName.ToUpper();
             sb.Append(t.Name);
-            if (pk_name == null && pk_value == null) { return sb.ToString(); }// All data will be deleted.
+            if (pkName == null && pkValue == null) { return sb.ToString(); }// All data will be deleted.
 
-            sb.Append(" WHERE ").Append(pk_name).Append(" = ");
+            sb.Append(" WHERE ").Append(pkName).Append(" = ");
             if (pr.PropertyType == typeof(string) ||
                     pr.PropertyType == typeof(DateTime) ||
                     pr.PropertyType == typeof(Nullable<DateTime>))
             {
-                sb.Append("'").Append(pk_value).Append("'");
+                sb.Append("'").Append(pkValue).Append("'");
             }
             else
             {
-                sb.Append(pk_value);
+                sb.Append(pkValue);
             }
             sb.Append(";");
             return sb.ToString();
@@ -415,15 +461,16 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
-        public static string getQuerySql(object poco, string pk_name, object pk_value)
+        public static string getQuerySql(object poco, string pkName, object pkValue)
         {
-            pk_name = pk_name.ToUpper();
+            pkName = pkName.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
             Type t = poco.GetType();
-            PropertyInfo pr = t.GetProperty(pk_name);
+            PropertyInfo pr = t.GetProperty(pkName);
             if (pr == null) return null;
 
+            pkName = pkName.ToUpper();
             PropertyInfo[] pros = t.GetProperties();
             for (int i = 0; i < pros.Length; i++)
             {
@@ -431,16 +478,16 @@ namespace mysqlDao_v1
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }
-            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(pk_name).Append(" = ");
+            sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(pkName).Append(" = ");
             if (pr.PropertyType == typeof(string) ||
                     pr.PropertyType == typeof(DateTime) ||
                     pr.PropertyType == typeof(Nullable<DateTime>))
             {
-                sb.Append("'").Append(pk_value).Append("'");
+                sb.Append("'").Append(pkValue).Append("'");
             }
             else
             {
-                sb.Append(pk_value);
+                sb.Append(pkValue);
             }
             sb.Append(";");
             return sb.ToString();
@@ -489,10 +536,11 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
-        public static string getUpdateSqlById(object poco, string String_After_SET, string idValue, string idCaption = "id")
+        public static string getUpdateSqlById(object poco, string String_After_SET, string pkValue, string pkName = "ID")
         {
-            if (idValue == null || idValue.Equals("")) return null;
-            string where_str = string.Format("{0} = '{1}';", idCaption, idValue);
+            if (pkValue == null || pkValue.Equals("")) return null;
+            pkName = pkName.ToUpper();
+            string where_str = string.Format("{0} = '{1}';", pkName, pkValue);
             return getUpdateSql(poco, String_After_SET, where_str);
         }
 
@@ -504,6 +552,11 @@ namespace mysqlDao_v1
             if (rightFields == null || rightPoco.Equals("")) return null;
             if (String_After_WHERE == null || String_After_WHERE.Equals(""))
                 String_After_WHERE = "TRUE";
+            leftTabFields = leftTabFields.ToUpper();
+            rightFields = rightFields.ToUpper();
+            leftPK = leftPK.ToUpper();
+            rightPK = rightPK.ToUpper();
+
             StringBuilder sb = new StringBuilder();
             Type tleft = leftPoco.GetType();
             Type tright = rightPoco.GetType();
@@ -514,16 +567,16 @@ namespace mysqlDao_v1
             {
                 if (i > 0)
                     sb.Append(",");
-                sb.Append("t1.").Append(f1[i]);
+                sb.Append("L.").Append(f1[i]);
             }
 
             string[] f2 = rightFields.Split(',');
             for (int i = 0; i < f2.Length; i++)
             {
-                sb.Append(",t2.").Append(f2[i]);
+                sb.Append(",R.").Append(f2[i]);
             }
-            sb.Append(" FROM ").Append(tleft.Name).Append(" t1 LEFT JOIN ").Append(tright.Name).Append(" t2 ON");
-            sb.Append(" t1.").Append(leftPK).Append(" = ").Append("t2.").Append(rightPK);
+            sb.Append(" FROM ").Append(tleft.Name).Append(" L LEFT JOIN ").Append(tright.Name).Append(" R ON");
+            sb.Append(" L.").Append(leftPK).Append(" = ").Append("R.").Append(rightPK);
             sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
             return sb.ToString();
         }

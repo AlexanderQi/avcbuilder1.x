@@ -24,9 +24,11 @@ namespace avcbuilder1
     public partial class FormMain : XtraForm
     {
         ILog log;
-       // List<FormQueryBase> frms = new List<FormQueryBase>();
+        // List<FormQueryBase> frms = new List<FormQueryBase>();
+        static internal FormMain Instance;
         public FormMain()
         {
+            Instance = this;
             InitializeComponent();
             log = LogManager.GetLogger("log");
             IniTreeTable();
@@ -168,7 +170,7 @@ namespace avcbuilder1
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            //TreeLoad(0);
+            FormMain_BackColorChanged(this, null);
         }
 
         private void barButtonItem_connect_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -292,7 +294,22 @@ namespace avcbuilder1
                 treeList1.ShowFindPanel();
             tree_findpanel_visible = !tree_findpanel_visible;
         }
-    }
+
+
+        public void showInfo(string sql)
+        {
+            richTextBox1.AppendText(sql);
+            richTextBox1.HideSelection = false;
+        }
+
+        private void FormMain_BackColorChanged(object sender, EventArgs e)
+        {
+            richTextBox1.BackColor = textEdit1.BackColor;
+            richTextBox1.ForeColor = textEdit1.ForeColor;
+        }
+    }//class
+
+
 
     public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, OtherId = 4 };
 }

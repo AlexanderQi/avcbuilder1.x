@@ -16,7 +16,7 @@ namespace avcbuilder1.tblForms
     public partial class FormQueryBase : avcbuilder1.tblForms.FormBase
     {
         protected string avc_conn = "";
-        protected mysqlDAO MysqlDao;
+        protected mysqlDAO dao;
         protected myConnInfo conninfo;
 
        /// <summary>

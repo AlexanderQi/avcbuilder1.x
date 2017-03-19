@@ -19,7 +19,7 @@ namespace AvcDb.entities
         public string NAME { get; set; }
         public string STATIONID { get; set; }
         public string YKKIND { get; set; }
-        public string CmdElementID { get; set; }
+        public string CMDELEMENTID { get; set; }
         public Nullable<int> CMDELEMENTSTYLE { get; set; }
         public string UPPER_CZH { get; set; }
         public string UPPER_YKYTH { get; set; }

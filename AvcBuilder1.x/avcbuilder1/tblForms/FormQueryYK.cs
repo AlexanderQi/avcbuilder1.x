@@ -10,9 +10,9 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryYC : avcbuilder1.tblForms.FormQueryBase
+    public partial class FormQueryYK : avcbuilder1.tblForms.FormQueryBase
     {
-        public FormQueryYC():base()
+        public FormQueryYK():base()
         {
             instance = this;
             InitializeComponent();
@@ -24,12 +24,12 @@ namespace avcbuilder1.tblForms
             FormMain.Instance.OnAvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-             gridView1.InitNewRow += GridView1_InitNewRow;
+            gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["EQUIPMENTID"], curId);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["CMDELEMENTID"], curId);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -74,7 +74,7 @@ namespace avcbuilder1.tblForms
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblycvalue(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblykparam(), pkName);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
@@ -102,11 +102,11 @@ namespace avcbuilder1.tblForms
             //cur.BestFit();
 
             //更换中文列名
-            DataTable dt = dao.GetFieldComment("tblycvalue");
+            DataTable dt = dao.GetFieldComment("tblykparam");
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-                if (gridCol.FieldName.Equals("EQUIPMENTID"))
+                if (gridCol.FieldName.Equals("CMDELEMENTID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
@@ -135,14 +135,14 @@ namespace avcbuilder1.tblForms
         {
             curId = Id;
             tblelement ele = new tblelement();
-            tblycvalue sta = new tblycvalue();
+            tblykparam sta = new tblykparam();
             if (IdType == AvcIdType.FeedId)
             {
                 MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
             }
             else
             {
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "EQUIPMENTID", Id);
+                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "CMDELEMENTID", Id);
                 QueryBySql(curSql);
             }
         }
@@ -172,7 +172,7 @@ namespace avcbuilder1.tblForms
                 log.Error(ex);
                 MsgBox(ex.Message);
             }
-
         }
+
     }//class
-}//namespace
+}

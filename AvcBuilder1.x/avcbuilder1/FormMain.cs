@@ -249,7 +249,7 @@ namespace avcbuilder1
             FormQueryBase frm = (FormQueryBase)p.Tag;
             if (frm != null)
             {
-                if (Id != null && (!Id.Equals("")) )
+                if (Id != null && (!Id.Equals("")))
                 {
                     frm.SetCaption(Caption);
                     frm.QueryById(Id, idType);
@@ -279,7 +279,18 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage_protect);
             frm = new FormQueryYC();
             frm.ShowInControl(xtraTabPage_yc);
-
+            frm = new FormQueryYX();
+            frm.ShowInControl(xtraTabPage_yx);
+            frm = new FormQueryYK();
+            frm.ShowInControl(xtraTabPage_yk);
+            frm = new FormQueryYT();
+            frm.ShowInControl(xtraTabPage_yt);
+            frm = new FormQueryAction();
+            frm.ShowInControl(xtraTabPage_num);
+            frm = new FormQueryRunTime();
+            frm.ShowInControl(xtraTabPage1_time);
+            frm = new FormQueryElement();
+            frm.ShowInControl(xtraTabPage1_param);
         }
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
@@ -297,11 +308,23 @@ namespace avcbuilder1
             {
                 case "配电电容器":
                 case "线路电容器":
+                    {
+                        callQuery(Caption, Id, AvcIdType.CapId);
+                        break;
+                    }
                 case "线路调压器":
+                    {
+                        callQuery(Caption, Id, AvcIdType.VolRegId);
+                        break;
+                    }
                 case "配电变压器":
+                    {
+                        callQuery(Caption, Id, AvcIdType.TransId);
+                        break;
+                    }
                 case "电容器子组":
                     {
-                        callQuery(Caption,Id, AvcIdType.ElementId);
+                        callQuery(Caption, Id, AvcIdType.Cap_itemId);
                         break;
                     }
                 case "馈线":
@@ -376,5 +399,5 @@ namespace avcbuilder1
         public AvcIdType IdType { get { return idt; } }
     }//class
 
-    public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, OtherId = 4 };
+    public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };
 }//namespace

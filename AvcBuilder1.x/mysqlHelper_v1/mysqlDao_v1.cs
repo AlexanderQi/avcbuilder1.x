@@ -463,7 +463,6 @@ namespace mysqlDao_v1
         /// <returns></returns>
         public static string getDeleteSql(object poco, string pkName, object pkValue)
         {
-            pkName = pkName.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
             Type t = poco.GetType();
@@ -504,7 +503,6 @@ namespace mysqlDao_v1
 
         public static string getQuerySql(object poco, string pkName, object pkValue)
         {
-            pkName = pkName.ToUpper();
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
             Type t = poco.GetType();

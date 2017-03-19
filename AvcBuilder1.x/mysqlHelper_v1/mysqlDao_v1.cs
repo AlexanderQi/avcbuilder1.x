@@ -131,7 +131,7 @@ namespace mysqlDao_v1
 
         public int Execute(String sql)
         {
-            if (sql == null) return -1;
+            if (sql == null || sql.Equals("")) return 0;
             try
             {
                 if (conn.State == ConnectionState.Closed)
@@ -315,6 +315,7 @@ namespace mysqlDao_v1
         /// <param name="dt">载有要保存信息的dataTable</param>
         /// <param name="EntityModel">实体对象</param>
         /// <param name="pkName">主键名称 必须大写字母</param>
+        /// return -1 内部错误
         public int SaveData(DataTable dt, object EntityModel, string pkName)
         {
             try
@@ -338,7 +339,7 @@ namespace mysqlDao_v1
                                 mysqlDAO.fillPoco(EntityModel, dr, pkName, newId);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
 
                                 string sql = mysqlDAO.getInsertSql(EntityModel);
-                                sbSqlCommand.Append(sql).Append("\n");
+                                sbSqlCommand.Append(sql);
                                 break;
                             }//case
                         case DataRowState.Modified:
@@ -356,20 +357,25 @@ namespace mysqlDao_v1
                                 }//FOR
                                 sbSqlPart.Remove(sbSqlPart.Length - 1, 1);
                                 string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(),pkName);
-                                sbSqlCommand.Append(sql).Append("\n");
+                                //if (sql.IndexOf(pkName) < 0)//检查sql是否包含主键，不包含则退出。
+                                //{
+                                //    return -2;
+                                //}
+                                sbSqlCommand.Append(sql);
                                 break;
                             }//case
                         case DataRowState.Deleted:
                             {
                                 string sql = mysqlDAO.getDeleteSql(
                                     EntityModel, pkName, dr[pkName, DataRowVersion.Original].ToString());
-                                sbSqlCommand.Append(sql).Append("\n");
+                                sbSqlCommand.Append(sql);
                                 break;
                             }//case
                     }//switch
                 } //foreach
                 #endregion
                 string sqls = sbSqlCommand.ToString();
+                log.Info(sqls);
                 int r = Execute(sqls);
                 dt.AcceptChanges();
                 return r;

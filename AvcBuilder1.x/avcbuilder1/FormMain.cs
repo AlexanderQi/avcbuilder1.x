@@ -27,6 +27,13 @@ namespace avcbuilder1
         ILog log;
         // List<FormQueryBase> frms = new List<FormQueryBase>();
         static internal FormMain Instance;
+        public delegate void TreeFocusChangedHandle(object sender, AvcTreeEventArgs e);
+        public delegate void AvcSrvConnectedHandle(object sender, EventArgs e);
+        public delegate void AvcSrvDisconnectedHandle(object sender, EventArgs e);
+        public event TreeFocusChangedHandle OnTreeFocusChanged;
+        public event AvcSrvConnectedHandle OnAvcSrvConnected;
+        public event AvcSrvDisconnectedHandle OnAvcSrvDisconnected;
+
         public FormMain()
         {
             Instance = this;
@@ -34,6 +41,15 @@ namespace avcbuilder1
             log = LogManager.GetLogger("log");
             IniTreeTable();
             IniForms();
+        }
+
+        private void emitTreeFocusChangedEvent(string id, AvcIdType idType)
+        {
+            if (OnTreeFocusChanged != null)
+            {
+                AvcTreeEventArgs e = new AvcTreeEventArgs(id, idType);
+                OnTreeFocusChanged(this, e);
+            }
         }
 
         /// <summary>
@@ -71,8 +87,6 @@ namespace avcbuilder1
             root["INFO"] = "未连接";
             //root["tag"] = 0;
             TreeTable.Rows.Add(root);
-
-            FormQueryState.Instance.DataClosedHandle();
         }
 
         /// <summary>
@@ -93,7 +107,7 @@ namespace avcbuilder1
 
                 treeList1.BeginUpdate();
 
-                string sql =  "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
+                string sql = "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
                 LoadTbl(sql, -1, 1, "管理单位");
 
                 sql = "select ID,NAME,SUBCONTROLAREAID as PID from tblsubstation;";
@@ -174,12 +188,26 @@ namespace avcbuilder1
             FormMain_BackColorChanged(this, null);
         }
 
+        /// <summary>
+        /// “连接..."按钮功能会动态改变，根据Caption属性内容，执行‘连接’或‘断开’数据库功能。
+        /// 并触发连接或断开事件。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void barButtonItem_connect_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             IniTreeTable();
+            EventArgs ea = new EventArgs();
             if (barButtonItem_connect.Caption.Equals("连接..."))
+            {
                 TreeLoad();
-
+                if (OnAvcSrvConnected != null)
+                    OnAvcSrvConnected(this, ea);
+            }
+            else if (OnAvcSrvDisconnected != null)
+            {
+                OnAvcSrvDisconnected(this, ea);
+            }
         }
 
         private void treeList1_MouseUp(object sender, MouseEventArgs e)
@@ -195,7 +223,6 @@ namespace avcbuilder1
                 //{
                 //    treeList1.SetFocusedNode(hitInfo.Node);
                 //}
-
                 if (hitInfo.Node != null)
                 {
                     if (hitInfo.Node["ID"].ToString().Equals("-1"))
@@ -212,24 +239,20 @@ namespace avcbuilder1
                         popupMenu1.ShowPopup(p);
                         return;
                     }
-
                 }
             }
         }
 
-        private void callQuery(string Id,AvcIdType idt)
+        private void callQuery(string Id, AvcIdType idType)
         {
             XtraTabPage p = xtraTabControl_element.SelectedTabPage;
             FormQueryBase frm = (FormQueryBase)p.Tag;
             if (frm != null)
             {
-                if (Id == null)  //call form's default query
-                    frm.QueryBySql(null);
-                else if (idt == AvcIdType.ElementId)
-                    frm.QueryById(Id);
-                else if (idt == AvcIdType.FeedId)
-                    frm.QueryByFeedId(Id);
-                frm.DataLoadedHandle();
+                if (Id != null && (!Id.Equals("")) )
+                {
+                    frm.QueryById(Id, idType);
+                }
             }
         }
 
@@ -247,8 +270,10 @@ namespace avcbuilder1
 
         public void IniForms()
         {
-            FormQueryBase frm = FormQueryState.Instance;
+            FormQueryBase frm = new FormQueryState();
             frm.ShowInControl(xtraTabPage_state);
+            frm = new FormQueryLimit();
+            frm.ShowInControl(xtraTabPage_limit);
 
         }
 
@@ -270,17 +295,17 @@ namespace avcbuilder1
                 case "配电变压器":
                 case "电容器子组":
                     {
-                        callQuery(Id,AvcIdType.ElementId);
+                        callQuery(Id, AvcIdType.ElementId);
                         break;
                     }
                 case "馈线":
                     {
-                        callQuery(Id,AvcIdType.FeedId);
+                        callQuery(Id, AvcIdType.FeedId);
                         break;
                     }
                 default:
                     {
-                        callQuery(null,AvcIdType.OtherId);
+                        callQuery(null, AvcIdType.OtherId);
                         break;
                     }
             }
@@ -289,7 +314,7 @@ namespace avcbuilder1
         private bool tree_findpanel_visible = false;
         private void barButtonItem_tree_find_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (tree_findpanel_visible) 
+            if (tree_findpanel_visible)
                 treeList1.HideFindPanel();
             else
                 treeList1.ShowFindPanel();
@@ -299,8 +324,8 @@ namespace avcbuilder1
 
         public void showInfo(string info)
         {
-            
-            richTextBox1.AppendText(info+'\n');
+
+            richTextBox1.AppendText(info + '\n');
             richTextBox1.HideSelection = false;
         }
 
@@ -316,23 +341,35 @@ namespace avcbuilder1
             if (textEdit1.Text.Trim().Equals("")) return;
             indexOfFind = 0;
             int len = richTextBox1.Text.Length;
-            indexOfFind = richTextBox1.Find(textEdit1.Text, 0, len,RichTextBoxFinds.None);
+            indexOfFind = richTextBox1.Find(textEdit1.Text, 0, len, RichTextBoxFinds.None);
         }
 
         private void richTextBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.F3)
+            if (e.KeyCode == Keys.F3)
             {
                 int len = richTextBox1.Text.Length;
-                indexOfFind = richTextBox1.Find(textEdit1.Text, indexOfFind+1, len, RichTextBoxFinds.None);
-            }else if(e.KeyCode == Keys.Enter)
+                indexOfFind = richTextBox1.Find(textEdit1.Text, indexOfFind + 1, len, RichTextBoxFinds.None);
+            }
+            else if (e.KeyCode == Keys.Enter)
             {
                 simpleButton_find_Click(this, null);
             }
         }
     }//class
 
-
+    public class AvcTreeEventArgs : EventArgs
+    {
+        private string id;
+        private AvcIdType idt;
+        public AvcTreeEventArgs(string id, AvcIdType idType) : base()
+        {
+            this.id = id;
+            this.idt = idType;
+        }
+        public string Id { get { return id; } }
+        public AvcIdType IdType { get { return idt; } }
+    }//class
 
     public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, OtherId = 4 };
-}
+}//namespace

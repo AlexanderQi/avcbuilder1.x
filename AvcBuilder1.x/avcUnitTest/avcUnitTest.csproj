@@ -56,6 +56,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\avcbuilder1\avcbuilder1.csproj">
       <Project>{395bf78d-b0e7-4b48-8e4c-8e55c97f7983}</Project>
       <Name>avcbuilder1</Name>
@@ -64,11 +69,6 @@
       <Project>{e7951712-9171-4222-becb-4574c86a9937}</Project>
       <Name>mysqlDao_v1</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

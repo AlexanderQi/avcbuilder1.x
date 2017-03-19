@@ -9,7 +9,7 @@ using log4net;
 using mysqlDao_v1;
 using System.Configuration;
 using System.Collections;
-
+using DevExpress.XtraGrid.Columns;
 
 namespace avcbuilder1.tblForms
 {
@@ -18,43 +18,46 @@ namespace avcbuilder1.tblForms
         protected string avc_conn = "";
         protected mysqlDAO dao;
         protected myConnInfo conninfo;
+        protected DataSet ds;
+       
 
-       /// <summary>
-       /// 暴露类单例属性，由子类实现。
-       /// </summary>
-        public static FormQueryBase Instance
+        protected FormQueryBase():base()
         {
-            get {return null;}
-        }
-
-        protected FormQueryBase()
-        {
+            instance = this;
             InitializeComponent();
             gridView1.HideFindPanel();
             SetButtonsEnable(false);
-
         }
 
-        virtual public void DataLoadedHandle()
+        /// <summary>
+        /// 用中文名称添加视图的列
+        /// </summary>
+        /// <param name="tableField">数据库表的字段名</param>
+        /// <param name="chineseCaption">中文名来自comment注释</param>
+        /// <returns></returns>
+        protected GridColumn AddGridColumn(string tableField, string chineseCaption)
         {
-            SetButtonsEnable(true);
+            GridColumn col = gridView1.Columns.Add();
+            col.FieldName = tableField;
+            col.Caption = chineseCaption;
+            col.CustomizationCaption = chineseCaption;
+
+            col.MinWidth = 70;
+            col.Visible = true;
+            return col;
         }
 
-        virtual public void DataClosedHandle()
-        {
-            SetButtonsEnable(false);
-        }
-      
+        /// <summary>
+        /// 根据value值，设置保存，刷新，数据初始化，查找按钮的有效性值。
+        /// </summary>
+        /// <param name="value">button.enabled = value</param>
         protected void SetButtonsEnable(bool value)
         {
-            simpleButton_Save.Enabled = simpleButton_Apply.Enabled = simpleButton_IniData.Enabled = simpleButton_Find.Enabled = value;
+            simpleButton_Save.Enabled = simpleButton_Refresh.Enabled = simpleButton_IniData.Enabled = simpleButton_Find.Enabled = value;
         }
 
-        virtual public void QueryByAreaId(String FeedId) { }
-        virtual public void QueryByStationId(String FeedId) { }
-        virtual public void QueryByFeedId(String FeedId) { }
-        virtual public void QueryById(String Id) { }
-        virtual public void QueryBySql(String Sql) { }
+
+        virtual public void QueryById(String Id, AvcIdType IdType) { }
 
         protected bool findpanel_visible = true;
         private void simpleButton_Find_Click(object sender, EventArgs e)

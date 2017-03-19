@@ -121,16 +121,7 @@ namespace avcUnitTest
             //{
             //    Console.WriteLine(string.Format("{0}    {1}", dr[0], dr[1]));
             //}
-            string id = AvcBuilder_func.getNewId(md);
-            Console.WriteLine(id);
-            id = AvcBuilder_func.getNewId(md);
-            Console.WriteLine(id);
-            id = AvcBuilder_func.getNewId(md);
-            Console.WriteLine(id);
-            id = AvcBuilder_func.getNewId(md);
-            Console.WriteLine(id);
-            id = AvcBuilder_func.getNewId(md);
-            Console.WriteLine(id);
+     
         }
 
     }

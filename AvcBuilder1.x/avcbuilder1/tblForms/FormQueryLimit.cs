@@ -7,9 +7,9 @@ using DevExpress.XtraEditors.Repository;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryState : FormQueryBase
+    public partial class FormQueryLimit : avcbuilder1.tblForms.FormQueryBase
     {
-        internal FormQueryState() : base()
+        public FormQueryLimit():base()
         {
             instance = this;
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace avcbuilder1.tblForms
         {
             SetButtonsEnable(false);
             ds.Tables[0].Clear();
-            
+
         }
 
         private void Instance_OnAvcSrvConnected(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Refresh_Click(object sender, EventArgs e)
         {
-            if(curSql != null)
+            if (curSql != null)
             {
                 QueryBySql(curSql);
             }
@@ -57,12 +57,12 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Save_Click(object sender, EventArgs e)
         {
-            
+
             if (MsgBox("确定保存到数据库吗,原有数据将会被覆盖?", "保存提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
                 return;
             }
-            string pkName = "ELEMENTID";
+            string pkName = "ID";
             //此处应该做必填项检查。
             int r = dao.SaveData(ds.Tables[0], new tblelementstate(), pkName);
             if (r < 0)
@@ -87,28 +87,28 @@ namespace avcbuilder1.tblForms
             cur.BestFit();
 
             //更换中文列名
-            DataTable dt = dao.GetFieldComment("tblelementstate");
+            DataTable dt = dao.GetFieldComment("tblelementlimit");
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-                tblelementstate tbl = new tblelementstate();
-                //tbl.CONTROLSTATE
-                if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                {
-                    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                }
-                else if (gridCol.FieldName.Equals("CONTROLSTATE"))
-                {
-                    RepositoryItemComboBox box = new RepositoryItemComboBox();
-                    box.Items.Add("不参与计算");
-                    box.Items.Add("建议");
-                    box.Items.Add("控制");
-                    box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
-                    gridCol.ColumnEdit = box;
-                }
-            }
+
+                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
+                //{
+                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                //}
+                //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
+                //{
+                //    RepositoryItemComboBox box = new RepositoryItemComboBox();
+                //    box.Items.Add("不参与计算");
+                //    box.Items.Add("建议");
+                //    box.Items.Add("控制");
+                //    box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
+                //    gridCol.ColumnEdit = box;
+                //}//if
+
+            }//for
             gridView1.EndUpdate();
-        }
+        }//func
 
         string curSql = "";
         public override void QueryById(string Id, AvcIdType IdType)
@@ -152,6 +152,7 @@ namespace avcbuilder1.tblForms
                 log.Error(ex);
                 MsgBox(ex.Message);
             }
-        }//func
+
+        }
     }//class
 }

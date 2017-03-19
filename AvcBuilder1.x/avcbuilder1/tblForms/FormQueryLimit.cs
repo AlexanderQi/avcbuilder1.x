@@ -4,10 +4,13 @@ using System.Windows.Forms;
 using AvcDb.entities;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraEditors.Repository;
+using avcbuilder1.tblForms;
+using avcbuilder1;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryLimit : avcbuilder1.tblForms.FormQueryBase
+    public partial class FormQueryLimit : FormQueryBase
     {
         public FormQueryLimit():base()
         {
@@ -21,7 +24,12 @@ namespace avcbuilder1.tblForms
             FormMain.Instance.OnAvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            // gridView1.InitNewRow += GridView1_InitNewRow;
+             gridView1.InitNewRow += GridView1_InitNewRow;
+        }
+
+        private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -64,13 +72,20 @@ namespace avcbuilder1.tblForms
             }
             string pkName = "ID";
             //此处应该做必填项检查。
-            int r = dao.SaveData(ds.Tables[0], new tblelementstate(), pkName);
-            if (r < 0)
+            try
             {
-                MsgBox("发生错误，保存失败");
+                int r = dao.SaveData(ds.Tables[0], new tblelementlimit(), pkName);
+                if (r < 0)
+                {
+                    MsgBox("发生错误，保存失败");
+                }
+                else
+                    MsgBox(string.Format("操作成功， {0} 条记录。", r));
             }
-            else
-                MsgBox(string.Format("操作成功， {0} 条记录。", r));
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message);
+            }
         }
 
 
@@ -82,16 +97,16 @@ namespace avcbuilder1.tblForms
                 dao = FormConnectSrv.Instance.Dao;
             }
             gridView1.BeginUpdate();
-            GridColumn cur = AddGridColumn("NAME", "设备名称");
-            cur.Fixed = FixedStyle.Left;
-            cur.BestFit();
 
-            //更换中文列名
             DataTable dt = dao.GetFieldComment("tblelementlimit");
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-
+                if (gridCol.FieldName.Equals("ELEMENTID"))
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowEdit = false;
+                }
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
                 //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
@@ -110,19 +125,20 @@ namespace avcbuilder1.tblForms
             gridView1.EndUpdate();
         }//func
 
-        string curSql = "";
+        string curSql = null;
+        string curId = null;
         public override void QueryById(string Id, AvcIdType IdType)
         {
+            curId = Id;
             tblelement ele = new tblelement();
-            tblelementstate sta = new tblelementstate();
+            tblelementlimit sta = new tblelementlimit();
             if (IdType == AvcIdType.FeedId)
             {
-                curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.FEEDID=" + Id);
-                QueryBySql(curSql);
+                MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
             }
             else
             {
-                curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.ID=" + Id);
+                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
                 QueryBySql(curSql);
             }
         }

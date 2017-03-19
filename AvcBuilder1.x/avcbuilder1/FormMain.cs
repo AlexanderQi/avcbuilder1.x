@@ -243,7 +243,7 @@ namespace avcbuilder1
             }
         }
 
-        private void callQuery(string Id, AvcIdType idType)
+        private void callQuery(string Caption, string Id, AvcIdType idType)
         {
             XtraTabPage p = xtraTabControl_element.SelectedTabPage;
             FormQueryBase frm = (FormQueryBase)p.Tag;
@@ -251,6 +251,7 @@ namespace avcbuilder1
             {
                 if (Id != null && (!Id.Equals("")) )
                 {
+                    frm.SetCaption(Caption);
                     frm.QueryById(Id, idType);
                 }
             }
@@ -274,6 +275,10 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage_state);
             frm = new FormQueryLimit();
             frm.ShowInControl(xtraTabPage_limit);
+            frm = new FormQueryProtect();
+            frm.ShowInControl(xtraTabPage_protect);
+            frm = new FormQueryYC();
+            frm.ShowInControl(xtraTabPage_yc);
 
         }
 
@@ -285,6 +290,7 @@ namespace avcbuilder1
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
             if (treeList1.FocusedNode == null) return;
+            string Caption = treeList1.FocusedNode["NAME"].ToString();
             string str = treeList1.FocusedNode["INFO"].ToString();
             string Id = treeList1.FocusedNode["ID"].ToString();
             switch (str)
@@ -295,17 +301,16 @@ namespace avcbuilder1
                 case "配电变压器":
                 case "电容器子组":
                     {
-                        callQuery(Id, AvcIdType.ElementId);
+                        callQuery(Caption,Id, AvcIdType.ElementId);
                         break;
                     }
                 case "馈线":
                     {
-                        callQuery(Id, AvcIdType.FeedId);
+                        callQuery(Caption, Id, AvcIdType.FeedId);
                         break;
                     }
                 default:
                     {
-                        callQuery(null, AvcIdType.OtherId);
                         break;
                     }
             }

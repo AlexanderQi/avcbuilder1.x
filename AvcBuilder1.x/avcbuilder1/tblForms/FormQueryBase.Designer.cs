@@ -33,6 +33,7 @@
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl_view = new DevExpress.XtraEditors.LabelControl();
             this.simpleButton_Save = new DevExpress.XtraEditors.SimpleButton();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
             this.simpleButton_IniData = new DevExpress.XtraEditors.SimpleButton();
@@ -69,6 +70,7 @@
             // panelControl1
             // 
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.labelControl_view);
             this.panelControl1.Controls.Add(this.simpleButton_Save);
             this.panelControl1.Controls.Add(this.simpleButton_IniData);
             this.panelControl1.Controls.Add(this.simpleButton_Refresh);
@@ -78,6 +80,14 @@
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(883, 50);
             this.panelControl1.TabIndex = 1;
+            // 
+            // labelControl_view
+            // 
+            this.labelControl_view.Appearance.Font = new System.Drawing.Font("Tahoma", 14F);
+            this.labelControl_view.Location = new System.Drawing.Point(199, 20);
+            this.labelControl_view.Name = "labelControl_view";
+            this.labelControl_view.Size = new System.Drawing.Size(0, 23);
+            this.labelControl_view.TabIndex = 4;
             // 
             // simpleButton_Save
             // 
@@ -155,6 +165,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
+            this.panelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
             this.ResumeLayout(false);
 
@@ -169,5 +180,6 @@
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Refresh;
         public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Save;
+        private DevExpress.XtraEditors.LabelControl labelControl_view;
     }
 }

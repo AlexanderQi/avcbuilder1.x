@@ -8,9 +8,9 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryState : FormQueryBase
+    public partial class FormQueryProtect : avcbuilder1.tblForms.FormQueryBase
     {
-        internal FormQueryState() : base()
+        internal FormQueryProtect() : base()
         {
             instance = this;
             InitializeComponent();
@@ -27,14 +27,14 @@ namespace avcbuilder1.tblForms
 
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["OBJECTELEMENTID"], curId);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {
             SetButtonsEnable(false);
             ds.Tables[0].Clear();
-            
+
         }
 
         private void Instance_OnAvcSrvConnected(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Refresh_Click(object sender, EventArgs e)
         {
-            if(curSql != null)
+            if (curSql != null)
             {
                 QueryBySql(curSql);
             }
@@ -63,16 +63,16 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Save_Click(object sender, EventArgs e)
         {
-            
+
             if (MsgBox("确定保存到数据库吗,原有数据将会被覆盖?", "保存提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
                 return;
             }
-            string pkName = "ELEMENTID";
+            string pkName = "ID";
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblelementstate(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblprotection(), pkName);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
@@ -95,35 +95,33 @@ namespace avcbuilder1.tblForms
                 dao = FormConnectSrv.Instance.Dao;
             }
             gridView1.BeginUpdate();
-            //GridColumn cur = AddGridColumn("NAME", "设备名称");
-            //cur.Fixed = FixedStyle.Left;
-            //cur.BestFit();
 
-            //初始化grid列信息，并更换中文列名
-            DataTable dt = dao.GetFieldComment("tblelementstate");
-            tblelementstate tbl = new tblelementstate();
+            GridColumn cur = AddGridColumn("ENAME", "设备名称");
+            cur.Fixed = FixedStyle.Left;
+            cur.BestFit();
+
+            DataTable dt = dao.GetFieldComment("tblprotection");
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-                //tbl.CONTROLSTATE
-                if (gridCol.FieldName.Equals("ELEMENTID"))
+                if (gridCol.FieldName.Equals("OBJECTELEMENTID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
                 }
-                if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                {
-                    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                }
-                else if (gridCol.FieldName.Equals("CONTROLSTATE"))
-                {
-                    RepositoryItemComboBox box = new RepositoryItemComboBox();
-                    box.Items.Add("不参与计算");
-                    box.Items.Add("建议");
-                    box.Items.Add("控制");
-                    box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
-                    gridCol.ColumnEdit = box;
-                }
+                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
+                //{
+                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                //}
+                //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
+                //{
+                //    RepositoryItemComboBox box = new RepositoryItemComboBox();
+                //    box.Items.Add("不参与计算");
+                //    box.Items.Add("建议");
+                //    box.Items.Add("控制");
+                //    box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
+                //    gridCol.ColumnEdit = box;
+                //}
             }
             gridView1.EndUpdate();
         }
@@ -134,19 +132,23 @@ namespace avcbuilder1.tblForms
         {
             curId = Id;
             tblelement ele = new tblelement();
-            tblelementstate sta = new tblelementstate();
+            tblprotection sta = new tblprotection();
             if (IdType == AvcIdType.FeedId)
             {
-                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.FEEDID=" + Id);
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
+                curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID EID,NAME ENAME", "*", "ID", "OBJECTELEMENTID", "L.FEEDID=" + Id);
                 QueryBySql(curSql);
+                gridView1.OptionsBehavior.Editable = 
+                simpleButton_IniData.Enabled = 
+                simpleButton_Save.Enabled = false;
                 //MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
             }
             else
             {
-                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.ID=" + Id);
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
+                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "OBJECTELEMENTID", Id);
                 QueryBySql(curSql);
+                gridView1.OptionsBehavior.Editable =
+               simpleButton_IniData.Enabled = 
+                simpleButton_Save.Enabled = true;
             }
         }
 
@@ -176,5 +178,5 @@ namespace avcbuilder1.tblForms
                 MsgBox(ex.Message);
             }
         }//func
-    }//class
+    }
 }

@@ -271,23 +271,34 @@ namespace mysqlDao_v1
         /// <param name="pkName">Prime key主键 必须是大写字母</param>
         /// <param name="pkValue">主键值</param>
         /// <returns></returns>
-        public static object fillPoco(object poco, DataRow row, string pkName = null, string pkValue = null)
+        public static object fillPoco(object poco, DataRow row, string pkName, string pkValue)
         {
+            if (pkName == null||pkName.Equals("")) return null;
             Type t = poco.GetType();
             PropertyInfo[] props = t.GetProperties();
-            int pkIndex = -1;
+            for (int i = 0; i < props.Length; i++)
+            {
+                if (props[i].Name.Equals(pkName))
+                {
+                    if(props[i].PropertyType == typeof(int))
+                    {
+                        int ipkValue = int.Parse(pkValue);
+                        props[i].SetValue(poco, ipkValue, null);
+                    }
+                    else
+                        props[i].SetValue(poco, pkValue, null);
+                    break;
+                }
+            }
+
             for (int i = 0; i < props.Length; i++)
             {
                 if (props[i].PropertyType.IsArray) continue;
                 if (row.IsNull(props[i].Name)) continue;
                 var val = row[props[i].Name];
                 props[i].SetValue(poco, val, null);
-
-                if (pkName != null && props[i].Name.Equals(pkName))
-                    pkIndex = i;
             }
-            if (pkIndex != -1)
-                props[pkIndex].SetValue(poco, pkValue, null);
+            
             return poco;
         }
 
@@ -352,11 +363,22 @@ namespace mysqlDao_v1
                                     if (!b) continue;
                                     if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
                                     {
-                                        sbSqlPart.Append(dt.Columns[i].Caption).Append(" = '").Append(dr[i]).Append("',");
+                                        sbSqlPart.Append(dt.Columns[i].Caption).Append(" = ");
+                                        //判断是否加单引号
+                                        Type type = dt.Columns[i].DataType;
+                                        var val = dr[i];
+                                        if (type == typeof(string) ||type == typeof(DateTime) ||type == typeof(Nullable<DateTime>))
+                                        {
+                                            sbSqlPart.Append("'").Append(val).Append("',");
+                                        }
+                                        else
+                                        {
+                                            sbSqlPart.Append(val).Append(",");
+                                        }
                                     }
                                 }//FOR
-                                sbSqlPart.Remove(sbSqlPart.Length - 1, 1);
-                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(),pkName);
+                                sbSqlPart.Remove(sbSqlPart.Length - 1, 1);//删除最后多余的逗号
+                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(), pkName);
                                 //if (sql.IndexOf(pkName) < 0)//检查sql是否包含主键，不包含则退出。
                                 //{
                                 //    return -2;
@@ -555,7 +577,7 @@ namespace mysqlDao_v1
             return sb.ToString();
         }
 
-        public static string getUpdateSqlById(object poco, string String_After_SET, string pkValue, string pkName )
+        public static string getUpdateSqlById(object poco, string String_After_SET, string pkValue, string pkName)
         {
             if (pkValue == null || pkValue.Equals("")) return null;
             pkName = pkName.ToUpper();

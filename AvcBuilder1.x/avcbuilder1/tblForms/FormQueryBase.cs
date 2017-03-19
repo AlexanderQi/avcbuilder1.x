@@ -29,6 +29,11 @@ namespace avcbuilder1.tblForms
             SetButtonsEnable(false);
         }
 
+        public virtual void SetCaption(string caption)
+        {
+            labelControl_view.Text = caption;
+        }
+
         /// <summary>
         /// 用中文名称添加视图的列
         /// </summary>

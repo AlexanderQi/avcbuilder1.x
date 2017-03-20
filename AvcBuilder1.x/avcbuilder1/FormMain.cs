@@ -246,13 +246,22 @@ namespace avcbuilder1
         private void callQuery(string Caption, string Id, AvcIdType idType)
         {
             XtraTabPage p = xtraTabControl_element.SelectedTabPage;
-            FormQueryBase frm = (FormQueryBase)p.Tag;
+            FormBase frm = (FormBase)p.Tag;
             if (frm != null)
             {
                 if (Id != null && (!Id.Equals("")))
                 {
-                    frm.SetCaption(Caption);
-                    frm.QueryById(Id, idType);
+                    if (frm is FormQueryBase)
+                    {
+                        FormQueryBase fq = (FormQueryBase)frm;
+                        fq.SetCaption(Caption);
+                        fq.QueryById(Id, idType);
+                    }else if(frm is FormCardBase)
+                    {
+                        FormCardBase fc = (FormCardBase)frm;
+                        fc.SetCaption(Caption);
+                        fc.QueryById(Id, idType);
+                    }
                 }
             }
         }
@@ -271,7 +280,7 @@ namespace avcbuilder1
 
         public void IniForms()
         {
-            FormQueryBase frm = new FormQueryState();
+            FormBase frm = new FormQueryState();
             frm.ShowInControl(xtraTabPage_state);
             frm = new FormQueryLimit();
             frm.ShowInControl(xtraTabPage_limit);
@@ -291,6 +300,9 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage1_time);
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
+
+            frm = new FormQueryMeasure();
+            frm.ShowInControl(xtraTabPage_measure);
         }
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)

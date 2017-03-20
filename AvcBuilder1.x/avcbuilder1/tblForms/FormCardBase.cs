@@ -5,15 +5,15 @@ using DevExpress.XtraGrid.Columns;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryBase : avcbuilder1.tblForms.FormBase
+    public partial class FormCardBase : avcbuilder1.tblForms.FormBase
     {
         protected string avc_conn = "";
         protected mysqlDAO dao;
         protected myConnInfo conninfo;
         protected DataSet ds;
-       
 
-        protected FormQueryBase():base()
+
+        protected FormCardBase():base()
         {
             instance = this;
             InitializeComponent();
@@ -24,6 +24,7 @@ namespace avcbuilder1.tblForms
         public virtual void SetCaption(string caption)
         {
             labelControl_view.Text = caption;
+            //gridView1.ViewCaption = caption;
         }
 
         /// <summary>

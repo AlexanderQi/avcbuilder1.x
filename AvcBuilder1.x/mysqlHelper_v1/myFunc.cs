@@ -9,6 +9,16 @@ namespace mysqlDao_v1
 {
     public static class myFunc
     {
+        public static string getPropertyName(object poco, string nameInsensitive)
+        {
+            Type t = poco.GetType();
+            PropertyInfo[] pinfos = t.GetProperties();
+            nameInsensitive = nameInsensitive.ToUpper();
+            for (int i = 0; i < pinfos.Length; i++)
+                if (pinfos[i].Name.ToUpper().Equals(nameInsensitive))
+                    return pinfos[i].Name;
+            return null;
+        }
          public static string[] getProperties(object model)
         {
             Type t = model.GetType();

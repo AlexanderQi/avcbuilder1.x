@@ -278,7 +278,7 @@ namespace mysqlDao_v1
             PropertyInfo[] props = t.GetProperties();
             for (int i = 0; i < props.Length; i++)
             {
-                if (props[i].Name.Equals(pkName))
+                if (props[i].Name.ToUpper().Equals(pkName.ToUpper()))
                 {
                     if(props[i].PropertyType == typeof(int))
                     {
@@ -465,10 +465,10 @@ namespace mysqlDao_v1
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
+            pkName = myFunc.getPropertyName(poco, pkName); //取得主键对应的实体对象属性.
             Type t = poco.GetType();
             PropertyInfo pr = t.GetProperty(pkName);
             if (pr == null) return null;
-            pkName = pkName.ToUpper();
             sb.Append(t.Name);
             if (pkName == null && pkValue == null) { return sb.ToString(); }// All data will be deleted.
 
@@ -505,11 +505,9 @@ namespace mysqlDao_v1
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
+            pkName = myFunc.getPropertyName(poco,pkName); //取得主键对应的实体对象属性.
             Type t = poco.GetType();
             PropertyInfo pr = t.GetProperty(pkName);
-            if (pr == null) return null;
-
-            pkName = pkName.ToUpper();
             PropertyInfo[] pros = t.GetProperties();
             for (int i = 0; i < pros.Length; i++)
             {

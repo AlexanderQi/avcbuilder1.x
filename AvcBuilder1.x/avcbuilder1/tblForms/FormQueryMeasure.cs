@@ -41,7 +41,8 @@ namespace avcbuilder1.tblForms
 
         private void Instance_OnAvcSrvConnected(object sender, EventArgs e)
         {
-            IniViewColumns();
+            iniInplaceEditors();
+            //IniViewColumns();
             SimpleButton_Refresh_Click(null, null);
         }
 
@@ -88,6 +89,19 @@ namespace avcbuilder1.tblForms
             }
         }
 
+        RepositoryItemLookUpEdit ycEditor = null;
+        private void iniInplaceEditors()
+        {
+            string sql = "select id YCID,name 遥测名 from tblycvalue;";
+            if (dao == null)
+                dao = FormConnectSrv.Instance.Dao;
+            DataTable dt = dao.Query(sql);
+            ycEditor = new RepositoryItemLookUpEdit();
+            ycEditor.DataSource = dt;
+            ycEditor.DisplayMember = "YCID";
+            ycEditor.ValueMember = "YCID";
+        }
+
 
         private void IniViewColumns()
         {
@@ -117,10 +131,10 @@ namespace avcbuilder1.tblForms
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
                 }
-                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                //{
-                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                //}
+                if (gridCol.FieldName.IndexOf("YCID") > 0)
+                {
+                    gridCol.ColumnEdit = ycEditor;
+                }
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{
                 //    RepositoryItemComboBox box = new RepositoryItemComboBox();

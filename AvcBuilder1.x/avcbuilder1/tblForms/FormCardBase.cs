@@ -23,8 +23,7 @@ namespace avcbuilder1.tblForms
 
         public virtual void SetCaption(string caption)
         {
-            labelControl_view.Text = caption;
-            //gridView1.ViewCaption = caption;
+            gridView1.ViewCaption = caption;
         }
 
         /// <summary>

@@ -14,19 +14,22 @@ namespace avcbuilder1.tblForms
     {
         public FormQueryYT():base()
         {
-            instance = this;
             InitializeComponent();
+        }
+
+        public override void Ini()
+        {
+            base.Ini();
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_IniData.Click += SimpleButton_IniData_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
-            FormMain.Instance.OnAvcSrvConnected += Instance_OnAvcSrvConnected;
-            FormMain.Instance.OnAvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
+            FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
+            FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
             gridView1.InitNewRow += GridView1_InitNewRow;
         }
-
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["CMDELEMENTID"], curId);

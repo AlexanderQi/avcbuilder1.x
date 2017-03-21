@@ -16,27 +16,22 @@ namespace avcbuilder1.tblForms
     public partial class FormBase : DevExpress.XtraEditors.XtraForm
     {
         protected ILog log;
-        protected static FormBase instance;
-        public static FormBase Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
+
         protected FormBase()
         {
             lock (this)
             {
-                instance = this;
                 log = LogManager.GetLogger("log");
                 InitializeComponent();
             }
             
         }
 
+        public virtual void RefreshForm() { }
+        public virtual void Ini() { }
         public void ShowInControl(Control owner)
         {
+            Ini();
             this.TopLevel = false;
             this.Dock = DockStyle.Fill;
             this.Parent = owner;

@@ -12,13 +12,16 @@ namespace avcbuilder1.tblForms
         protected myConnInfo conninfo;
         protected DataSet ds;
 
-
         protected FormCardBase():base()
         {
-            instance = this;
             InitializeComponent();
             gridView1.HideFindPanel();
             SetButtonsEnable(false);
+        }
+
+        public override void Ini()
+        {
+            base.Ini();
         }
 
         public virtual void SetCaption(string caption)

@@ -16,6 +16,7 @@ using DevExpress.XtraBars;
 using avcbuilder1.tblForms;
 using DevExpress.XtraTab;
 using AvcDb.entities;
+using DevExpress.XtraTreeList.Nodes;
 
 namespace avcbuilder1
 {
@@ -26,30 +27,43 @@ namespace avcbuilder1
     {
         ILog log;
         // List<FormQueryBase> frms = new List<FormQueryBase>();
-        static internal FormMain Instance;
-        public delegate void TreeFocusChangedHandle(object sender, AvcTreeEventArgs e);
+        private static FormMain instance;
+        public delegate void AvcTreeFocusChangedHandle(object sender, AvcTreeEventArgs e);
         public delegate void AvcSrvConnectedHandle(object sender, EventArgs e);
         public delegate void AvcSrvDisconnectedHandle(object sender, EventArgs e);
-        public event TreeFocusChangedHandle OnTreeFocusChanged;
-        public event AvcSrvConnectedHandle OnAvcSrvConnected;
-        public event AvcSrvDisconnectedHandle OnAvcSrvDisconnected;
+       
+        public event AvcTreeFocusChangedHandle AvcTreeFocusChanged;
+        public event AvcSrvConnectedHandle AvcSrvConnected;
+        public event AvcSrvDisconnectedHandle AvcSrvDisconnected;
+        internal static FormMain Instance
+        {
+            get
+            {
+                if(instance == null)
+                    new FormMain();
+                return instance;
+            }
+        }
 
         public FormMain()
         {
-            Instance = this;
-            InitializeComponent();
-            log = LogManager.GetLogger("log");
-            IniTreeTable();
-            IniForms();
+            lock (this)
+            {
+                instance = this;
+                InitializeComponent();
+                xtraTabControl_element.SelectedPageChanged += XtraTabControl_element_SelectedPageChanged;
+                log = LogManager.GetLogger("log");
+                IniTreeTable();
+                IniForms();
+            }
         }
 
-        private void emitTreeFocusChangedEvent(string id, AvcIdType idType)
+        private void XtraTabControl_element_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
         {
-            if (OnTreeFocusChanged != null)
-            {
-                AvcTreeEventArgs e = new AvcTreeEventArgs(id, idType);
-                OnTreeFocusChanged(this, e);
-            }
+            AvcTreeEventArgs av = newAvcTreeEventArgs();
+            FormBase frm = e.Page.Tag as FormBase;
+            if (frm != null)
+                frm.RefreshForm();
         }
 
         /// <summary>
@@ -201,18 +215,17 @@ namespace avcbuilder1
             if (barButtonItem_connect.Caption.Equals("连接..."))
             {
                 TreeLoad();
-                if (OnAvcSrvConnected != null)
-                    OnAvcSrvConnected(this, ea);
+                if (AvcSrvConnected != null)
+                    AvcSrvConnected(this, ea);
             }
-            else if (OnAvcSrvDisconnected != null)
+            else if (AvcSrvDisconnected != null)
             {
-                OnAvcSrvDisconnected(this, ea);
+                AvcSrvDisconnected(this, ea);
             }
         }
 
         private void treeList1_MouseUp(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Right
                     && ModifierKeys == Keys.None
                     && treeList1.State == DevExpress.XtraTreeList.TreeListState.Regular)
@@ -243,38 +256,38 @@ namespace avcbuilder1
             }
         }
 
-        private void callQuery(string Caption, string Id, AvcIdType idType)
-        {
-            XtraTabPage p = xtraTabControl_element.SelectedTabPage;
-            FormBase frm = (FormBase)p.Tag;
-            if (frm != null)
-            {
-                if (Id != null && (!Id.Equals("")))
-                {
-                    if (frm is FormQueryBase)
-                    {
-                        FormQueryBase fq = (FormQueryBase)frm;
-                        fq.SetCaption(Caption);
-                        fq.QueryById(Id, idType);
-                    }else if(frm is FormCardBase)
-                    {
-                        FormCardBase fc = (FormCardBase)frm;
-                        fc.SetCaption(Caption);
-                        fc.QueryById(Id, idType);
-                    }
-                }
-            }
-        }
+        //private void callQuery(string Caption, string Id, AvcIdType idType)
+        //{
+        //    XtraTabPage p = xtraTabControl_element.SelectedTabPage;
+        //    FormBase frm = (FormBase)p.Tag;
+        //    if (frm != null)
+        //    {
+        //        if (Id != null && (!Id.Equals("")))
+        //        {
+        //            if (frm is FormQueryBase)
+        //            {
+        //                FormQueryBase fq = (FormQueryBase)frm;
+        //                fq.SetCaption(Caption);
+        //                fq.QueryById(Id, idType);
+        //            }else if(frm is FormCardBase)
+        //            {
+        //                FormCardBase fc = (FormCardBase)frm;
+        //                fc.SetCaption(Caption);
+        //                fc.QueryById(Id, idType);
+        //            }
+        //        }
+        //    }
+        //}
 
 
 
         private void toolTipController1_GetActiveObjectInfo(object sender, DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventArgs e)
         {
-            TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.ControlMousePosition);
-            if (hitInfo.Node != null)
-            {
-                e.Info = new DevExpress.Utils.ToolTipControlInfo(treeList1, hitInfo.Node["name"].ToString() + " ID:" + hitInfo.Node["ID"].ToString());
-            }
+            //TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.ControlMousePosition);
+            //if (hitInfo.Node != null)
+            //{
+            //    e.Info = new DevExpress.Utils.ToolTipControlInfo(treeList1, hitInfo.Node["name"].ToString() + " ID:" + hitInfo.Node["ID"].ToString());
+            //}
         }
 
 
@@ -305,43 +318,56 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage_measure);
         }
 
-        private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
+       private AvcTreeEventArgs newAvcTreeEventArgs()
         {
-
+            TreeListNode e = treeList1.FocusedNode;
+            string Caption = e["NAME"].ToString();
+            string str = e["INFO"].ToString();
+            string Id = e["ID"].ToString();
+            AvcIdType a = getAvcIdType(str);
+            AvcTreeEventArgs av = new AvcTreeEventArgs(Id, a);
+            av.Caption = Caption;
+            return av;
         }
 
-        private void treeList1_DoubleClick(object sender, EventArgs e)
+        private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
         {
-            if (treeList1.FocusedNode == null) return;
-            string Caption = treeList1.FocusedNode["NAME"].ToString();
-            string str = treeList1.FocusedNode["INFO"].ToString();
-            string Id = treeList1.FocusedNode["ID"].ToString();
+            if (AvcTreeFocusChanged != null)
+            {
+                AvcTreeEventArgs av = newAvcTreeEventArgs();
+                AvcTreeFocusChanged(this, av);
+            }
+        }
+
+        public AvcIdType getAvcIdType(string str)
+        {
+            AvcIdType a = AvcIdType.OtherId;
             switch (str)
             {
                 case "配电电容器":
                 case "线路电容器":
                     {
-                        callQuery(Caption, Id, AvcIdType.CapId);
+                        a = AvcIdType.CapId;
                         break;
                     }
                 case "线路调压器":
                     {
-                        callQuery(Caption, Id, AvcIdType.VolRegId);
+                        a = AvcIdType.VolRegId;
                         break;
                     }
                 case "配电变压器":
                     {
-                        callQuery(Caption, Id, AvcIdType.TransId);
+                        a = AvcIdType.TransId;
                         break;
                     }
                 case "电容器子组":
                     {
-                        callQuery(Caption, Id, AvcIdType.Cap_itemId);
+                        a = AvcIdType.Cap_itemId;
                         break;
                     }
                 case "馈线":
                     {
-                        callQuery(Caption, Id, AvcIdType.FeedId);
+                        a = AvcIdType.FeedId;
                         break;
                     }
                 default:
@@ -349,6 +375,12 @@ namespace avcbuilder1
                         break;
                     }
             }
+            return a;
+        }
+
+        private void treeList1_DoubleClick(object sender, EventArgs e)
+        {
+           
         }
 
         private bool tree_findpanel_visible = false;
@@ -400,6 +432,7 @@ namespace avcbuilder1
 
     public class AvcTreeEventArgs : EventArgs
     {
+        private string caption;
         private string id;
         private AvcIdType idt;
         public AvcTreeEventArgs(string id, AvcIdType idType) : base()
@@ -407,6 +440,20 @@ namespace avcbuilder1
             this.id = id;
             this.idt = idType;
         }
+
+        public string Caption
+        {
+            get
+            {
+                return caption;
+            }
+
+            set
+            {
+                caption = value;
+            }
+        }
+
         public string Id { get { return id; } }
         public AvcIdType IdType { get { return idt; } }
     }//class

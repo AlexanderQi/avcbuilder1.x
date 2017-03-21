@@ -28,14 +28,15 @@ namespace avcbuilder1.tblForms
         AvcTreeEventArgs oldAvcEvent = null;
         private void Instance_AvcTreeFocusChanged(object sender, AvcTreeEventArgs e)
         {
-            if (e.IdType != AvcIdType.OtherId)
-                oldAvcEvent = e;
-
-            if (Visible && e.IdType != AvcIdType.FeedId && e.IdType != AvcIdType.OtherId)
+            int vt = (int)e.IdType;
+            if (vt > 3 && vt < 8)
             {
                 oldAvcEvent = e;
-                QueryById(e.Id, e.IdType);
-                SetCaption(e.Caption);
+                if (Visible)
+                {
+                    QueryById(e.Id, e.IdType);
+                    SetCaption(e.Caption);
+                }
             }
         }
 

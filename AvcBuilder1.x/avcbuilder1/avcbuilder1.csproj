@@ -233,11 +233,11 @@
     <Compile Include="tblForms\FormQueryLimit.Designer.cs">
       <DependentUpon>FormQueryLimit.cs</DependentUpon>
     </Compile>
-    <Compile Include="tblForms\FormQueryMeasure.cs">
+    <Compile Include="tblForms\FormCardMeasure.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="tblForms\FormQueryMeasure.Designer.cs">
-      <DependentUpon>FormQueryMeasure.cs</DependentUpon>
+    <Compile Include="tblForms\FormCardMeasure.Designer.cs">
+      <DependentUpon>FormCardMeasure.cs</DependentUpon>
     </Compile>
     <Compile Include="tblForms\FormQueryProtect.cs">
       <SubType>Form</SubType>
@@ -309,8 +309,8 @@
     <EmbeddedResource Include="tblForms\FormQueryLimit.resx">
       <DependentUpon>FormQueryLimit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="tblForms\FormQueryMeasure.resx">
-      <DependentUpon>FormQueryMeasure.cs</DependentUpon>
+    <EmbeddedResource Include="tblForms\FormCardMeasure.resx">
+      <DependentUpon>FormCardMeasure.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryState.resx">
       <DependentUpon>FormQueryState.cs</DependentUpon>

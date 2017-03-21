@@ -133,7 +133,7 @@ namespace avcbuilder1
             {
                 Dao = new mysqlDAO(avc_conn);
                 Dao.SetSqlForNewId(sql4NewId);
-                Dao.OnCmdExecute += Dao_OnSqlExecute; ;
+                Dao.CmdExecute += Dao_OnSqlExecute; ;
             }
             catch (Exception ex)
             {

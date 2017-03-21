@@ -15,13 +15,39 @@ namespace avcbuilder1.tblForms
         protected FormCardBase():base()
         {
             InitializeComponent();
-            gridView1.HideFindPanel();
-            SetButtonsEnable(false);
+            
         }
 
         public override void Ini()
         {
-            base.Ini();
+            FormMain.Instance.AvcTreeFocusChanged += Instance_AvcTreeFocusChanged;
+            gridView1.HideFindPanel();
+            SetButtonsEnable(false);
+        }
+
+        AvcTreeEventArgs oldAvcEvent = null;
+        private void Instance_AvcTreeFocusChanged(object sender, AvcTreeEventArgs e)
+        {
+            int vt = (int)e.IdType;
+            if (vt > 3 && vt < 8)
+            {
+                oldAvcEvent = e;
+                if (Visible)
+                {
+                    QueryById(e.Id, e.IdType);
+                    SetCaption(e.Caption);
+                }
+            }
+        }
+
+        public override void RefreshForm()
+        {
+            base.RefreshForm();
+            if (oldAvcEvent != null)
+            {
+                QueryById(oldAvcEvent.Id, oldAvcEvent.IdType);
+                SetCaption(oldAvcEvent.Caption);
+            }
         }
 
         public virtual void SetCaption(string caption)

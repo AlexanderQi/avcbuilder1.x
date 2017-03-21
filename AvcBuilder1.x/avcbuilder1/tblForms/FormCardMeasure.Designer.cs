@@ -1,6 +1,6 @@
 ﻿namespace avcbuilder1.tblForms
 {
-    partial class FormQueryMeasure
+    partial class FormCardMeasure
     {
         /// <summary>
         /// 必需的设计器变量。

@@ -224,6 +224,7 @@ namespace avcbuilder1
             }
         }
 
+        
         private void treeList1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right
@@ -232,26 +233,22 @@ namespace avcbuilder1
             {
 
                 TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.Location);
-                //if (hitInfo.HitInfoType == HitInfoType.Cell)
-                //{
-                //    treeList1.SetFocusedNode(hitInfo.Node);
-                //}
                 if (hitInfo.Node != null)
                 {
+                    if(hitInfo.Node != treeList1.FocusedNode)
+                        hitInfo.Node.Selected = true;
+
                     if (hitInfo.Node["ID"].ToString().Equals("-1"))
                     {
                         if ((hitInfo.Node["INFO"] as string).Equals("未连接"))
-                        {
                             barButtonItem_connect.Caption = "连接...";
-                        }
                         else
-                        {
                             barButtonItem_connect.Caption = "断开...";
-                        }
-                        Point p = new Point(Cursor.Position.X, Cursor.Position.Y);
-                        popupMenu1.ShowPopup(p);
-                        return;
                     }
+                    Point p = new Point(Cursor.Position.X, Cursor.Position.Y);
+                    popupMenuBefore(hitInfo.Node);
+                    popupMenu1.ShowPopup(p);
+                    return;
                 }
             }
         }
@@ -314,7 +311,7 @@ namespace avcbuilder1
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
 
-            frm = new FormQueryMeasure();
+            frm = new FormCardMeasure();
             frm.ShowInControl(xtraTabPage_measure);
         }
 
@@ -370,6 +367,16 @@ namespace avcbuilder1
                         a = AvcIdType.FeedId;
                         break;
                     }
+                case "变电站":
+                    {
+                        a = AvcIdType.StationId;
+                        break;
+                    }
+                case "管理单位":
+                    {
+                        a = AvcIdType.AreaId;
+                        break;
+                    }
                 default:
                     {
                         break;
@@ -393,10 +400,11 @@ namespace avcbuilder1
             tree_findpanel_visible = !tree_findpanel_visible;
         }
 
-
+        int maxInfoLen = 8192;
         public void showInfo(string info)
         {
-
+            if (richTextBox1.TextLength > maxInfoLen)
+                richTextBox1.Clear();
             richTextBox1.AppendText(info + '\n');
             richTextBox1.HideSelection = false;
         }
@@ -428,6 +436,47 @@ namespace avcbuilder1
                 simpleButton_find_Click(this, null);
             }
         }
+
+        private void barButtonEnable(bool b)
+        {
+            barButtonItem_add.Enabled =  barButtonItem_del.Enabled = barButtonItem_edit.Enabled = b;
+        }
+
+        public void popupMenuBefore(TreeListNode node)
+        {
+            string Caption = node["NAME"].ToString();
+            string str = node["INFO"].ToString();
+            string Id = node["ID"].ToString();
+            AvcIdType ai = getAvcIdType(str);
+            barButtonItem_connect.Visibility = BarItemVisibility.Never;
+            switch (ai)
+            {
+                case AvcIdType.AreaId:
+                case AvcIdType.StationId:
+                case AvcIdType.FeedId:
+                case AvcIdType.CapId:
+                    {
+                        barButtonEnable(true);
+                        break;
+                    }
+
+                case AvcIdType.ElementId:
+                case AvcIdType.Cap_itemId:
+                case AvcIdType.TransId:
+                case AvcIdType.VolRegId:
+                    {
+                        barButtonItem_add.Enabled = false;
+                        break;
+                    }
+                case AvcIdType.OtherId:
+                    {
+                        barButtonItem_connect.Visibility = BarItemVisibility.Always;
+                        barButtonEnable(false);
+                        break;
+                    }
+            }
+        }
+
     }//class
 
     public class AvcTreeEventArgs : EventArgs

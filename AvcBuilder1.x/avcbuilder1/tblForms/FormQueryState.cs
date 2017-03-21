@@ -20,7 +20,6 @@ namespace avcbuilder1.tblForms
             base.Ini();
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
-            simpleButton_IniData.Click += SimpleButton_IniData_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
             FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
             FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
@@ -37,7 +36,8 @@ namespace avcbuilder1.tblForms
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {
             SetButtonsEnable(false);
-            ds.Tables[0].Clear();
+            if (ds.Tables.Count > 0)
+                ds.Tables[0].Clear();
             
         }
 
@@ -53,16 +53,6 @@ namespace avcbuilder1.tblForms
             {
                 QueryBySql(curSql);
             }
-        }
-
-        private void SimpleButton_IniData_Click(object sender, EventArgs e)
-        {
-            IniTableData();
-        }
-
-        private void IniTableData()
-        {
-            MsgBox("IniTableData...");
         }
 
         private void SimpleButton_Save_Click(object sender, EventArgs e)

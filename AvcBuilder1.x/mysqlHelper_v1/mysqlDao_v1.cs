@@ -39,13 +39,13 @@ namespace mysqlDao_v1
         myConnInfo conInfo;
 
         public delegate void CmdExecuteHandle(object sender, EventDaoArgs args);
-        public event CmdExecuteHandle OnCmdExecute;
+        public event CmdExecuteHandle CmdExecute;
 
         private void eventEmit(string cmd)
         {
-            if (OnCmdExecute == null) return;
+            if (CmdExecute == null) return;
             EventDaoArgs ev = new EventDaoArgs(cmd);
-            OnCmdExecute(this, ev);
+            CmdExecute(this, ev);
         }
 
         public static myConnInfo getConnInfo(string ConnectString)

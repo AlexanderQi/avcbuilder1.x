@@ -31,6 +31,7 @@ namespace avcbuilder1.tblForms
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["OBJECTELEMENTID"], curId);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["NAME"], gridView1.ViewCaption);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -123,6 +124,7 @@ namespace avcbuilder1.tblForms
 
         string curSql = null;
         string curId = null;
+        string curCaption = null;
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;
@@ -130,12 +132,12 @@ namespace avcbuilder1.tblForms
             tblprotection sta = new tblprotection();
             if (IdType == AvcIdType.FeedId)
             {
-                curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID EID,NAME ENAME", "*", "ID", "OBJECTELEMENTID", "L.FEEDID=" + Id);
-                QueryBySql(curSql);
-                gridView1.OptionsBehavior.Editable = 
-                simpleButton_IniData.Enabled = 
-                simpleButton_Save.Enabled = false;
-                //MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
+                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID EID,NAME ENAME", "*", "ID", "OBJECTELEMENTID", "L.FEEDID=" + Id);
+                //QueryBySql(curSql);
+                //gridView1.OptionsBehavior.Editable = 
+                //simpleButton_IniData.Enabled = 
+                //simpleButton_Save.Enabled = false;
+                ////MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
             }
             else
             {

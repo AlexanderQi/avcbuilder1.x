@@ -306,11 +306,17 @@
     <EmbeddedResource Include="tblForms\FormQueryBase.resx">
       <DependentUpon>FormQueryBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryElement.resx">
+      <DependentUpon>FormQueryElement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryLimit.resx">
       <DependentUpon>FormQueryLimit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormCardMeasure.resx">
       <DependentUpon>FormCardMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryProtect.resx">
+      <DependentUpon>FormQueryProtect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryState.resx">
       <DependentUpon>FormQueryState.cs</DependentUpon>

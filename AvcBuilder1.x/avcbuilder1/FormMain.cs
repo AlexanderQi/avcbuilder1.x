@@ -178,7 +178,7 @@ namespace avcbuilder1
                         tree_row["PID"] = pid;
                     else
                         tree_row["PID"] = row["PID"];
-                    tree_row["NAME"] = row["NAME"].ToString() + "【" + id + "】";
+                    tree_row["NAME"] = row["NAME"].ToString();
                     tree_row["INFO"] = info;
 
                     TreeTable.Rows.Add(tree_row);
@@ -287,9 +287,12 @@ namespace avcbuilder1
             //}
         }
 
-
+        public static FormQueryElement FormElement;
         public void IniForms()
         {
+            FormElement = new FormQueryElement();
+            FormElement.Ini();
+
             FormBase frm = new FormQueryState();
             frm.ShowInControl(xtraTabPage_state);
             frm = new FormQueryLimit();
@@ -308,8 +311,6 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage_num);
             frm = new FormQueryRunTime();
             frm.ShowInControl(xtraTabPage1_time);
-            frm = new FormQueryElement();
-            frm.ShowInControl(xtraTabPage1_param);
 
             frm = new FormCardMeasure();
             frm.ShowInControl(xtraTabPage_measure);
@@ -324,6 +325,12 @@ namespace avcbuilder1
             AvcIdType a = getAvcIdType(str);
             AvcTreeEventArgs av = new AvcTreeEventArgs(Id, a);
             av.Caption = Caption;
+            TreeListNode pe = e.ParentNode;
+            if (pe != null)
+            {
+                av.ParentId = pe["ID"].ToString();
+                av.ParentCaption = pe["NAME"].ToString();
+            }
             return av;
         }
 
@@ -442,48 +449,58 @@ namespace avcbuilder1
             barButtonItem_add.Enabled =  barButtonItem_del.Enabled = barButtonItem_edit.Enabled = b;
         }
 
+        string curCaption = null;
+        string curNodeInfo = null;
+        string curNodeId = null;
         public void popupMenuBefore(TreeListNode node)
         {
-            string Caption = node["NAME"].ToString();
-            string str = node["INFO"].ToString();
-            string Id = node["ID"].ToString();
-            AvcIdType ai = getAvcIdType(str);
+            curCaption = node["NAME"].ToString();
+             curNodeInfo = node["INFO"].ToString();
+             curNodeId = node["ID"].ToString();
+            AvcIdType ai = getAvcIdType(curNodeInfo);
             barButtonItem_connect.Visibility = BarItemVisibility.Never;
+            barButtonEnable(false);
             switch (ai)
             {
-                case AvcIdType.AreaId:
-                case AvcIdType.StationId:
-                case AvcIdType.FeedId:
-                case AvcIdType.CapId:
-                    {
-                        barButtonEnable(true);
-                        break;
-                    }
-
+                case AvcIdType.AreaId: { barButtonItem_add.Caption = "添加区域..."; barButtonEnable(true); break; }
+                case AvcIdType.StationId: { barButtonItem_add.Caption = "添加变电站..."; barButtonEnable(true); break; }
+                case AvcIdType.FeedId: { barButtonItem_add.Caption = "添加馈线...";barButtonEnable(true);break; }
+                case AvcIdType.CapId: { barButtonItem_add.Caption = "添加电容..."; barButtonEnable(true); break; }
+                case AvcIdType.Cap_itemId: { barButtonItem_add.Caption = "添加电容子组..."; barButtonEnable(true); break; }
+                case AvcIdType.TransId: { barButtonItem_add.Caption = "添加变压器..."; barButtonEnable(true); break; }
+                case AvcIdType.VolRegId: { barButtonItem_add.Caption = "添加调压器..."; barButtonEnable(true); break; }
+                 
                 case AvcIdType.ElementId:
-                case AvcIdType.Cap_itemId:
-                case AvcIdType.TransId:
-                case AvcIdType.VolRegId:
-                    {
-                        barButtonItem_add.Enabled = false;
-                        break;
-                    }
                 case AvcIdType.OtherId:
                     {
                         barButtonItem_connect.Visibility = BarItemVisibility.Always;
-                        barButtonEnable(false);
                         break;
                     }
             }
         }
 
+        private void barButtonItem_add_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AvcTreeEventArgs av = newAvcTreeEventArgs();
+            FormElement.ShowAddModal(av);
+        }
+
+        private void barButtonItem_edit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AvcTreeEventArgs av = newAvcTreeEventArgs();
+            FormElement.ShowEditModal(av);
+        }
     }//class
 
     public class AvcTreeEventArgs : EventArgs
     {
         private string caption;
         private string id;
+        private string parentId;
+        private string parentCaption;
+
         private AvcIdType idt;
+
         public AvcTreeEventArgs(string id, AvcIdType idType) : base()
         {
             this.id = id;
@@ -505,6 +522,32 @@ namespace avcbuilder1
 
         public string Id { get { return id; } }
         public AvcIdType IdType { get { return idt; } }
+
+        public string ParentId
+        {
+            get
+            {
+                return parentId;
+            }
+
+            set
+            {
+                parentId = value;
+            }
+        }
+
+        public string ParentCaption
+        {
+            get
+            {
+                return parentCaption;
+            }
+
+            set
+            {
+                parentCaption = value;
+            }
+        }
     }//class
 
     public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };

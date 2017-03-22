@@ -88,6 +88,7 @@ namespace avcbuilder1
             TreeTable.Columns.Add("PID", typeof(string));
             TreeTable.Columns.Add("NAME", typeof(string));
             TreeTable.Columns.Add("INFO", typeof(string));
+            TreeTable.Columns.Add("TYPE", typeof(int));
             //TreeTable.Columns.Add("tag", typeof(int));
             //TreeTable.Columns.Add("style", typeof(int));
 
@@ -99,6 +100,7 @@ namespace avcbuilder1
             root["PID"] = -2;
             root["NAME"] = "AVC Server";
             root["INFO"] = "未连接";
+            root["TYPE"] = AvcIdType.ServerId;
             //root["tag"] = 0;
             TreeTable.Rows.Add(root);
         }
@@ -122,27 +124,27 @@ namespace avcbuilder1
                 treeList1.BeginUpdate();
 
                 string sql = "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
-                LoadTbl(sql, -1, 1, "管理单位");
+                LoadTbl(sql, -1, 1, "管理单位",AvcIdType.AreaId);
 
                 sql = "select ID,NAME,SUBCONTROLAREAID as PID from tblsubstation;";
-                LoadTbl(sql, 2, "变电站");
+                LoadTbl(sql, 2, "变电站", AvcIdType.StationId);
 
                 sql = "select ID,NAME,SUBSTATIONID as PID from tblfeeder;";
-                LoadTbl(sql, 3, "馈线");
+                LoadTbl(sql, 3, "馈线", AvcIdType.FeedId);
 
                 sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
-                LoadTbl(sql, 4, "线路电容器");
+                LoadTbl(sql, 4, "线路电容器", AvcIdType.CapId);
                 sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
-                LoadTbl(sql, 5, "配电电容器");
+                LoadTbl(sql, 5, "配电电容器", AvcIdType.CapId);
 
                 sql = "select ID,NAME,FEEDCAPACITORID as PID from tblfeedcapacitoritem";
-                LoadTbl(sql, 8, "电容器子组");
+                LoadTbl(sql, 8, "电容器子组", AvcIdType.Cap_itemId);
 
                 sql = "select ID,NAME,FEEDID as PID from tblfeedtrans";
-                LoadTbl(sql, 6, "配电变压器");
+                LoadTbl(sql, 6, "配电变压器", AvcIdType.TransId);
 
                 sql = "select id,name,FEEDID as PID from tblfeedvoltageregulator";
-                LoadTbl(sql, 7, "线路调压器");
+                LoadTbl(sql, 7, "线路调压器", AvcIdType.VolRegId);
                 treeList1.ExpandAll();
                 treeList1.BestFitColumns();
                 treeList1.EndUpdate();
@@ -162,7 +164,7 @@ namespace avcbuilder1
         /// <param name="pid">parent id 如果小于0 则属于程序内部指定，否则是数据库表中的上级id</param>
         /// <param name="ImgIndex">index of imagelist</param>
         /// <param name="info">infomation of recorder</param>
-        private void LoadTbl(string sql, int pid, int ImgIndex, string info)
+        private void LoadTbl(string sql, int pid, int ImgIndex, string info,AvcIdType idTtype)
         {
 
             try
@@ -180,7 +182,7 @@ namespace avcbuilder1
                         tree_row["PID"] = row["PID"];
                     tree_row["NAME"] = row["NAME"].ToString();
                     tree_row["INFO"] = info;
-
+                    tree_row["TYPE"] = idTtype;
                     TreeTable.Rows.Add(tree_row);
                 }
             }
@@ -191,9 +193,9 @@ namespace avcbuilder1
             }
         }
 
-        private void LoadTbl(string sql, int ImgIndex, string info)
+        private void LoadTbl(string sql, int ImgIndex, string info, AvcIdType idType)
         {
-            LoadTbl(sql, 0xff, ImgIndex, info);
+            LoadTbl(sql, 0xff, ImgIndex, info, idType);
         }
 
 
@@ -322,7 +324,7 @@ namespace avcbuilder1
             string Caption = e["NAME"].ToString();
             string str = e["INFO"].ToString();
             string Id = e["ID"].ToString();
-            AvcIdType a = getAvcIdType(str);
+            AvcIdType a = (AvcIdType)((int)e["TYPE"]);
             AvcTreeEventArgs av = new AvcTreeEventArgs(Id, a);
             av.Caption = Caption;
             TreeListNode pe = e.ParentNode;
@@ -343,54 +345,54 @@ namespace avcbuilder1
             }
         }
 
-        public AvcIdType getAvcIdType(string str)
-        {
-            AvcIdType a = AvcIdType.OtherId;
-            switch (str)
-            {
-                case "配电电容器":
-                case "线路电容器":
-                    {
-                        a = AvcIdType.CapId;
-                        break;
-                    }
-                case "线路调压器":
-                    {
-                        a = AvcIdType.VolRegId;
-                        break;
-                    }
-                case "配电变压器":
-                    {
-                        a = AvcIdType.TransId;
-                        break;
-                    }
-                case "电容器子组":
-                    {
-                        a = AvcIdType.Cap_itemId;
-                        break;
-                    }
-                case "馈线":
-                    {
-                        a = AvcIdType.FeedId;
-                        break;
-                    }
-                case "变电站":
-                    {
-                        a = AvcIdType.StationId;
-                        break;
-                    }
-                case "管理单位":
-                    {
-                        a = AvcIdType.AreaId;
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-            }
-            return a;
-        }
+        //public AvcIdType getAvcIdType(string str)
+        //{
+        //    AvcIdType a = AvcIdType.OtherId;
+        //    switch (str)
+        //    {
+        //        case "配电电容器":
+        //        case "线路电容器":
+        //            {
+        //                a = AvcIdType.CapId;
+        //                break;
+        //            }
+        //        case "线路调压器":
+        //            {
+        //                a = AvcIdType.VolRegId;
+        //                break;
+        //            }
+        //        case "配电变压器":
+        //            {
+        //                a = AvcIdType.TransId;
+        //                break;
+        //            }
+        //        case "电容器子组":
+        //            {
+        //                a = AvcIdType.Cap_itemId;
+        //                break;
+        //            }
+        //        case "馈线":
+        //            {
+        //                a = AvcIdType.FeedId;
+        //                break;
+        //            }
+        //        case "变电站":
+        //            {
+        //                a = AvcIdType.StationId;
+        //                break;
+        //            }
+        //        case "管理单位":
+        //            {
+        //                a = AvcIdType.AreaId;
+        //                break;
+        //            }
+        //        default:
+        //            {
+        //                break;
+        //            }
+        //    }
+        //    return a;
+        //}
 
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
@@ -444,38 +446,42 @@ namespace avcbuilder1
             }
         }
 
-        private void barButtonEnable(bool b)
-        {
-            barButtonItem_add.Enabled =  barButtonItem_del.Enabled = barButtonItem_edit.Enabled = b;
-        }
+
 
         string curCaption = null;
         string curNodeInfo = null;
         string curNodeId = null;
         public void popupMenuBefore(TreeListNode node)
         {
+            barSubItem_element.Enabled = barButtonItem_add.Enabled = barButtonItem_del.Enabled = barButtonItem_edit.Enabled = false;
             curCaption = node["NAME"].ToString();
              curNodeInfo = node["INFO"].ToString();
              curNodeId = node["ID"].ToString();
-            AvcIdType ai = getAvcIdType(curNodeInfo);
-            barButtonItem_connect.Visibility = BarItemVisibility.Never;
-            barButtonEnable(false);
+            AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
+            TreeListNode parentNode = node.ParentNode;
+            if(parentNode == null)
+            {
+                barButtonItem_connect.Visibility = BarItemVisibility.Always;
+                barButtonItem_add.Enabled = true;
+            }
+            else
+            {
+                barButtonItem_connect.Visibility = BarItemVisibility.Never;
+                AvcIdType pai = (AvcIdType)((int)parentNode["TYPE"]);
+                barButtonItem_del.Enabled = barButtonItem_edit.Enabled = true;
+                if (ai == AvcIdType.FeedId)
+                    barSubItem_element.Enabled = true;
+                else
+                    barButtonItem_add.Enabled = true;
+            }
+
             switch (ai)
             {
-                case AvcIdType.AreaId: { barButtonItem_add.Caption = "添加区域..."; barButtonEnable(true); break; }
-                case AvcIdType.StationId: { barButtonItem_add.Caption = "添加变电站..."; barButtonEnable(true); break; }
-                case AvcIdType.FeedId: { barButtonItem_add.Caption = "添加馈线...";barButtonEnable(true);break; }
-                case AvcIdType.CapId: { barButtonItem_add.Caption = "添加电容..."; barButtonEnable(true); break; }
-                case AvcIdType.Cap_itemId: { barButtonItem_add.Caption = "添加电容子组..."; barButtonEnable(true); break; }
-                case AvcIdType.TransId: { barButtonItem_add.Caption = "添加变压器..."; barButtonEnable(true); break; }
-                case AvcIdType.VolRegId: { barButtonItem_add.Caption = "添加调压器..."; barButtonEnable(true); break; }
-                 
-                case AvcIdType.ElementId:
-                case AvcIdType.OtherId:
-                    {
-                        barButtonItem_connect.Visibility = BarItemVisibility.Always;
-                        break;
-                    }
+                case AvcIdType.ServerId: { barButtonItem_add.Caption = "添加区域..."; break; }
+                case AvcIdType.AreaId: { barButtonItem_add.Caption = "添加变电站..."; break; }
+                case AvcIdType.StationId: { barButtonItem_add.Caption = "添加馈线...";break; }
+                case AvcIdType.CapId: { barButtonItem_add.Caption = "添加电容子组...";  break; }
+                default: { barButtonItem_add.Caption = "添加..."; break;}
             }
         }
 
@@ -550,5 +556,5 @@ namespace avcbuilder1
         }
     }//class
 
-    public enum AvcIdType { AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };
+    public enum AvcIdType {ServerId = -1, AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };
 }//namespace

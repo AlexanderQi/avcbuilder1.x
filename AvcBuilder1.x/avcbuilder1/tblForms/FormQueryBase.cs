@@ -68,7 +68,7 @@ namespace avcbuilder1.tblForms
             col.Caption = chineseCaption;
             col.CustomizationCaption = chineseCaption;
 
-            col.MinWidth = 70;
+            col.MinWidth = 100;
             col.Visible = true;
             return col;
         }

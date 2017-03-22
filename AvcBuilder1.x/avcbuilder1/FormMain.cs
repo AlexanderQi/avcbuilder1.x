@@ -52,10 +52,19 @@ namespace avcbuilder1
                 instance = this;
                 InitializeComponent();
                 xtraTabControl_element.SelectedPageChanged += XtraTabControl_element_SelectedPageChanged;
+                barButtonItem_volt.ItemClick += barButtonItem_add_ItemClick;
+                barButtonItem_trans.ItemClick += barButtonItem_add_ItemClick;
+                barButtonItem_cap.ItemClick += barButtonItem_add_ItemClick;
+                barButtonItem_refresh.ItemClick += BarButtonItem_refresh_ItemClick;
                 log = LogManager.GetLogger("log");
                 IniTreeTable();
                 IniForms();
             }
+        }
+
+        private void BarButtonItem_refresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TreeLoad();
         }
 
         private void XtraTabControl_element_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
@@ -91,9 +100,12 @@ namespace avcbuilder1
             TreeTable.Columns.Add("TYPE", typeof(int));
             //TreeTable.Columns.Add("tag", typeof(int));
             //TreeTable.Columns.Add("style", typeof(int));
-
+            CreateTreeRoot();
             treeList1.DataSource = TreeTable;
+        }
 
+        private DataRow CreateTreeRoot()
+        {
             root = TreeTable.NewRow();
             root["IMAGEINDEX"] = 0;
             root["ID"] = -1;
@@ -103,6 +115,7 @@ namespace avcbuilder1
             root["TYPE"] = AvcIdType.ServerId;
             //root["tag"] = 0;
             TreeTable.Rows.Add(root);
+            return root;
         }
 
         /// <summary>
@@ -113,16 +126,15 @@ namespace avcbuilder1
         private void TreeLoad()
         {
             try
-            {
-                Dao = FormConnectSrv.Instance.Open();
+            {             
                 if (Dao == null)
                 {
                     return;
                 }
-                root["INFO"] = "已连接";
-
                 treeList1.BeginUpdate();
-
+                TreeTable.Clear();
+                DataRow root = CreateTreeRoot();
+                root["INFO"] = "已连接";
                 string sql = "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
                 LoadTbl(sql, -1, 1, "管理单位",AvcIdType.AreaId);
 
@@ -213,6 +225,8 @@ namespace avcbuilder1
         private void barButtonItem_connect_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             IniTreeTable();
+            Dao = FormConnectSrv.Instance.Open();
+            TreeLoad();
             EventArgs ea = new EventArgs();
             if (barButtonItem_connect.Caption.Equals("连接..."))
             {
@@ -461,8 +475,16 @@ namespace avcbuilder1
             TreeListNode parentNode = node.ParentNode;
             if(parentNode == null)
             {
-                barButtonItem_connect.Visibility = BarItemVisibility.Always;
-                barButtonItem_add.Enabled = true;
+                if (ai == AvcIdType.ServerId)
+                {
+                    barButtonItem_connect.Visibility = BarItemVisibility.Always;
+                    barButtonItem_add.Enabled = true;
+                }
+                else
+                {
+                    node["INFO"] += "[垃圾数据]";
+                    barButtonItem_del.Enabled = true;
+                }
             }
             else
             {
@@ -488,6 +510,13 @@ namespace avcbuilder1
         private void barButtonItem_add_ItemClick(object sender, ItemClickEventArgs e)
         {
             AvcTreeEventArgs av = newAvcTreeEventArgs();
+           
+            if (e.Item == barButtonItem_cap)
+                av.tag = (int)AvcIdType.CapId;
+            else if (e.Item == barButtonItem_trans)
+                av.tag = (int)AvcIdType.TransId;
+            else if (e.Item == barButtonItem_volt)
+                av.tag = (int)AvcIdType.VolRegId;
             FormElement.ShowAddModal(av);
         }
 
@@ -495,6 +524,27 @@ namespace avcbuilder1
         {
             AvcTreeEventArgs av = newAvcTreeEventArgs();
             FormElement.ShowEditModal(av);
+        }
+
+        private void barButtonItem_del_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                TreeListNode node = treeList1.FocusedNode;
+                object poco = null;
+                String id = node["ID"].ToString();
+                AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
+                switch (ai)
+                {
+                    case AvcIdType.AreaId: { break; }
+                }
+                //mysqlDAO.getDeleteSql()
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                XtraMessageBox.Show(ex.Message);
+            }
         }
     }//class
 
@@ -506,7 +556,7 @@ namespace avcbuilder1
         private string parentCaption;
 
         private AvcIdType idt;
-
+        public int tag;
         public AvcTreeEventArgs(string id, AvcIdType idType) : base()
         {
             this.id = id;

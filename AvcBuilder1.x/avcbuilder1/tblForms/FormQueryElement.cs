@@ -43,39 +43,11 @@ namespace avcbuilder1.tblForms
             {
                 gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
                 gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
-                PkValue = ae.ParentId;
-                switch (ae.IdType)
-                {
-                    case AvcIdType.AreaId: //若当前是区域（顶层单位）则查询主键是自身ID
-                        {
-                            PkValue = ae.Id;
-                            pkName = "ID";
-                            break;
-                        }
-                    case AvcIdType.StationId:  //若当前是变电站（二级单位）则查询主键是上级区域ID
-                        {
-                            pkName = "SUBCONTROLAREAID";
-                            break;
-                        }
-                    case AvcIdType.FeedId: //若当前是馈线（三级级单位）则查询主键是上级变电站ID
-                        {
-                            pkName = "SUBSTATIONID";
-                            break;
-                        }
-                    case AvcIdType.Cap_itemId:
-                        {
-                            pkName = "FEEDCAPACITORID";
-                            break;
-                        }
-                    default:            //其他都是馈线下的设备，查询主键是馈线ID
-                        {
-                            pkName = "FEEDID";
-                            break;
-                        }
-                }
-                SetCaption(ae.ParentCaption + "  " + ae.ParentId);
-                QueryByPk(ae.IdType);
-                return ShowDialog();
+
+                SetCaption(ae.ParentCaption + " ▶ " + ae.Caption);
+                AvcIdType targetType = (AvcIdType)(ae.tag);
+                return QueryAndAdd(ae.IdType, ae.Id,targetType);
+               
             }
             catch (Exception e)
             {
@@ -89,6 +61,7 @@ namespace avcbuilder1.tblForms
         public override void Ini()
         {
             base.Ini();
+           
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
@@ -99,9 +72,11 @@ namespace avcbuilder1.tblForms
             gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
+
+
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            //gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ID"], curId);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns[PkName], PkValue);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -138,7 +113,8 @@ namespace avcbuilder1.tblForms
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], curPoco, pkName);
+                PkName = "ID";
+                int r = dao.SaveData(ds.Tables[0], curPoco, PkName);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
@@ -156,7 +132,7 @@ namespace avcbuilder1.tblForms
         private void IniViewColumns()
         {
             if (curPoco == null) return;
-            if (gridView1.Columns.Count > 0) { gridView1.Columns.Clear();}
+            if (gridView1.Columns.Count > 0) { gridView1.Columns.Clear(); }
             if (dao == null)
             {
                 dao = FormConnectSrv.Instance.Dao;
@@ -172,10 +148,15 @@ namespace avcbuilder1.tblForms
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-                if (gridCol.FieldName.Equals(pkName))
+                if (gridCol.FieldName.Equals(PkName))
                 {
-                    gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.Visible = false;
+                    //gridCol.Fixed = FixedStyle.Left;
+                    //gridCol.OptionsColumn.AllowEdit = false;
+                }
+                if (gridCol.FieldName.ToUpper().Equals("ID"))
+                {
+                    gridCol.Visible = false;
                 }
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
@@ -199,12 +180,12 @@ namespace avcbuilder1.tblForms
         string PkValue = null;
         AvcIdType idType = AvcIdType.OtherId;
         object curPoco = null;
-        string pkName = "ID";
+        string PkName = null;
         public override void QueryById(string Id, AvcIdType IdType)
         {
             PkValue = Id;
             idType = IdType;
-
+            PkName = "ID";
             if (IdType == AvcIdType.FeedId)
             {
                 curPoco = new tblfeeder();
@@ -224,46 +205,74 @@ namespace avcbuilder1.tblForms
             else if (IdType == AvcIdType.VolRegId)
             {
                 curPoco = new tblfeedvoltageregulator();
-
             }
             else
             {
-                return;
+                MsgBox("Id类型错误,添加失败"); return;
             }
 
-            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, pkName, Id);
+            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, PkName, PkValue);
             QueryBySql(curSql);
+            DialogResult = DialogResult.OK;
+            ShowDialog();
         }
 
-        public  void QueryByPk(AvcIdType IdType)
+        public DialogResult QueryAndAdd(AvcIdType currentType, string IdFromParentOfFocusNode, AvcIdType TargetType)
         {
-            if (IdType == AvcIdType.FeedId)
+            curPoco = null;
+            PkValue = IdFromParentOfFocusNode;
+            if (currentType == AvcIdType.ServerId)
             {
+                PkName = "ID";
+                curPoco = new tblsubcontrolarea();
+            }
+            if (currentType == AvcIdType.AreaId)
+            {
+                PkName = "SUBCONTROLAREAID";
+                curPoco = new tblsubstation();
+            }
+            else if (currentType == AvcIdType.StationId)
+            {
+                PkName = "SUBSTATIONID";
                 curPoco = new tblfeeder();
             }
-            else if (IdType == AvcIdType.CapId)
+            else if (currentType == AvcIdType.CapId)
             {
-                curPoco = new tblfeedcapacitor();
-            }
-            else if (IdType == AvcIdType.Cap_itemId)
-            {
+                PkName = "FEEDCAPACITORID";
                 curPoco = new tblfeedcapacitoritem();
             }
-            else if (IdType == AvcIdType.TransId)
+
+
+            if (currentType == AvcIdType.FeedId)
             {
-                curPoco = new tblfeedtrans();
-            }
-            else if (IdType == AvcIdType.VolRegId)
-            {
-                curPoco = new tblfeedvoltageregulator();
-            }
-            else
-            {
-                return;
+                if (TargetType == AvcIdType.CapId)
+                {
+                    PkName = "FEEDID";
+                    curPoco = new tblfeedcapacitor();
+                }
+                else if (TargetType == AvcIdType.TransId)
+                {
+                    PkName = "FEEDID";
+                    curPoco = new tblfeedtrans();
+                }
+                else if (TargetType == AvcIdType.VolRegId)
+                {
+                    PkName = "FEEDID";
+                    curPoco = new tblfeedvoltageregulator();
+                }
             }
 
-            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, pkName, PkValue);
+            if(curPoco == null)
+            {
+                MsgBox("Id类型错误,添加失败");
+                return DialogResult.None;
+            }
+            string sql_where = string.Format("{0} = {1};", PkName, PkValue);
+            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, sql_where);
             QueryBySql(curSql);
+            gridView1.AddNewRow();
+            this.DialogResult = DialogResult.OK;
+            return ShowDialog();
         }
 
 

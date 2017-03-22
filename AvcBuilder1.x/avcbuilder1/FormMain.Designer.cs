@@ -52,6 +52,10 @@
             this.barButtonItem_del = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem_edit = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem_refresh = new DevExpress.XtraBars.BarButtonItem();
+            this.barSubItem_element = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonItem_cap = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem_trans = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem_volt = new DevExpress.XtraBars.BarButtonItem();
             this.repositoryItemTrackBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemTrackBar();
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -77,10 +81,6 @@
             this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
             this.xtraTabPage4 = new DevExpress.XtraTab.XtraTabPage();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.barSubItem_element = new DevExpress.XtraBars.BarSubItem();
-            this.barButtonItem_cap = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem_trans = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem_volt = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl_Main)).BeginInit();
             this.xtraTabControl_Main.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
@@ -415,6 +415,7 @@
             this.barButtonItem_del.ImageIndex = 18;
             this.barButtonItem_del.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D));
             this.barButtonItem_del.Name = "barButtonItem_del";
+            this.barButtonItem_del.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem_del_ItemClick);
             // 
             // barButtonItem_edit
             // 
@@ -431,6 +432,34 @@
             this.barButtonItem_refresh.ImageIndex = 17;
             this.barButtonItem_refresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
             this.barButtonItem_refresh.Name = "barButtonItem_refresh";
+            // 
+            // barSubItem_element
+            // 
+            this.barSubItem_element.Caption = "添加设备";
+            this.barSubItem_element.Id = 15;
+            this.barSubItem_element.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_cap),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_trans),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_volt)});
+            this.barSubItem_element.Name = "barSubItem_element";
+            // 
+            // barButtonItem_cap
+            // 
+            this.barButtonItem_cap.Caption = "电容器";
+            this.barButtonItem_cap.Id = 16;
+            this.barButtonItem_cap.Name = "barButtonItem_cap";
+            // 
+            // barButtonItem_trans
+            // 
+            this.barButtonItem_trans.Caption = "变压器";
+            this.barButtonItem_trans.Id = 17;
+            this.barButtonItem_trans.Name = "barButtonItem_trans";
+            // 
+            // barButtonItem_volt
+            // 
+            this.barButtonItem_volt.Caption = "调压器";
+            this.barButtonItem_volt.Id = 18;
+            this.barButtonItem_volt.Name = "barButtonItem_volt";
             // 
             // repositoryItemTrackBar1
             // 
@@ -462,7 +491,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.xtraTabControl2);
             this.splitContainer2.Panel2MinSize = 100;
             this.splitContainer2.Size = new System.Drawing.Size(809, 577);
-            this.splitContainer2.SplitterDistance = 416;
+            this.splitContainer2.SplitterDistance = 414;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -473,7 +502,7 @@
             this.xtraTabControl_element.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl_element.Name = "xtraTabControl_element";
             this.xtraTabControl_element.SelectedTabPage = this.xtraTabPage_state;
-            this.xtraTabControl_element.Size = new System.Drawing.Size(809, 416);
+            this.xtraTabControl_element.Size = new System.Drawing.Size(809, 414);
             this.xtraTabControl_element.TabIndex = 0;
             this.xtraTabControl_element.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage_state,
@@ -492,76 +521,76 @@
             // 
             this.xtraTabPage_state.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_state.Name = "xtraTabPage_state";
-            this.xtraTabPage_state.Size = new System.Drawing.Size(807, 374);
+            this.xtraTabPage_state.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_state.Text = "状态";
             // 
             // xtraTabPage_limit
             // 
             this.xtraTabPage_limit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_limit.Name = "xtraTabPage_limit";
-            this.xtraTabPage_limit.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_limit.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_limit.Text = "限值";
             // 
             // xtraTabPage_protect
             // 
             this.xtraTabPage_protect.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_protect.Name = "xtraTabPage_protect";
-            this.xtraTabPage_protect.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_protect.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_protect.Text = "保护";
             // 
             // xtraTabPage_yc
             // 
             this.xtraTabPage_yc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yc.Name = "xtraTabPage_yc";
-            this.xtraTabPage_yc.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_yc.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_yc.Text = "遥测";
             // 
             // xtraTabPage_yx
             // 
             this.xtraTabPage_yx.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yx.Name = "xtraTabPage_yx";
-            this.xtraTabPage_yx.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_yx.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_yx.Text = "遥信";
             // 
             // xtraTabPage_yk
             // 
             this.xtraTabPage_yk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yk.Name = "xtraTabPage_yk";
-            this.xtraTabPage_yk.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_yk.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_yk.Text = "遥控";
             // 
             // xtraTabPage_yt
             // 
             this.xtraTabPage_yt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yt.Name = "xtraTabPage_yt";
-            this.xtraTabPage_yt.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_yt.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_yt.Text = "遥调";
             // 
             // xtraTabPage_num
             // 
             this.xtraTabPage_num.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_num.Name = "xtraTabPage_num";
-            this.xtraTabPage_num.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_num.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_num.Text = "动作次数";
             // 
             // xtraTabPage1_time
             // 
             this.xtraTabPage1_time.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_time.Name = "xtraTabPage1_time";
-            this.xtraTabPage1_time.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage1_time.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage1_time.Text = "运行时间";
             // 
             // xtraTabPage1_param
             // 
             this.xtraTabPage1_param.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_param.Name = "xtraTabPage1_param";
-            this.xtraTabPage1_param.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage1_param.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage1_param.Text = "铭牌参数";
             // 
             // xtraTabPage_measure
             // 
             this.xtraTabPage_measure.Name = "xtraTabPage_measure";
-            this.xtraTabPage_measure.Size = new System.Drawing.Size(807, 327);
+            this.xtraTabPage_measure.Size = new System.Drawing.Size(807, 372);
             this.xtraTabPage_measure.Text = "量测关联";
             // 
             // xtraTabControl2
@@ -571,7 +600,7 @@
             this.xtraTabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl2.Name = "xtraTabControl2";
             this.xtraTabControl2.SelectedTabPage = this.xtraTabPage_Info;
-            this.xtraTabControl2.Size = new System.Drawing.Size(809, 156);
+            this.xtraTabControl2.Size = new System.Drawing.Size(809, 158);
             this.xtraTabControl2.TabIndex = 0;
             this.xtraTabControl2.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage_Info});
@@ -582,7 +611,7 @@
             this.xtraTabPage_Info.Controls.Add(this.panelControl1);
             this.xtraTabPage_Info.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_Info.Name = "xtraTabPage_Info";
-            this.xtraTabPage_Info.Size = new System.Drawing.Size(807, 114);
+            this.xtraTabPage_Info.Size = new System.Drawing.Size(807, 116);
             this.xtraTabPage_Info.Text = "信息";
             // 
             // richTextBox1
@@ -595,7 +624,7 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(807, 77);
+            this.richTextBox1.Size = new System.Drawing.Size(807, 79);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
@@ -639,21 +668,21 @@
             // 
             this.xtraTabPage2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1119, 576);
+            this.xtraTabPage2.Size = new System.Drawing.Size(1119, 577);
             this.xtraTabPage2.Text = "拓扑管理";
             // 
             // xtraTabPage3
             // 
             this.xtraTabPage3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage3.Name = "xtraTabPage3";
-            this.xtraTabPage3.Size = new System.Drawing.Size(1119, 576);
+            this.xtraTabPage3.Size = new System.Drawing.Size(1119, 577);
             this.xtraTabPage3.Text = "通信管理";
             // 
             // xtraTabPage4
             // 
             this.xtraTabPage4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage4.Name = "xtraTabPage4";
-            this.xtraTabPage4.Size = new System.Drawing.Size(1119, 576);
+            this.xtraTabPage4.Size = new System.Drawing.Size(1119, 577);
             this.xtraTabPage4.Text = "专家系统";
             // 
             // popupMenu1
@@ -668,34 +697,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem_element)});
             this.popupMenu1.Manager = this.barManager1;
             this.popupMenu1.Name = "popupMenu1";
-            // 
-            // barSubItem_element
-            // 
-            this.barSubItem_element.Caption = "添加设备";
-            this.barSubItem_element.Id = 15;
-            this.barSubItem_element.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_cap),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_trans),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem_volt)});
-            this.barSubItem_element.Name = "barSubItem_element";
-            // 
-            // barButtonItem_cap
-            // 
-            this.barButtonItem_cap.Caption = "电容器";
-            this.barButtonItem_cap.Id = 16;
-            this.barButtonItem_cap.Name = "barButtonItem_cap";
-            // 
-            // barButtonItem_trans
-            // 
-            this.barButtonItem_trans.Caption = "变压器";
-            this.barButtonItem_trans.Id = 17;
-            this.barButtonItem_trans.Name = "barButtonItem_trans";
-            // 
-            // barButtonItem_volt
-            // 
-            this.barButtonItem_volt.Caption = "调压器";
-            this.barButtonItem_volt.Id = 18;
-            this.barButtonItem_volt.Name = "barButtonItem_volt";
             // 
             // FormMain
             // 

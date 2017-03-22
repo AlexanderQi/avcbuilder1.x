@@ -11,9 +11,9 @@ namespace avcbuilder1.tblForms
         protected mysqlDAO dao;
         protected myConnInfo conninfo;
         protected DataSet ds;
-       
 
-        protected FormQueryBase():base()
+
+        protected FormQueryBase() : base()
         {
             InitializeComponent();
         }
@@ -28,22 +28,20 @@ namespace avcbuilder1.tblForms
         AvcTreeEventArgs oldAvcEvent = null;
         private void Instance_AvcTreeFocusChanged(object sender, AvcTreeEventArgs e)
         {
-            int vt = (int)e.IdType;
-            if (vt > 3 && vt < 8)
+            oldAvcEvent = e;
+            if (Visible)
             {
-                oldAvcEvent = e;
-                if (Visible)
-                {
-                    QueryById(e.Id, e.IdType);
-                    SetCaption(e.Caption);
-                }
+                SetCaption(e.Caption);
+                PrimeTableName = e.Msg;
+                QueryById(e.Id, e.IdType);
             }
+
         }
 
         public override void RefreshForm()
         {
             base.RefreshForm();
-            if(oldAvcEvent != null)
+            if (oldAvcEvent != null)
             {
                 QueryById(oldAvcEvent.Id, oldAvcEvent.IdType);
                 SetCaption(oldAvcEvent.Caption);
@@ -68,7 +66,7 @@ namespace avcbuilder1.tblForms
             col.Caption = chineseCaption;
             col.CustomizationCaption = chineseCaption;
 
-            col.MinWidth = 100;
+            //col.MinWidth = 50;
             col.Visible = true;
             return col;
         }
@@ -84,6 +82,12 @@ namespace avcbuilder1.tblForms
 
 
         virtual public void QueryById(String Id, AvcIdType IdType) { }
+
+        protected string PrimeTableName = null;
+        virtual public void Query(string pkName, string pkValue)
+        {
+
+        }
 
         protected bool findpanel_visible = true;
         private void simpleButton_Find_Click(object sender, EventArgs e)

@@ -127,11 +127,10 @@ namespace avcbuilder1.tblForms
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;
-            tblelement ele = new tblelement();
             tblytparam sta = new tblytparam();
-            if (IdType == AvcIdType.FeedId)
+            if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
             {
-                MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
+                MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
             }
             else
             {

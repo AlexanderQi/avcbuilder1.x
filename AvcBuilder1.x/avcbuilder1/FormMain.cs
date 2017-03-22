@@ -229,7 +229,6 @@ namespace avcbuilder1
         {
             IniTreeTable();
             Dao = FormConnectSrv.Instance.Open();
-            TreeLoad();
             EventArgs ea = new EventArgs();
             if (barButtonItem_connect.Caption.Equals("连接..."))
             {
@@ -333,6 +332,9 @@ namespace avcbuilder1
 
             frm = new FormCardMeasure();
             frm.ShowInControl(xtraTabPage_measure);
+
+            frm = new FormQueryElement();
+            frm.ShowInControl(xtraTabPage1_param);
         }
 
         private AvcTreeEventArgs newAvcTreeEventArgs()
@@ -341,9 +343,11 @@ namespace avcbuilder1
             string Caption = e["NAME"].ToString();
             string str = e["INFO"].ToString();
             string Id = e["ID"].ToString();
+            string tbl = e["TBL"].ToString();
             AvcIdType a = (AvcIdType)((int)e["TYPE"]);
             AvcTreeEventArgs av = new AvcTreeEventArgs(Id, a);
             av.Caption = Caption;
+            av.Msg = tbl;
             TreeListNode pe = e.ParentNode;
             if (pe != null)
             {
@@ -355,61 +359,15 @@ namespace avcbuilder1
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
         {
+
+            if (treeList1.FocusedNode == null || treeList1.FocusedNode["ID"].ToString().Equals("-1"))
+                return;
             if (AvcTreeFocusChanged != null)
             {
                 AvcTreeEventArgs av = newAvcTreeEventArgs();
                 AvcTreeFocusChanged(this, av);
             }
         }
-
-        //public AvcIdType getAvcIdType(string str)
-        //{
-        //    AvcIdType a = AvcIdType.OtherId;
-        //    switch (str)
-        //    {
-        //        case "配电电容器":
-        //        case "线路电容器":
-        //            {
-        //                a = AvcIdType.CapId;
-        //                break;
-        //            }
-        //        case "线路调压器":
-        //            {
-        //                a = AvcIdType.VolRegId;
-        //                break;
-        //            }
-        //        case "配电变压器":
-        //            {
-        //                a = AvcIdType.TransId;
-        //                break;
-        //            }
-        //        case "电容器子组":
-        //            {
-        //                a = AvcIdType.Cap_itemId;
-        //                break;
-        //            }
-        //        case "馈线":
-        //            {
-        //                a = AvcIdType.FeedId;
-        //                break;
-        //            }
-        //        case "变电站":
-        //            {
-        //                a = AvcIdType.StationId;
-        //                break;
-        //            }
-        //        case "管理单位":
-        //            {
-        //                a = AvcIdType.AreaId;
-        //                break;
-        //            }
-        //        default:
-        //            {
-        //                break;
-        //            }
-        //    }
-        //    return a;
-        //}
 
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
@@ -563,11 +521,11 @@ namespace avcbuilder1
 
     public class AvcTreeEventArgs : EventArgs
     {
-        private string caption;
-        private string id;
+        private string caption;  //主键字段名  
+        private string id;          //主键字段值
         private string parentId;
         private string parentCaption;
-
+        public string Msg;
         private AvcIdType idt;
         public int tag;
         public AvcTreeEventArgs(string id, AvcIdType idType) : base()

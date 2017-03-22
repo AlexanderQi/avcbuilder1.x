@@ -127,14 +127,10 @@ namespace avcbuilder1.tblForms
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;
-            tblelement ele = new tblelement();
             tblelementstate sta = new tblelementstate();
-            if (IdType == AvcIdType.FeedId)
+            if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
             {
-                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.FEEDID=" + Id);
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
-                QueryBySql(curSql);
-                //MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
+                MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
             }
             else
             {

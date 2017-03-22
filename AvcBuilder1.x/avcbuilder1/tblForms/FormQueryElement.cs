@@ -176,6 +176,16 @@ namespace avcbuilder1.tblForms
             gridView1.EndUpdate();
         }//func
 
+
+        public override void Query(string pkName, string pkValue)
+        {
+            object poco = PocoFactory.getPocoByName(PrimeTableName);
+            PkName = pkName;
+            PkValue = pkValue;
+            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(poco, pkName, pkValue);
+            QueryBySql(curSql);
+        }
+
         string curSql = null;
         string PkValue = null;
         AvcIdType idType = AvcIdType.OtherId;
@@ -186,35 +196,17 @@ namespace avcbuilder1.tblForms
             PkValue = Id;
             idType = IdType;
             PkName = "ID";
-            if (IdType == AvcIdType.FeedId)
+            try
             {
-                curPoco = new tblfeeder();
+                curPoco = PocoFactory.getPocoByName(PrimeTableName);
+                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, PkName, PkValue);
+                QueryBySql(curSql);
             }
-            else if (IdType == AvcIdType.CapId)
+            catch (Exception ex)
             {
-                curPoco = new tblfeedcapacitor();
+                log.Error(ex);
+                MsgBox(ex.Message);
             }
-            else if (IdType == AvcIdType.Cap_itemId)
-            {
-                curPoco = new tblfeedcapacitoritem();
-            }
-            else if (IdType == AvcIdType.TransId)
-            {
-                curPoco = new tblfeedtrans();
-            }
-            else if (IdType == AvcIdType.VolRegId)
-            {
-                curPoco = new tblfeedvoltageregulator();
-            }
-            else
-            {
-                MsgBox("Id类型错误,添加失败"); return;
-            }
-
-            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, PkName, PkValue);
-            QueryBySql(curSql);
-            DialogResult = DialogResult.OK;
-            ShowDialog();
         }
 
         public DialogResult QueryAndAdd(AvcIdType currentType, string IdFromParentOfFocusNode, AvcIdType TargetType)

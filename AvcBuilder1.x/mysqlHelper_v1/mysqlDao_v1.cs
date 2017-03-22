@@ -276,9 +276,18 @@ namespace mysqlDao_v1
             if (pkName == null||pkName.Equals("")) return null;
             Type t = poco.GetType();
             PropertyInfo[] props = t.GetProperties();
+
+            for (int i = 0; i < props.Length; i++) //复制数据到poco
+            {
+                if (props[i].PropertyType.IsArray) continue;
+                if (row.IsNull(props[i].Name)) continue;
+                var val = row[props[i].Name];
+                props[i].SetValue(poco, val, null);
+            }
+
             for (int i = 0; i < props.Length; i++)
             {
-                if (props[i].Name.ToUpper().Equals(pkName.ToUpper()))
+                if (props[i].Name.ToUpper().Equals(pkName.ToUpper())) //找主键并设置。
                 {
                     if(props[i].PropertyType == typeof(int))
                     {
@@ -290,15 +299,6 @@ namespace mysqlDao_v1
                     break;
                 }
             }
-
-            for (int i = 0; i < props.Length; i++)
-            {
-                if (props[i].PropertyType.IsArray) continue;
-                if (row.IsNull(props[i].Name)) continue;
-                var val = row[props[i].Name];
-                props[i].SetValue(poco, val, null);
-            }
-            
             return poco;
         }
 

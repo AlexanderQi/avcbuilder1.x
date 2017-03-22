@@ -128,16 +128,10 @@ namespace avcbuilder1.tblForms
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;
-            tblelement ele = new tblelement();
             tblprotection sta = new tblprotection();
-            if (IdType == AvcIdType.FeedId)
+            if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
             {
-                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID EID,NAME ENAME", "*", "ID", "OBJECTELEMENTID", "L.FEEDID=" + Id);
-                //QueryBySql(curSql);
-                //gridView1.OptionsBehavior.Editable = 
-                //simpleButton_IniData.Enabled = 
-                //simpleButton_Save.Enabled = false;
-                ////MsgBox("你选择的是馈线单位，请选择馈线下的具体设备。");
+                MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
             }
             else
             {

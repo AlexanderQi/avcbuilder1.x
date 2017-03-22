@@ -32,6 +32,7 @@ namespace avcbuilder1.tblForms
         public void ShowInControl(Control owner)
         {
             Ini();
+            this.FormBorderStyle = FormBorderStyle.None;
             this.TopLevel = false;
             this.Dock = DockStyle.Fill;
             this.Parent = owner;

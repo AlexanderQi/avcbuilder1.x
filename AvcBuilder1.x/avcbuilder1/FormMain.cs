@@ -31,7 +31,7 @@ namespace avcbuilder1
         public delegate void AvcTreeFocusChangedHandle(object sender, AvcTreeEventArgs e);
         public delegate void AvcSrvConnectedHandle(object sender, EventArgs e);
         public delegate void AvcSrvDisconnectedHandle(object sender, EventArgs e);
-       
+
         public event AvcTreeFocusChangedHandle AvcTreeFocusChanged;
         public event AvcSrvConnectedHandle AvcSrvConnected;
         public event AvcSrvDisconnectedHandle AvcSrvDisconnected;
@@ -39,7 +39,7 @@ namespace avcbuilder1
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                     new FormMain();
                 return instance;
             }
@@ -98,6 +98,7 @@ namespace avcbuilder1
             TreeTable.Columns.Add("NAME", typeof(string));
             TreeTable.Columns.Add("INFO", typeof(string));
             TreeTable.Columns.Add("TYPE", typeof(int));
+            TreeTable.Columns.Add("TBL", typeof(string));
             //TreeTable.Columns.Add("tag", typeof(int));
             //TreeTable.Columns.Add("style", typeof(int));
             CreateTreeRoot();
@@ -113,6 +114,7 @@ namespace avcbuilder1
             root["NAME"] = "AVC Server";
             root["INFO"] = "未连接";
             root["TYPE"] = AvcIdType.ServerId;
+
             //root["tag"] = 0;
             TreeTable.Rows.Add(root);
             return root;
@@ -126,7 +128,7 @@ namespace avcbuilder1
         private void TreeLoad()
         {
             try
-            {             
+            {
                 if (Dao == null)
                 {
                     return;
@@ -136,27 +138,27 @@ namespace avcbuilder1
                 DataRow root = CreateTreeRoot();
                 root["INFO"] = "已连接";
                 string sql = "select ID,NAME from tblsubcontrolarea"; //mysqlDAO.getQuerySql(new tblsubcontrolarea(), null); 
-                LoadTbl(sql, -1, 1, "管理单位",AvcIdType.AreaId);
+                LoadTbl(sql, -1, 1, "管理单位", AvcIdType.AreaId, "tblsubcontrolarea");
 
                 sql = "select ID,NAME,SUBCONTROLAREAID as PID from tblsubstation;";
-                LoadTbl(sql, 2, "变电站", AvcIdType.StationId);
+                LoadTbl(sql, 2, "变电站", AvcIdType.StationId, "tblsubstation");
 
                 sql = "select ID,NAME,SUBSTATIONID as PID from tblfeeder;";
-                LoadTbl(sql, 3, "馈线", AvcIdType.FeedId);
+                LoadTbl(sql, 3, "馈线", AvcIdType.FeedId, "tblfeeder");
 
                 sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
-                LoadTbl(sql, 4, "线路电容器", AvcIdType.CapId);
+                LoadTbl(sql, 4, "线路电容器", AvcIdType.CapId, "tblfeedcapacitor");
                 sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
-                LoadTbl(sql, 5, "配电电容器", AvcIdType.CapId);
+                LoadTbl(sql, 5, "配电电容器", AvcIdType.CapId, "tblfeedcapacitor");
 
                 sql = "select ID,NAME,FEEDCAPACITORID as PID from tblfeedcapacitoritem";
-                LoadTbl(sql, 8, "电容器子组", AvcIdType.Cap_itemId);
+                LoadTbl(sql, 8, "电容器子组", AvcIdType.Cap_itemId, "tblfeedcapacitoritem");
 
                 sql = "select ID,NAME,FEEDID as PID from tblfeedtrans";
-                LoadTbl(sql, 6, "配电变压器", AvcIdType.TransId);
+                LoadTbl(sql, 6, "配电变压器", AvcIdType.TransId, "tblfeedtrans");
 
                 sql = "select id,name,FEEDID as PID from tblfeedvoltageregulator";
-                LoadTbl(sql, 7, "线路调压器", AvcIdType.VolRegId);
+                LoadTbl(sql, 7, "线路调压器", AvcIdType.VolRegId, "tblfeedvoltageregulator");
                 treeList1.ExpandAll();
                 treeList1.BestFitColumns();
                 treeList1.EndUpdate();
@@ -176,7 +178,7 @@ namespace avcbuilder1
         /// <param name="pid">parent id 如果小于0 则属于程序内部指定，否则是数据库表中的上级id</param>
         /// <param name="ImgIndex">index of imagelist</param>
         /// <param name="info">infomation of recorder</param>
-        private void LoadTbl(string sql, int pid, int ImgIndex, string info,AvcIdType idTtype)
+        private void LoadTbl(string sql, int pid, int ImgIndex, string info, AvcIdType idTtype,string tblName)
         {
 
             try
@@ -195,6 +197,7 @@ namespace avcbuilder1
                     tree_row["NAME"] = row["NAME"].ToString();
                     tree_row["INFO"] = info;
                     tree_row["TYPE"] = idTtype;
+                    tree_row["TBL"] = tblName;
                     TreeTable.Rows.Add(tree_row);
                 }
             }
@@ -205,9 +208,9 @@ namespace avcbuilder1
             }
         }
 
-        private void LoadTbl(string sql, int ImgIndex, string info, AvcIdType idType)
+        private void LoadTbl(string sql, int ImgIndex, string info, AvcIdType idType,string tblName)
         {
-            LoadTbl(sql, 0xff, ImgIndex, info, idType);
+            LoadTbl(sql, 0xff, ImgIndex, info, idType,tblName);
         }
 
 
@@ -240,7 +243,7 @@ namespace avcbuilder1
             }
         }
 
-        
+
         private void treeList1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right
@@ -251,7 +254,7 @@ namespace avcbuilder1
                 TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.Location);
                 if (hitInfo.Node != null)
                 {
-                    if(hitInfo.Node != treeList1.FocusedNode)
+                    if (hitInfo.Node != treeList1.FocusedNode)
                         hitInfo.Node.Selected = true;
 
                     if (hitInfo.Node["ID"].ToString().Equals("-1"))
@@ -332,7 +335,7 @@ namespace avcbuilder1
             frm.ShowInControl(xtraTabPage_measure);
         }
 
-       private AvcTreeEventArgs newAvcTreeEventArgs()
+        private AvcTreeEventArgs newAvcTreeEventArgs()
         {
             TreeListNode e = treeList1.FocusedNode;
             string Caption = e["NAME"].ToString();
@@ -410,7 +413,7 @@ namespace avcbuilder1
 
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
-           
+
         }
 
         private bool tree_findpanel_visible = false;
@@ -469,11 +472,11 @@ namespace avcbuilder1
         {
             barSubItem_element.Enabled = barButtonItem_add.Enabled = barButtonItem_del.Enabled = barButtonItem_edit.Enabled = false;
             curCaption = node["NAME"].ToString();
-             curNodeInfo = node["INFO"].ToString();
-             curNodeId = node["ID"].ToString();
+            curNodeInfo = node["INFO"].ToString();
+            curNodeId = node["ID"].ToString();
             AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
             TreeListNode parentNode = node.ParentNode;
-            if(parentNode == null)
+            if (parentNode == null)
             {
                 if (ai == AvcIdType.ServerId)
                 {
@@ -501,16 +504,16 @@ namespace avcbuilder1
             {
                 case AvcIdType.ServerId: { barButtonItem_add.Caption = "添加区域..."; break; }
                 case AvcIdType.AreaId: { barButtonItem_add.Caption = "添加变电站..."; break; }
-                case AvcIdType.StationId: { barButtonItem_add.Caption = "添加馈线...";break; }
-                case AvcIdType.CapId: { barButtonItem_add.Caption = "添加电容子组...";  break; }
-                default: { barButtonItem_add.Caption = "添加..."; break;}
+                case AvcIdType.StationId: { barButtonItem_add.Caption = "添加馈线..."; break; }
+                case AvcIdType.CapId: { barButtonItem_add.Caption = "添加电容子组..."; break; }
+                default: { barButtonItem_add.Caption = "添加..."; break; }
             }
         }
 
         private void barButtonItem_add_ItemClick(object sender, ItemClickEventArgs e)
         {
             AvcTreeEventArgs av = newAvcTreeEventArgs();
-           
+
             if (e.Item == barButtonItem_cap)
                 av.tag = (int)AvcIdType.CapId;
             else if (e.Item == barButtonItem_trans)
@@ -531,13 +534,23 @@ namespace avcbuilder1
             try
             {
                 TreeListNode node = treeList1.FocusedNode;
-                object poco = null;
+                string caption = node["NAME"].ToString();
+                if (XtraMessageBox.Show(string.Format("确定删除 {0} 该记录吗?",caption), "删除提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
                 String id = node["ID"].ToString();
                 AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
-                switch (ai)
+                string tbl = node["TBL"].ToString( );
+                object poco = PocoFactory.getPocoByName(tbl);  //, "AvcDb.entities"
+                if (poco != null)
                 {
-                    case AvcIdType.AreaId: { break; }
+                    string sql = mysqlDAO.getDeleteSql(poco, "ID", id);
+                    int r = Dao.Execute(sql);
+                    XtraMessageBox.Show(string.Format("操作成功,{0}条记录.", r));
                 }
+                else
+                {
+                    XtraMessageBox.Show(string.Format("类型错误,{0}.", tbl));
+                }
+                //tbl 字符串反射反射反射反射
                 //mysqlDAO.getDeleteSql()
             }
             catch (Exception ex)
@@ -606,5 +619,5 @@ namespace avcbuilder1
         }
     }//class
 
-    public enum AvcIdType {ServerId = -1, AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };
+    public enum AvcIdType { ServerId = -1, AreaId = 0, StationId = 1, FeedId = 2, ElementId = 3, CapId = 4, Cap_itemId = 5, TransId = 6, VolRegId = 7, OtherId = 8 };
 }//namespace

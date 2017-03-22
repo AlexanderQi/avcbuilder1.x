@@ -281,6 +281,7 @@
     <Compile Include="tblForms\FormQueryYX.Designer.cs">
       <DependentUpon>FormQueryYX.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\PocoFactory.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

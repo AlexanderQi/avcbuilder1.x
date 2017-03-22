@@ -112,16 +112,19 @@ namespace avcUnitTest
         }
 
         [TestMethod]
-        public void TestMethod6_forDB()
+        public void TestMethod6()
         {
-            string conn = ConfigurationManager.ConnectionStrings["avcdb"].ConnectionString;
-            mysqlDAO md = new mysqlDAO(conn);
-            //DataTable dt = md.Query("select * from tblsequencenumber");
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    Console.WriteLine(string.Format("{0}    {1}", dr[0], dr[1]));
-            //}
-     
+            Assembly ass;
+               ass = Assembly.GetAssembly(typeof(tblalarm));
+            //ass = Assembly.GetAssembly(typeof(tblalarm));
+           // ass = Assembly.GetEntryAssembly();
+            Console.WriteLine(ass.FullName);
+            Type t = ass.GetType("AvcDb.entities.tblfeeder",true,true);
+            object obj = Activator.CreateInstance(t, true);
+            if (obj != null)
+                Console.WriteLine(string.Format("obj fullname: {0}", t.FullName));
+            else
+                Console.WriteLine("failed");
         }
 
     }

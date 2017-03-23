@@ -428,18 +428,21 @@ namespace avcbuilder1
         string curNodeId = null;
         public void popupMenuBefore(TreeListNode node)
         {
-            barSubItem_element.Enabled = barButtonItem_add.Enabled = barButtonItem_del.Enabled = barButtonItem_edit.Enabled = false;
+            barSubItem_element.Enabled = barButtonItem_add.Enabled = barButtonItem_del.Enabled = false;
+            
             curCaption = node["NAME"].ToString();
             curNodeInfo = node["INFO"].ToString();
             curNodeId = node["ID"].ToString();
             AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
+            barButtonItem_tree_find.Enabled = barButtonItem_refresh.Enabled = root["INFO"].ToString().Equals("已连接");
             TreeListNode parentNode = node.ParentNode;
             if (parentNode == null)
             {
                 if (ai == AvcIdType.ServerId)
                 {
                     barButtonItem_connect.Visibility = BarItemVisibility.Always;
-                    barButtonItem_add.Enabled = true;
+                    if(curNodeInfo.Equals("已连接"))
+                        barButtonItem_add.Enabled = true;
                 }
                 else
                 {
@@ -451,7 +454,7 @@ namespace avcbuilder1
             {
                 barButtonItem_connect.Visibility = BarItemVisibility.Never;
                 AvcIdType pai = (AvcIdType)((int)parentNode["TYPE"]);
-                barButtonItem_del.Enabled = barButtonItem_edit.Enabled = true;
+                barButtonItem_del.Enabled =  true;
                 if (ai == AvcIdType.FeedId)
                     barSubItem_element.Enabled = true;
                 else
@@ -481,11 +484,6 @@ namespace avcbuilder1
             FormElement.ShowAddModal(av);
         }
 
-        private void barButtonItem_edit_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            AvcTreeEventArgs av = newAvcTreeEventArgs();
-            FormElement.ShowEditModal(av);
-        }
 
         private void barButtonItem_del_ItemClick(object sender, ItemClickEventArgs e)
         {

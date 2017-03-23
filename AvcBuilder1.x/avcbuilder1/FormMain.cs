@@ -56,6 +56,11 @@ namespace avcbuilder1
                 barButtonItem_trans.ItemClick += barButtonItem_add_ItemClick;
                 barButtonItem_cap.ItemClick += barButtonItem_add_ItemClick;
                 barButtonItem_refresh.ItemClick += BarButtonItem_refresh_ItemClick;
+
+                simpleButton_trans.Click += simpleButton_vol_Click;
+                simpleButton_line.Click += simpleButton_vol_Click;
+                simpleButton_tap.Click += simpleButton_vol_Click;
+
                 log = LogManager.GetLogger("log");
                 IniTreeTable();
                 IniForms();
@@ -528,6 +533,29 @@ namespace avcbuilder1
         {
             treeListColumn_id.Visible = barCheckItem_id.Checked;
             treeList1.BestFitColumns();
+        }
+
+        FormQueryAvcType ftype = null;
+        private void simpleButton_vol_Click(object sender, EventArgs e)
+        {
+            if(ftype == null)
+            {
+                
+                ftype = new FormQueryAvcType();
+                ftype.FormBorderStyle = FormBorderStyle.Sizable;
+                ftype.ControlBox = true;
+                ftype.MinimizeBox = false;
+                ftype.StartPosition = FormStartPosition.CenterScreen;
+                ftype.Ini();
+            }
+            if (sender == simpleButton_vol)
+                ftype.ShowModal("tblvoltagelevel",simpleButton_vol.ToolTip);
+            else if (sender == simpleButton_trans)
+                ftype.ShowModal("tbltransformertype", simpleButton_trans.ToolTip);
+            else if (sender == simpleButton_line)
+                ftype.ShowModal("tblconductortype", simpleButton_line.ToolTip);
+            else if (sender == simpleButton_tap)
+                ftype.ShowModal("tbltapchangertype", simpleButton_tap.ToolTip);
         }
     }//class
 

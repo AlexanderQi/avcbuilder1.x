@@ -215,6 +215,12 @@
     <Compile Include="tblForms\FormQueryAction.Designer.cs">
       <DependentUpon>FormQueryAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\FormQueryAvcType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormQueryAvcType.Designer.cs">
+      <DependentUpon>FormQueryAvcType.cs</DependentUpon>
+    </Compile>
     <Compile Include="tblForms\FormQueryBase.cs">
       <SubType>Form</SubType>
     </Compile>

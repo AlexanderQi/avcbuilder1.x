@@ -21,9 +21,24 @@ namespace avcbuilder1.tblForms
         public override void Ini()
         {
             FormMain.Instance.AvcTreeFocusChanged += Instance_AvcTreeFocusChanged;
+            FormMain.Instance.AvcSrvDisconnected += Instance_AvcSrvDisconnected;
+            FormMain.Instance.AvcSrvConnected += Instance_AvcSrvConnected;
             gridView1.HideFindPanel();
             SetButtonsEnable(false);
         }
+
+        private void Instance_AvcSrvConnected(object sender, EventArgs e)
+        {
+            Enabled = true;
+        }
+
+        private void Instance_AvcSrvDisconnected(object sender, EventArgs e)
+        {
+            Enabled = false;
+            SetCaption(" ");
+        }
+
+
 
         AvcTreeEventArgs oldAvcEvent = null;
         private void Instance_AvcTreeFocusChanged(object sender, AvcTreeEventArgs e)
@@ -42,6 +57,7 @@ namespace avcbuilder1.tblForms
 
         public override void RefreshForm()
         {
+            if (!Enabled) return;
             base.RefreshForm();
             if (oldAvcEvent != null)
             {

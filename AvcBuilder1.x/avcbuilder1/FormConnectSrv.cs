@@ -23,7 +23,7 @@ namespace avcbuilder1
 
 
         private string avc_conn = "";
-        public mysqlDAO Dao;
+        internal mysqlDAO Dao;
         private static FormConnectSrv instance = null;
         public myConnInfo conninfo;
 
@@ -114,15 +114,16 @@ namespace avcbuilder1
             return true;
         }
 
-        public mysqlDAO Open()
+        public DialogResult Open()
         {
             LoadConnInfo();
             ShowDialog();
-            return Dao;
+            return this.DialogResult;
         }
 
         private void simpleButton_cancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Hide();
         }
 
@@ -132,17 +133,19 @@ namespace avcbuilder1
             try
             {
                 Dao = new mysqlDAO(avc_conn);
+                Dao.TestConnect();
                 Dao.SetSqlForNewId(sql4NewId);
                 Dao.CmdExecute += Dao_OnSqlExecute; ;
+                DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 XtraMessageBox.Show(ex.Message);
                 log.Error(ex.Message);
             }
             finally
             {
-                DialogResult = DialogResult.OK;
                 Hide();
             }
         }

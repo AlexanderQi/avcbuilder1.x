@@ -178,7 +178,7 @@ namespace avcbuilder1
         /// <param name="pid">parent id 如果小于0 则属于程序内部指定，否则是数据库表中的上级id</param>
         /// <param name="ImgIndex">index of imagelist</param>
         /// <param name="info">infomation of recorder</param>
-        private void LoadTbl(string sql, int pid, int ImgIndex, string info, AvcIdType idTtype,string tblName)
+        private void LoadTbl(string sql, int pid, int ImgIndex, string info, AvcIdType idTtype, string tblName)
         {
 
             try
@@ -208,9 +208,9 @@ namespace avcbuilder1
             }
         }
 
-        private void LoadTbl(string sql, int ImgIndex, string info, AvcIdType idType,string tblName)
+        private void LoadTbl(string sql, int ImgIndex, string info, AvcIdType idType, string tblName)
         {
-            LoadTbl(sql, 0xff, ImgIndex, info, idType,tblName);
+            LoadTbl(sql, 0xff, ImgIndex, info, idType, tblName);
         }
 
 
@@ -227,18 +227,26 @@ namespace avcbuilder1
         /// <param name="e"></param>
         private void barButtonItem_connect_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            IniTreeTable();
-            Dao = FormConnectSrv.Instance.Open();
-            EventArgs ea = new EventArgs();
             if (barButtonItem_connect.Caption.Equals("连接..."))
             {
+                DialogResult dia = FormConnectSrv.Instance.Open();
+                if (dia != DialogResult.OK) return;
+                this.Dao = FormConnectSrv.Instance.Dao;
+                panelControl_buttons.Enabled = true;
+                IniTreeTable();
                 TreeLoad();
                 if (AvcSrvConnected != null)
-                    AvcSrvConnected(this, ea);
+                {
+                    AvcSrvConnected(this, new EventArgs());
+                }
             }
-            else if (AvcSrvDisconnected != null)
+
+            if(barButtonItem_connect.Caption.Equals("断开..."))
             {
-                AvcSrvDisconnected(this, ea);
+                IniTreeTable();
+                panelControl_buttons.Enabled = false;
+                if (AvcSrvDisconnected != null)
+                    AvcSrvDisconnected(this, new EventArgs());
             }
         }
 
@@ -429,7 +437,7 @@ namespace avcbuilder1
         public void popupMenuBefore(TreeListNode node)
         {
             barSubItem_element.Enabled = barButtonItem_add.Enabled = barButtonItem_del.Enabled = false;
-            
+
             curCaption = node["NAME"].ToString();
             curNodeInfo = node["INFO"].ToString();
             curNodeId = node["ID"].ToString();
@@ -441,7 +449,7 @@ namespace avcbuilder1
                 if (ai == AvcIdType.ServerId)
                 {
                     barButtonItem_connect.Visibility = BarItemVisibility.Always;
-                    if(curNodeInfo.Equals("已连接"))
+                    if (curNodeInfo.Equals("已连接"))
                         barButtonItem_add.Enabled = true;
                 }
                 else
@@ -454,7 +462,7 @@ namespace avcbuilder1
             {
                 barButtonItem_connect.Visibility = BarItemVisibility.Never;
                 AvcIdType pai = (AvcIdType)((int)parentNode["TYPE"]);
-                barButtonItem_del.Enabled =  true;
+                barButtonItem_del.Enabled = true;
                 if (ai == AvcIdType.FeedId)
                     barSubItem_element.Enabled = true;
                 else
@@ -491,10 +499,10 @@ namespace avcbuilder1
             {
                 TreeListNode node = treeList1.FocusedNode;
                 string caption = node["NAME"].ToString();
-                if (XtraMessageBox.Show(string.Format("确定删除 {0} 该记录吗?",caption), "删除提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
+                if (XtraMessageBox.Show(string.Format("确定删除 {0} 该记录吗?", caption), "删除提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
                 String id = node["ID"].ToString();
                 AvcIdType ai = (AvcIdType)((int)node["TYPE"]);
-                string tbl = node["TBL"].ToString( );
+                string tbl = node["TBL"].ToString();
                 object poco = PocoFactory.getPocoByName(tbl);  //, "AvcDb.entities"
                 if (poco != null)
                 {
@@ -514,6 +522,12 @@ namespace avcbuilder1
                 log.Error(ex);
                 XtraMessageBox.Show(ex.Message);
             }
+        }
+
+        private void barCheckItem_id_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            treeListColumn_id.Visible = barCheckItem_id.Checked;
+            treeList1.BestFitColumns();
         }
     }//class
 

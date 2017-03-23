@@ -82,7 +82,7 @@ namespace avcbuilder1.tblForms
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {
             SetButtonsEnable(false);
-            if (ds.Tables.Count > 0)
+            if (ds != null && ds.Tables.Count > 0)
                 ds.Tables[0].Clear();
 
         }

@@ -93,7 +93,7 @@ namespace avcbuilder1.tblForms
         /// <param name="value">button.enabled = value</param>
         protected void SetButtonsEnable(bool value)
         {
-            simpleButton_Save.Enabled = simpleButton_Refresh.Enabled = simpleButton_IniData.Enabled = simpleButton_Find.Enabled = value;
+            simpleButton_Save.Enabled = simpleButton_Refresh.Enabled = simpleButton_copy.Enabled = simpleButton_Find.Enabled = value;
         }
 
 
@@ -113,6 +113,37 @@ namespace avcbuilder1.tblForms
             else
                 gridView1.HideFindPanel();
             findpanel_visible = !findpanel_visible;
+        }
+
+        private void simpleButton_copy_Click(object sender, EventArgs e)
+        {
+            if (dao == null) return;
+            try
+            {
+                int n = gridView1.FocusedRowHandle;
+                if (n<0l)
+                {
+                    MsgBox("空行不可复制.");
+                    return;
+                }
+                DataTable dt = ds.Tables[0];
+                DataRow old_ = dt.Rows[n];
+                DataRow new_ = dt.NewRow();
+                gridView1.BeginDataUpdate();
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    if (dt.Columns[i].Caption.ToUpper().IndexOf("NAME") >= 0)
+                        new_[i] = old_[i].ToString() + " Copy";
+                    else
+                        new_[i] = old_[i];
+                }
+                ds.Tables[0].Rows.Add(new_);
+                gridView1.EndDataUpdate();
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message);
+            }
         }
     }//class
 }

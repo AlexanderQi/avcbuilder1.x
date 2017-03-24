@@ -138,7 +138,7 @@ namespace avcbuilder1.tblForms
                 curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "OBJECTELEMENTID", Id);
                 QueryBySql(curSql);
                 gridView1.OptionsBehavior.Editable =
-               simpleButton_IniData.Enabled = 
+               simpleButton_copy.Enabled = 
                 simpleButton_Save.Enabled = true;
             }
         }

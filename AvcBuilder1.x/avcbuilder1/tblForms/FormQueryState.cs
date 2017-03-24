@@ -23,15 +23,15 @@ namespace avcbuilder1.tblForms
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
             FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
             FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
-            //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-            //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            gridView1.InitNewRow += GridView1_InitNewRow;
+            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            //gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
-        private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
-        {
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
-        }
+        //private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
+        //{
+        //    gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
+        //}
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {

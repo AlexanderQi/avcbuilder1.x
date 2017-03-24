@@ -35,7 +35,7 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton_Save = new DevExpress.XtraEditors.SimpleButton();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
-            this.simpleButton_IniData = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton_copy = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton_Refresh = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton_Find = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -80,7 +80,7 @@
             // 
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             this.panelControl1.Controls.Add(this.simpleButton_Save);
-            this.panelControl1.Controls.Add(this.simpleButton_IniData);
+            this.panelControl1.Controls.Add(this.simpleButton_copy);
             this.panelControl1.Controls.Add(this.simpleButton_Refresh);
             this.panelControl1.Controls.Add(this.simpleButton_Find);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -114,16 +114,17 @@
             this.imageCollection1.InsertGalleryImage("exportmodeldifferences_32x32.png", "images/data/exportmodeldifferences_32x32.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/data/exportmodeldifferences_32x32.png"), 3);
             this.imageCollection1.Images.SetKeyName(3, "exportmodeldifferences_32x32.png");
             // 
-            // simpleButton_IniData
+            // simpleButton_copy
             // 
-            this.simpleButton_IniData.ImageIndex = 2;
-            this.simpleButton_IniData.ImageList = this.imageCollection1;
-            this.simpleButton_IniData.Location = new System.Drawing.Point(107, 6);
-            this.simpleButton_IniData.Name = "simpleButton_IniData";
-            this.simpleButton_IniData.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_IniData.Size = new System.Drawing.Size(46, 51);
-            this.simpleButton_IniData.TabIndex = 2;
-            this.simpleButton_IniData.ToolTip = "导入导出数据";
+            this.simpleButton_copy.ImageIndex = 2;
+            this.simpleButton_copy.ImageList = this.imageCollection1;
+            this.simpleButton_copy.Location = new System.Drawing.Point(107, 6);
+            this.simpleButton_copy.Name = "simpleButton_copy";
+            this.simpleButton_copy.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_copy.Size = new System.Drawing.Size(46, 51);
+            this.simpleButton_copy.TabIndex = 2;
+            this.simpleButton_copy.ToolTip = "复制数据到新行";
+            this.simpleButton_copy.Click += new System.EventHandler(this.simpleButton_copy_Click);
             // 
             // simpleButton_Refresh
             // 
@@ -172,7 +173,7 @@
         public DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.Utils.ImageCollection imageCollection1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Find;
-        protected DevExpress.XtraEditors.SimpleButton simpleButton_IniData;
+        protected DevExpress.XtraEditors.SimpleButton simpleButton_copy;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Refresh;
         public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Save;

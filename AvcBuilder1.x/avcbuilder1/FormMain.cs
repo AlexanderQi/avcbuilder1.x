@@ -557,6 +557,16 @@ namespace avcbuilder1
             else if (sender == simpleButton_tap)
                 ftype.ShowModal("tbltapchangertype", simpleButton_tap.ToolTip);
         }
+
+        FormDataTools fdt;
+        private void simpleButton_tools_Click(object sender, EventArgs e)
+        {
+            if(fdt == null)
+            {
+                fdt = new FormDataTools();
+            }
+            fdt.ShowDialog();
+        }
     }//class
 
     public class AvcTreeEventArgs : EventArgs

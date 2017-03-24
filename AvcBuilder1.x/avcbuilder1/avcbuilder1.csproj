@@ -209,6 +209,12 @@
     <Compile Include="tblForms\FormCardBase.Designer.cs">
       <DependentUpon>FormCardBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\FormDataTools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormDataTools.Designer.cs">
+      <DependentUpon>FormDataTools.cs</DependentUpon>
+    </Compile>
     <Compile Include="tblForms\FormQueryAction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormCardBase.resx">
       <DependentUpon>FormCardBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormDataTools.resx">
+      <DependentUpon>FormDataTools.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryBase.resx">
       <DependentUpon>FormQueryBase.cs</DependentUpon>

@@ -336,7 +336,7 @@ namespace mysqlDao_v1
             {
                 if (dt == null || dt.Rows.Count == 0) return -1;
                 pkName = pkName.ToUpper();
-                string[] fields = mysqlDao_v1.myFunc.getProperties(EntityModel);
+                string[] fields = mysqlDao_v1.myPoco.getProperties(EntityModel);
                 int p = Array.IndexOf<string>(fields, pkName);//不存在此主键 pkName;
                 if (p < 0) return -1;
                 StringBuilder sbSqlPart = new StringBuilder();
@@ -362,7 +362,7 @@ namespace mysqlDao_v1
                                 for (int i = 0; i < dt.Columns.Count; i++)
                                 {
                                     string caption = dt.Columns[i].Caption;
-                                    bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+                                    bool b = mysqlDao_v1.myPoco.ContainsField(fields, caption);
                                     if (!b) continue;
                                     if (!dr[i, DataRowVersion.Current].ToString().Equals(dr[i, DataRowVersion.Original].ToString()))
                                     {
@@ -474,7 +474,7 @@ namespace mysqlDao_v1
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
-            pkName = myFunc.getPropertyName(poco, pkName); //取得主键对应的实体对象属性.
+            pkName = myPoco.getPropertyName(poco, pkName); //取得主键对应的实体对象属性.
             Type t = poco.GetType();
             PropertyInfo pr = t.GetProperty(pkName);
             if (pr == null) return null;
@@ -514,7 +514,7 @@ namespace mysqlDao_v1
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
-            pkName = myFunc.getPropertyName(poco,pkName); //取得主键对应的实体对象属性.
+            pkName = myPoco.getPropertyName(poco,pkName); //取得主键对应的实体对象属性.
             Type t = poco.GetType();
             PropertyInfo pr = t.GetProperty(pkName);
             PropertyInfo[] pros = t.GetProperties();
@@ -636,8 +636,8 @@ namespace mysqlDao_v1
             sb.Append(" WHERE ").Append(String_After_WHERE).Append(";");
             return sb.ToString();
         }
-    }
 
 
 
+    }//class
 }

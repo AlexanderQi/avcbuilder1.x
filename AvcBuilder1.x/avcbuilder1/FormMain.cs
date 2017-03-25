@@ -308,16 +308,6 @@ namespace avcbuilder1
         //}
 
 
-
-        private void toolTipController1_GetActiveObjectInfo(object sender, DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventArgs e)
-        {
-            //TreeListHitInfo hitInfo = treeList1.CalcHitInfo(e.ControlMousePosition);
-            //if (hitInfo.Node != null)
-            //{
-            //    e.Info = new DevExpress.Utils.ToolTipControlInfo(treeList1, hitInfo.Node["name"].ToString() + " ID:" + hitInfo.Node["ID"].ToString());
-            //}
-        }
-
         public static FormQueryElement FormElement;
         public void IniForms()
         {

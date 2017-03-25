@@ -127,7 +127,7 @@ namespace avcbuilder1
             Hide();
         }
 
-        internal static string sql4NewId = @"select `MAXVALUE`+13 newid from tblsequencenumber;update tblsequencenumber set `MAXVALUE` = `MAXVALUE`+13,  `MinVALUE` = `MinVALUE`+13 where name = 'NewID';";//里面有两个SQL语句一个查一个改。13是ID增量，可自定义。
+        internal static string sql4NewId = @"select `MinVALUE`+ 1 newid from tblsequencenumber;update tblsequencenumber set `MinVALUE` = `MAXVALUE`, `MAXVALUE` = `MAXVALUE`+51  where name = 'NewID';";//里面有两个SQL语句一个查一个改。51是ID增量，可自定义。
         private void simpleButton_ok_Click(object sender, EventArgs e)
         {
             try

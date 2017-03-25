@@ -92,7 +92,7 @@ namespace avcUnitTest
         [TestMethod]
         public void TestMethod4()
         {
-            string[] fields = mysqlDao_v1.myFunc.getProperties(new tblsubstation());
+            string[] fields = mysqlDao_v1.myPoco.getProperties(new tblsubstation());
             foreach (string str in fields)
             {
                 Console.WriteLine(str);
@@ -100,12 +100,12 @@ namespace avcUnitTest
             Console.WriteLine("------------------------------");
             string caption = "atype";
             int a = Array.IndexOf(fields, caption.ToUpper());
-            bool b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+            bool b = mysqlDao_v1.myPoco.ContainsField(fields, caption);
             Console.WriteLine(caption + " Pos: " + a + " result: " + b);
 
             caption = "ids";
             a = Array.IndexOf(fields, caption.ToUpper());
-            b = mysqlDao_v1.myFunc.ContainsField(fields, caption);
+            b = mysqlDao_v1.myPoco.ContainsField(fields, caption);
             Console.WriteLine(caption + " Pos: " + a + " result: " + b);
         }
 

@@ -14,11 +14,6 @@ namespace AvcDb.entities
     
     public partial class tblfeedcapacitor
     {
-        public tblfeedcapacitor()
-        {
-            this.tblfeedcapacitoritem = new HashSet<tblfeedcapacitoritem>();
-        }
-    
         public string ID { get; set; }
         public string NAME { get; set; }
         public string VOLTAGELEVELID { get; set; }
@@ -38,10 +33,5 @@ namespace AvcDb.entities
         public string GRAPHID { get; set; }
         public string SCHEMEID { get; set; }
         public string ALIASNAME { get; set; }
-    
-        public virtual tblfeeder tblfeeder { get; set; }
-        public virtual tblfeedcapacitorcontrol tblfeedcapacitorcontrol { get; set; }
-        public virtual ICollection<tblfeedcapacitoritem> tblfeedcapacitoritem { get; set; }
-        public virtual tblfeedcapacitormeasure tblfeedcapacitormeasure { get; set; }
     }
 }

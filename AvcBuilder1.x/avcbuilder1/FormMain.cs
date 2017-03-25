@@ -323,6 +323,7 @@ namespace avcbuilder1
         {
             FormElement = new FormQueryElement();
             FormElement.Ini();
+            FormElement.DataChaged += FormElement_DataChaged;
 
             FormBase frm = new FormQueryState();
             frm.ShowInControl(xtraTabPage_state);
@@ -348,6 +349,11 @@ namespace avcbuilder1
 
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
+        }
+
+        private void FormElement_DataChaged(object sender, EventArgs e)
+        {
+            TreeLoad();
         }
 
         private AvcTreeEventArgs newAvcTreeEventArgs()
@@ -514,6 +520,7 @@ namespace avcbuilder1
                     string sql = mysqlDAO.getDeleteSql(poco, "ID", id);
                     int r = Dao.Execute(sql);
                     XtraMessageBox.Show(string.Format("操作成功,{0}条记录.", r));
+                    TreeLoad();
                 }
                 else
                 {

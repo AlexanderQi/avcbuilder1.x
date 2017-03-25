@@ -11,6 +11,8 @@ namespace avcbuilder1.tblForms
         protected mysqlDAO dao;
         protected myConnInfo conninfo;
         protected DataSet ds;
+        public delegate void DataChangedHandle(object sender, EventArgs e);
+        public virtual event DataChangedHandle DataChaged;
 
 
         protected FormQueryBase() : base()
@@ -23,9 +25,11 @@ namespace avcbuilder1.tblForms
             FormMain.Instance.AvcTreeFocusChanged += Instance_AvcTreeFocusChanged;
             FormMain.Instance.AvcSrvDisconnected += Instance_AvcSrvDisconnected;
             FormMain.Instance.AvcSrvConnected += Instance_AvcSrvConnected;
+
             gridView1.HideFindPanel();
             SetButtonsEnable(false);
         }
+
 
         private void Instance_AvcSrvConnected(object sender, EventArgs e)
         {

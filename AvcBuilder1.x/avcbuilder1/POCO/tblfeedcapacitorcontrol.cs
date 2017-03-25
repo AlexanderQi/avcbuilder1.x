@@ -29,7 +29,5 @@ namespace AvcDb.entities
         public Nullable<int> PUTOFFYKVAL { get; set; }
         public Nullable<int> DISTANTYKVAL { get; set; }
         public Nullable<int> LOCALYKVAL { get; set; }
-    
-        public virtual tblfeedcapacitor tblfeedcapacitor { get; set; }
     }
 }

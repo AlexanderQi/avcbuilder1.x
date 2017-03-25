@@ -14,13 +14,6 @@ namespace AvcDb.entities
     
     public partial class tblfeeder
     {
-        public tblfeeder()
-        {
-            this.tblfeedcapacitor = new HashSet<tblfeedcapacitor>();
-            this.tblfeedtrans = new HashSet<tblfeedtrans>();
-            this.tblfeedvoltageregulator = new HashSet<tblfeedvoltageregulator>();
-        }
-    
         public string ID { get; set; }
         public string NAME { get; set; }
         public string SUBSTATIONID { get; set; }
@@ -30,10 +23,5 @@ namespace AvcDb.entities
         public string GRAPHID { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
-    
-        public virtual ICollection<tblfeedcapacitor> tblfeedcapacitor { get; set; }
-        public virtual tblsubstation tblsubstation { get; set; }
-        public virtual ICollection<tblfeedtrans> tblfeedtrans { get; set; }
-        public virtual ICollection<tblfeedvoltageregulator> tblfeedvoltageregulator { get; set; }
     }
 }

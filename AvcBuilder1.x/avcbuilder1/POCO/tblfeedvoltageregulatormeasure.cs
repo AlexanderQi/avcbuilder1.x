@@ -27,7 +27,5 @@ namespace AvcDb.entities
         public Nullable<int> GUARDSIGNALYXID { get; set; }
         public Nullable<int> CONSERVATIONYCID { get; set; }
         public Nullable<int> FLOWDIRECTIONYXID { get; set; }
-    
-        public virtual tblfeedvoltageregulator tblfeedvoltageregulator { get; set; }
     }
 }

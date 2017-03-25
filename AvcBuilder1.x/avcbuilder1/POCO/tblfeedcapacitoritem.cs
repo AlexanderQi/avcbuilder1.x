@@ -28,8 +28,5 @@ namespace AvcDb.entities
         public string GRAPHID { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
-    
-        public virtual tblfeedcapacitor tblfeedcapacitor { get; set; }
-        public virtual tblfeedcapacitoritemmeasure tblfeedcapacitoritemmeasure { get; set; }
     }
 }

@@ -14,11 +14,6 @@ namespace AvcDb.entities
     
     public partial class tblsubstation
     {
-        public tblsubstation()
-        {
-            this.tblfeeder = new HashSet<tblfeeder>();
-        }
-    
         public string ID { get; set; }
         public string NAME { get; set; }
         public string VOLTAGELEVELID { get; set; }
@@ -30,8 +25,5 @@ namespace AvcDb.entities
         public string STATIONKIND { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
-    
-        public virtual ICollection<tblfeeder> tblfeeder { get; set; }
-        public virtual tblsubcontrolarea tblsubcontrolarea { get; set; }
     }
 }

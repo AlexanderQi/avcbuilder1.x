@@ -23,7 +23,5 @@ namespace AvcDb.entities
         public Nullable<int> ACTIONCOUNTINDAYYCID { get; set; }
         public Nullable<int> ACTIONCOUNTTOTALYCID { get; set; }
         public Nullable<int> CONSERVATIONYCID { get; set; }
-    
-        public virtual tblfeedtrans tblfeedtrans { get; set; }
     }
 }

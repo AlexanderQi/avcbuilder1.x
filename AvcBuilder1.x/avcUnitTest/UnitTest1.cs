@@ -16,13 +16,23 @@ namespace avcUnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            tblalarm a = new tblalarm();
-            a.aContent = "xxx";
-            a.ID = 999;
-            a.aType = "cao";
-            a.aShowTag = 99;
-            a.aTime = DateTime.Now;
+            tblsubstation a = new tblsubstation();
+            //a.aContent = "xxx";
+            //a.ID = 999;
+            //a.aType = "cao";
+            //a.aShowTag = 99;
+            //a.aTime = DateTime.Now;
             Type t = a.GetType();
+            foreach(PropertyInfo p in t.GetProperties())
+            {
+
+                Console.WriteLine(string.Format("{0} IsAbstract {1}", p.Name, p.PropertyType.IsAbstract));
+                Console.WriteLine(string.Format("{0} IsAnsiClass {1}", p.Name, p.PropertyType.IsAnsiClass));
+                Console.WriteLine(string.Format("{0} IsClass {1}", p.Name, p.PropertyType.IsClass));
+                Console.WriteLine(string.Format("{0} IsPointer {1}", p.Name, p.PropertyType.IsPointer));
+                Console.WriteLine(string.Format("{0} IsPrimitive {1}", p.Name, p.PropertyType.IsPrimitive));
+                Console.WriteLine("-----------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
             //Console.WriteLine(t.Name);
             //Console.WriteLine(t.FullName);
 
@@ -82,7 +92,7 @@ namespace avcUnitTest
         [TestMethod]
         public void TestMethod4()
         {
-            string[] fields = mysqlDao_v1.myFunc.getProperties(new tblalarm());
+            string[] fields = mysqlDao_v1.myFunc.getProperties(new tblsubstation());
             foreach (string str in fields)
             {
                 Console.WriteLine(str);

@@ -11,6 +11,7 @@ namespace avcbuilder1.tblForms
 {
     public partial class FormQueryElement : avcbuilder1.tblForms.FormQueryBase
     {
+        public override event DataChangedHandle DataChaged;
         public FormQueryElement() : base()
         {
             InitializeComponent();
@@ -72,7 +73,7 @@ namespace avcbuilder1.tblForms
             gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
-
+        
 
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
@@ -121,6 +122,12 @@ namespace avcbuilder1.tblForms
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
+                if(r>0 && DataChaged != null)
+                {
+                    DataChaged(this, null);
+                }
+                    
+                   
             }
             catch (Exception ex)
             {

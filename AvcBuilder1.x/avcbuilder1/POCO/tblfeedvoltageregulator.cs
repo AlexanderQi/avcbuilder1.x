@@ -26,8 +26,5 @@ namespace AvcDb.entities
         public string GRAPHID { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
-    
-        public virtual tblfeeder tblfeeder { get; set; }
-        public virtual tblfeedvoltageregulatormeasure tblfeedvoltageregulatormeasure { get; set; }
     }
 }

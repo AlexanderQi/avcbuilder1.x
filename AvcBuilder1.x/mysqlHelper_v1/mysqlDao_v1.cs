@@ -280,6 +280,7 @@ namespace mysqlDao_v1
             for (int i = 0; i < props.Length; i++) //复制数据到poco
             {
                 if (props[i].PropertyType.IsArray) continue;
+                if (props[i].PropertyType.IsInterface) continue;  //interface 不处理
                 if (row.IsNull(props[i].Name)) continue;
                 var val = row[props[i].Name];
                 props[i].SetValue(poco, val, null);
@@ -287,6 +288,8 @@ namespace mysqlDao_v1
 
             for (int i = 0; i < props.Length; i++)
             {
+                if (props[i].PropertyType.IsInterface) continue;
+                if (props[i].PropertyType.IsArray) continue;
                 if (props[i].Name.ToUpper().Equals(pkName.ToUpper())) //找主键并设置。
                 {
                     if(props[i].PropertyType == typeof(int))
@@ -428,6 +431,11 @@ namespace mysqlDao_v1
             for (int i = 0; i < pros.Length; i++)
             {
                 if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
+                if (pros[i].PropertyType.IsInterface)
+                {
+                    //throw new Exception(pros[i].Name+"接口类型");
+                    continue; //interface 不处理
+                }
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }
@@ -436,7 +444,8 @@ namespace mysqlDao_v1
             {
 
                 if (pros[i].PropertyType.IsArray) continue; //blob or text field 不处理
-                if (i > 0) { sb.Append(","); }
+                if (pros[i].PropertyType.IsInterface) continue;  //interface 不处理
+                    if (i > 0) { sb.Append(","); }
 
                 object val = pros[i].GetValue(poco, null);
                 if (val == null)
@@ -512,6 +521,11 @@ namespace mysqlDao_v1
             for (int i = 0; i < pros.Length; i++)
             {
                 if (pros[i].PropertyType.IsArray) continue; //blob  field 不处理
+                if (pros[i].PropertyType.IsInterface)
+                {
+                    //throw new Exception(pros[i].Name + "接口类型");
+                    continue; //blob or text field 不处理
+                }
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }
@@ -549,6 +563,11 @@ namespace mysqlDao_v1
             for (int i = 0; i < pros.Length; i++)
             {
                 if (pros[i].PropertyType.IsArray) continue; //blob field 不处理
+                if (pros[i].PropertyType.IsInterface)
+                {
+                   // throw new Exception(pros[i].Name + "接口类型");
+                    continue; //blob or text field 不处理
+                }
                 if (i > 0) { sb.Append(","); }
                 sb.Append(pros[i].Name);
             }

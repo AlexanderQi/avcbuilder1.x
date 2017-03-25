@@ -14,18 +14,11 @@ namespace AvcDb.entities
     
     public partial class tblsubcontrolarea
     {
-        public tblsubcontrolarea()
-        {
-            this.tblsubstation = new HashSet<tblsubstation>();
-        }
-    
         public string ID { get; set; }
         public string NAME { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
         public Nullable<bool> LOCALCONTROL { get; set; }
         public Nullable<bool> REMOTECONTROL { get; set; }
-    
-        public virtual ICollection<tblsubstation> tblsubstation { get; set; }
     }
 }

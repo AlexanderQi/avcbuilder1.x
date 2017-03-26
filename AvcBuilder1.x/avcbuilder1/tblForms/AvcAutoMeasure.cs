@@ -81,7 +81,7 @@ namespace avcbuilder1.tblForms
                 sendMsg(cfn + " = " + int_ycyxid,2);
                 myPoco.setPropertyValue(measurePoco, cfn, int_ycyxid);
 
-                string cfn_chinese =elementName +"-"+ row[1].ToString();
+                string cfn_chinese =elementName +"-"+ row[1].ToString().Replace("编号","");
                 if (cfn.IndexOf("YCID") >= 0)
                 {
                     WriteYC(int_ycyxid, cfn_chinese, "1","1", eid);

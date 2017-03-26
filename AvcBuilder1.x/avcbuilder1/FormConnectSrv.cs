@@ -22,7 +22,7 @@ namespace avcbuilder1
         ILog log;
 
 
-        private string avc_conn = "";
+        public string avc_conn = "";
         internal mysqlDAO Dao;
         private static FormConnectSrv instance = null;
         public myConnInfo conninfo;
@@ -127,7 +127,7 @@ namespace avcbuilder1
             Hide();
         }
 
-        internal static string sql4NewId = @"select `MinVALUE`+ 1 newid from tblsequencenumber;update tblsequencenumber set `MinVALUE` = `MAXVALUE`, `MAXVALUE` = `MAXVALUE`+51  where name = 'NewID';";//里面有两个SQL语句一个查一个改。51是ID增量，可自定义。
+        public static string sql4NewId = @"select `MinVALUE`+ 1 newid from tblsequencenumber;update tblsequencenumber set `MinVALUE` = `MAXVALUE`, `MAXVALUE` = `MAXVALUE`+51  where name = 'NewID';";//里面有两个SQL语句一个查一个改。51是ID增量，可自定义。
         private void simpleButton_ok_Click(object sender, EventArgs e)
         {
             try

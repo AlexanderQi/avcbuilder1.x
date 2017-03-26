@@ -31,19 +31,19 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataTools));
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.listBoxControl1 = new DevExpress.XtraEditors.ListBoxControl();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelControl1
             // 
-            this.panelControl1.Controls.Add(this.memoEdit1);
+            this.panelControl1.Controls.Add(this.listBoxControl1);
             this.panelControl1.Controls.Add(this.simpleButton2);
             this.panelControl1.Controls.Add(this.simpleButton1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -51,16 +51,6 @@
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(698, 489);
             this.panelControl1.TabIndex = 0;
-            // 
-            // memoEdit1
-            // 
-            this.memoEdit1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.memoEdit1.Location = new System.Drawing.Point(5, 43);
-            this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(688, 441);
-            this.memoEdit1.TabIndex = 4;
             // 
             // simpleButton2
             // 
@@ -94,6 +84,18 @@
             this.simpleButton1.Text = "删除设备量测";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
+            // listBoxControl1
+            // 
+            this.listBoxControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
+            this.listBoxControl1.Appearance.Options.UseFont = true;
+            this.listBoxControl1.Location = new System.Drawing.Point(5, 43);
+            this.listBoxControl1.Name = "listBoxControl1";
+            this.listBoxControl1.Size = new System.Drawing.Size(688, 441);
+            this.listBoxControl1.TabIndex = 4;
+            // 
             // FormDataTools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -106,8 +108,8 @@
             this.Text = "AVC Builder 数据自动化工具";
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listBoxControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -116,8 +118,8 @@
 
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.Utils.ImageCollection imageCollection1;
-        private DevExpress.XtraEditors.MemoEdit memoEdit1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.ListBoxControl listBoxControl1;
     }
 }

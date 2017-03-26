@@ -100,6 +100,15 @@ namespace avcbuilder1.tblForms
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
                 }
+                if (gridCol.FieldName.Equals("ID"))
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowEdit = false;
+                }
+                if (gridCol.FieldName.IndexOf("NAME") >= 0)
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                }
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
                 //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();

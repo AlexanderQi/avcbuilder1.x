@@ -118,6 +118,16 @@ namespace avcbuilder1.tblForms
                     box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
                     gridCol.ColumnEdit = box;
                 }
+
+                if (gridCol.FieldName.Equals("ID"))
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowEdit = false;
+                }
+                if (gridCol.FieldName.IndexOf("NAME") >= 0)
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                }
             }
             gridView1.EndUpdate();
         }

@@ -100,11 +100,23 @@ namespace avcbuilder1.tblForms
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
+              
                 if (gridCol.FieldName.Equals("EQUIPMENTID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
                 }
+
+                if (gridCol.FieldName.Equals("ID"))
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowEdit = false;
+                }
+                if (gridCol.FieldName.IndexOf("NAME")>=0)
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                }
+           
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
                 //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();

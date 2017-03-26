@@ -216,6 +216,24 @@
     <Compile Include="tblForms\FormDataTools.Designer.cs">
       <DependentUpon>FormDataTools.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\FormFtpBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormFtpBase.Designer.cs">
+      <DependentUpon>FormFtpBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tblForms\FormFtpKZQ.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormFtpKZQ.Designer.cs">
+      <DependentUpon>FormFtpKZQ.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tblForms\FormFtpTX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormFtpTX.Designer.cs">
+      <DependentUpon>FormFtpTX.cs</DependentUpon>
+    </Compile>
     <Compile Include="tblForms\FormQueryAction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +338,15 @@
     <EmbeddedResource Include="tblForms\FormDataTools.resx">
       <DependentUpon>FormDataTools.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormFtpBase.resx">
+      <DependentUpon>FormFtpBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormFtpKZQ.resx">
+      <DependentUpon>FormFtpKZQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormFtpTX.resx">
+      <DependentUpon>FormFtpTX.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryBase.resx">
       <DependentUpon>FormQueryBase.cs</DependentUpon>
     </EmbeddedResource>
@@ -335,8 +362,20 @@
     <EmbeddedResource Include="tblForms\FormQueryProtect.resx">
       <DependentUpon>FormQueryProtect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryRunTime.resx">
+      <DependentUpon>FormQueryRunTime.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryState.resx">
       <DependentUpon>FormQueryState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYC.resx">
+      <DependentUpon>FormQueryYC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYK.resx">
+      <DependentUpon>FormQueryYK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYT.resx">
+      <DependentUpon>FormQueryYT.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>

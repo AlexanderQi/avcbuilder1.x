@@ -311,6 +311,11 @@ namespace avcbuilder1
         public static FormQueryElement FormElement;
         public void IniForms()
         {
+            FormFtpKZQ fkzq = new FormFtpKZQ();
+            fkzq.ShowInControl(xtraTabPage_control);
+            FormFtpTX ftx = new FormFtpTX();
+            ftx.ShowInControl(xtraTabPage_communication);
+
             FormElement = new FormQueryElement();
             FormElement.Ini();
             FormElement.DataChaged += FormElement_DataChaged;
@@ -339,6 +344,8 @@ namespace avcbuilder1
 
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
+
+
         }
 
         private void FormElement_DataChaged(object sender, EventArgs e)

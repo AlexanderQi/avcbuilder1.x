@@ -339,8 +339,9 @@ namespace avcbuilder1
             frm = new FormQueryRunTime();
             frm.ShowInControl(xtraTabPage1_time);
 
-            frm = new FormCardMeasure();
-            frm.ShowInControl(xtraTabPage_measure);
+            xtraTabPage_measure.PageVisible = false;
+            //frm = new FormCardMeasure();
+            //frm.ShowInControl(xtraTabPage_measure);
 
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);

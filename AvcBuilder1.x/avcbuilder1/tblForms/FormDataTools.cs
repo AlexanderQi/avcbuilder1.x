@@ -75,13 +75,15 @@ namespace avcbuilder1.tblForms
             AvcAutoMeasure am = new AvcAutoMeasure(dao);
             am.ProduceMsg += Auto_ProduceMsg;
             tblfeedcapacitormeasure m = new tblfeedcapacitormeasure();
-            
+            am.DeleteYCYXByElementId(null);
             am.DeleteByElementId(m, null);
-
+            am.DeleteByElementId(new tblfeedtransmeasure(), null);
+            am.DeleteByElementId(new tblfeedvoltageregulatormeasure(), null);
         }
 
         private void simpleButton2_Click(object sender, EventArgs e)
         {
+            if (MsgBox("将会覆盖量测信息，且不可恢复,是否继续？", "提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
             try
             {
                 listBoxControl1.Items.Clear();

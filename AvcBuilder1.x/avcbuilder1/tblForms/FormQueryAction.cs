@@ -23,16 +23,16 @@ namespace avcbuilder1.tblForms
             //gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
-            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-            gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            //gridView1.InitNewRow += GridView1_InitNewRow;
+            //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+           gridView1.InitNewRow += GridView1_InitNewRow;
             FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
             FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
         }
-        //private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
-        //{
-        //    gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
-        //}
+        private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
+        }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {
@@ -66,7 +66,7 @@ namespace avcbuilder1.tblForms
                 return;
             }
             
-            string pkName = "ELEMENTID";
+            string pkName = "ID";
             //此处应该做必填项检查。
             try
             {
@@ -77,6 +77,14 @@ namespace avcbuilder1.tblForms
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
             }
             catch (Exception ex)
             {
@@ -105,7 +113,12 @@ namespace avcbuilder1.tblForms
                 if (gridCol.FieldName.Equals("ELEMENTID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowFocus = false;
                     gridCol.OptionsColumn.AllowEdit = false;
+                }
+                if (gridCol.FieldName.Equals("ID"))
+                {
+                    gridCol.Visible = false;
                 }
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
@@ -161,6 +174,14 @@ namespace avcbuilder1.tblForms
                 dao.Query(sql, ref dt);
                 gridControl1.DataSource = dt;
                 gridView1.BestFitColumns();
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
                 SetButtonsEnable(true);
             }
             catch (Exception ex)

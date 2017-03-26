@@ -330,7 +330,7 @@ namespace mysqlDao_v1
         /// <param name="EntityModel">实体对象</param>
         /// <param name="pkName">主键名称 必须大写字母</param>
         /// return -1 内部错误
-        public int SaveData(DataTable dt, object EntityModel, string pkName)
+        public int SaveData(DataTable dt, object EntityModel, string pkName, string pkValue)
         {
             try
             {
@@ -349,7 +349,12 @@ namespace mysqlDao_v1
                         case DataRowState.Added:
                             {
                                 sbSqlPart.Clear();
-                                string newId = getNewId();
+                                string newId = null;
+                                if (pkValue == null)
+                                    newId = getNewId();
+                                else
+                                    newId = pkValue;
+
                                 mysqlDAO.fillPoco(EntityModel, dr, pkName, newId);  //注意:fill函数应该为新增记录的id考虑自增和非自增的情况.
 
                                 string sql = mysqlDAO.getInsertSql(EntityModel);
@@ -370,7 +375,7 @@ namespace mysqlDao_v1
                                         //判断是否加单引号
                                         Type type = dt.Columns[i].DataType;
                                         var val = dr[i];
-                                        if (type == typeof(string) ||type == typeof(DateTime) ||type == typeof(Nullable<DateTime>))
+                                        if (type == typeof(string) || type == typeof(DateTime) || type == typeof(Nullable<DateTime>))
                                         {
                                             sbSqlPart.Append("'").Append(val).Append("',");
                                         }
@@ -410,6 +415,12 @@ namespace mysqlDao_v1
                 log.Error(ex);
                 throw;
             }
+        }//func
+
+        //使用自动获取数据库ID方案。
+        public int SaveData(DataTable dt, object EntityModel, string pkName)
+        {
+            return SaveData(dt, EntityModel, pkName, null);
         }//func
 
 
@@ -454,7 +465,8 @@ namespace mysqlDao_v1
                 }
                 else if (pros[i].PropertyType == typeof(string) ||
                     pros[i].PropertyType == typeof(DateTime) ||
-                    pros[i].PropertyType == typeof(Nullable<DateTime>))
+                    pros[i].PropertyType == typeof(Nullable<DateTime>)||
+                    pros[i].PropertyType == typeof(Nullable<TimeSpan>))
                 {
                     sb.Append("'").Append(val.ToString()).Append("'");
                 }
@@ -472,6 +484,7 @@ namespace mysqlDao_v1
         /// <returns></returns>
         public static string getDeleteSql(object poco, string pkName, object pkValue)
         {
+            if (pkValue == null || pkValue.Equals("")) return null;
             StringBuilder sb = new StringBuilder();
             sb.Append("DELETE FROM ");
             pkName = myPoco.getPropertyName(poco, pkName); //取得主键对应的实体对象属性.
@@ -484,7 +497,8 @@ namespace mysqlDao_v1
             sb.Append(" WHERE ").Append(pkName).Append(" = ");
             if (pr.PropertyType == typeof(string) ||
                     pr.PropertyType == typeof(DateTime) ||
-                    pr.PropertyType == typeof(Nullable<DateTime>))
+                    pr.PropertyType == typeof(Nullable<DateTime>) ||
+                    pr.PropertyType == typeof(Nullable<TimeSpan>))
             {
                 sb.Append("'").Append(pkValue).Append("'");
             }
@@ -512,6 +526,7 @@ namespace mysqlDao_v1
 
         public static string getQuerySql(object poco, string pkName, object pkValue)
         {
+            if (pkValue == null || pkValue.Equals("")) return null;
             StringBuilder sb = new StringBuilder();
             sb.Append("SELECT ");
             pkName = myPoco.getPropertyName(poco,pkName); //取得主键对应的实体对象属性.
@@ -532,7 +547,8 @@ namespace mysqlDao_v1
             sb.Append(" FROM ").Append(t.Name).Append(" WHERE ").Append(pkName).Append(" = ");
             if (pr.PropertyType == typeof(string) ||
                     pr.PropertyType == typeof(DateTime) ||
-                    pr.PropertyType == typeof(Nullable<DateTime>))
+                    pr.PropertyType == typeof(Nullable<DateTime>) ||
+                    pr.PropertyType == typeof(Nullable<TimeSpan>))
             {
                 sb.Append("'").Append(pkValue).Append("'");
             }

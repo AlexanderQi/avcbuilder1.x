@@ -31,7 +31,7 @@ namespace avcbuilder1.tblForms
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["OBJECTELEMENTID"], curId);
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["NAME"], gridView1.ViewCaption);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["NAME"], gridView1.ViewCaption +"保护-"+ ds.Tables[0].Rows.Count);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -92,9 +92,9 @@ namespace avcbuilder1.tblForms
             }
             gridView1.BeginUpdate();
 
-            GridColumn cur = AddGridColumn("ENAME", "设备名称");
-            cur.Fixed = FixedStyle.Left;
-            cur.BestFit();
+            //GridColumn cur = AddGridColumn("ENAME", "设备名称");
+            //cur.Fixed = FixedStyle.Left;
+            //cur.BestFit();
 
             DataTable dt = dao.GetFieldComment("tblprotection");
             foreach (DataRow dr in dt.Rows)
@@ -104,15 +104,17 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.OptionsColumn.AllowFocus = false;
                 }
                 if (gridCol.FieldName.Equals("ID"))
                 {
-                    gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.Visible = false;
                 }
                 if (gridCol.FieldName.IndexOf("NAME") >= 0)
                 {
                     gridCol.Fixed = FixedStyle.Left;
+                    gridCol.MinWidth = 150;
+                  
                 }
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{

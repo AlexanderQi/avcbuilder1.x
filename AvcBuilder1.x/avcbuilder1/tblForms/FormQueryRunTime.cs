@@ -68,13 +68,21 @@ namespace avcbuilder1.tblForms
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblelementruntime(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblelementruntime(), pkName,curId);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
             }
             catch (Exception ex)
             {
@@ -104,16 +112,17 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.OptionsColumn.AllowFocus = false;
                 }
-                if (gridCol.FieldName.Equals("ID"))
-                {
-                    gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
-                }
-                if (gridCol.FieldName.IndexOf("NAME") >= 0)
-                {
-                    gridCol.Fixed = FixedStyle.Left;
-                }
+                //if (gridCol.FieldName.Equals("ID"))
+                //{
+                //    gridCol.Fixed = FixedStyle.Left;
+                //    gridCol.OptionsColumn.AllowEdit = false;
+                //}
+                //if (gridCol.FieldName.IndexOf("NAME") >= 0)
+                //{
+                //    gridCol.Fixed = FixedStyle.Left;
+                //}
                 //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 //{
                 //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
@@ -167,6 +176,14 @@ namespace avcbuilder1.tblForms
                 dao.Query(sql, ref dt);
                 gridControl1.DataSource = dt;
                 gridView1.BestFitColumns();
+                if (dt.Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
                 SetButtonsEnable(true);
             }
             catch (Exception ex)

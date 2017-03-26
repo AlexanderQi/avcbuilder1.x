@@ -205,6 +205,7 @@ namespace avcbuilder1.tblForms
             PkName = "ID";
             try
             {
+                if (PrimeTableName == null || PrimeTableName.Equals("")) return;
                 curPoco = PocoFactory.getPocoByName(PrimeTableName);
                 curSql = mysqlDao_v1.mysqlDAO.getQuerySql(curPoco, PkName, PkValue);
                 QueryBySql(curSql);

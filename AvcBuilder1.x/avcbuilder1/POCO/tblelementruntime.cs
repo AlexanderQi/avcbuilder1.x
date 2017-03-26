@@ -15,7 +15,7 @@ namespace AvcDb.entities
     public partial class tblelementruntime
     {
         public string ELEMENTID { get; set; }
-        public Nullable<long> ELEMENTSTYLE { get; set; }
+        public Nullable<int> ELEMENTSTYLE { get; set; }
         public Nullable<int> RUNTIME { get; set; }
         public Nullable<int> STOPTIME { get; set; }
         public Nullable<int> MALFUNCTIONTIME { get; set; }

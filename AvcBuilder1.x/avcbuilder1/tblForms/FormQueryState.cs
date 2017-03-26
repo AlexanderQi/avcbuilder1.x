@@ -23,15 +23,16 @@ namespace avcbuilder1.tblForms
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
             FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
             FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
-            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-            gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            //gridView1.InitNewRow += GridView1_InitNewRow;
+            gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+           // gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
-        //private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
-        //{
-        //    gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
-        //}
+        private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
+          
+        }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
         {
@@ -66,13 +67,21 @@ namespace avcbuilder1.tblForms
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblelementstate(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblelementstate(), pkName, curId);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
             }
             catch (Exception ex)
             {
@@ -104,7 +113,18 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.OptionsColumn.AllowFocus = false;
                 }
+                if (gridCol.FieldName.Equals("ID"))
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                    gridCol.Visible = false;
+                }
+                if (gridCol.FieldName.IndexOf("NAME") >= 0)
+                {
+                    gridCol.Fixed = FixedStyle.Left;
+                }
+
                 if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
                 {
                     gridCol.ColumnEdit = new RepositoryItemTimeEdit();
@@ -117,16 +137,6 @@ namespace avcbuilder1.tblForms
                     box.Items.Add("控制");
                     box.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor; //只能选择不能编辑文本。
                     gridCol.ColumnEdit = box;
-                }
-
-                if (gridCol.FieldName.Equals("ID"))
-                {
-                    gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
-                }
-                if (gridCol.FieldName.IndexOf("NAME") >= 0)
-                {
-                    gridCol.Fixed = FixedStyle.Left;
                 }
             }
             gridView1.EndUpdate();
@@ -168,6 +178,15 @@ namespace avcbuilder1.tblForms
                 dao.Query(sql, ref dt);
                 gridControl1.DataSource = dt;
                 gridView1.BestFitColumns();
+                if(dt.Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
+
                 SetButtonsEnable(true);
             }
             catch (Exception ex)

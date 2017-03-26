@@ -30,7 +30,12 @@ namespace avcbuilder1.tblForms
         }
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
+            string t = DateTime.Now.ToShortTimeString();
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["LIMITNAME"],gridView1.ViewCaption+"限值-"+ds.Tables[0].Rows.Count );
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["LIMITGROUPNAME"], gridView1.ViewCaption + "分组");
             gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["PERIODBEGIN"], t);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["PERIODEND"], t);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -99,20 +104,25 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Fixed = FixedStyle.Left;
                     gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.OptionsColumn.AllowFocus = false;
                 }
                 if (gridCol.FieldName.Equals("ID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
+                    gridCol.Visible = false;
                 }
                 if (gridCol.FieldName.IndexOf("NAME") >= 0)
                 {
                     gridCol.Fixed = FixedStyle.Left;
                 }
-                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                //{
-                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                //}
+                if (gridCol.FieldName.Equals("PERIODBEGIN"))
+                {
+                    //gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                }
+                if (gridCol.FieldName.Equals("PERIODEND"))
+                {
+                   // gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                }
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{
                 //    RepositoryItemComboBox box = new RepositoryItemComboBox();

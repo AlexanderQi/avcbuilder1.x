@@ -114,10 +114,10 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Fixed = FixedStyle.Left;
                 }
-                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                //{
-                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                //}
+                if (gridCol.FieldName.Equals("REFRESHTIME"))
+                {
+                    gridCol.ColumnEdit = repositoryItemTimeEdit1;
+                }
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{
                 //    RepositoryItemComboBox box = new RepositoryItemComboBox();

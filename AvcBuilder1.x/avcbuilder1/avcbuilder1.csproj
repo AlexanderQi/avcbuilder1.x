@@ -388,6 +388,15 @@
     <EmbeddedResource Include="tblForms\FormQueryState.resx">
       <DependentUpon>FormQueryState.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYC.resx">
+      <DependentUpon>FormQueryYC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYK.resx">
+      <DependentUpon>FormQueryYK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYT.resx">
+      <DependentUpon>FormQueryYT.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

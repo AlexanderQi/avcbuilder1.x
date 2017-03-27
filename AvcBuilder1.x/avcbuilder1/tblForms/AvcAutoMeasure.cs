@@ -27,6 +27,7 @@ namespace avcbuilder1.tblForms
         public event ProduceMsgHandle ProduceMsg;
         private mysqlDao_v1.mysqlDAO dao;
         private AvcMsgEventArgs ame = new AvcMsgEventArgs();
+
         private void sendMsg(string msg, int level)
         {
             string lev = null;
@@ -38,7 +39,8 @@ namespace avcbuilder1.tblForms
                 ProduceMsg(this, ame);
             }
         }
-
+        private int ych_seed = 1;
+        private int yxh_seed = 1;
         public AvcAutoMeasure(mysqlDao_v1.mysqlDAO dao)
         {
             this.dao = dao;
@@ -60,6 +62,8 @@ namespace avcbuilder1.tblForms
             }
             dao.SaveData(dt, poco, "ID");
         }
+
+
 
         private void ProdureMeasure(string elementName, string eid, object measurePoco)
         {
@@ -98,6 +102,7 @@ namespace avcbuilder1.tblForms
             sendMsg(eid + " 执行结果 " + r, 2);
         }
 
+        private DateTime curTime = DateTime.Now;
         private void WriteYC(int ID, string Name, string areaId, string stationId, string elementId)
         {
             tblycvalue yc = new tblycvalue();
@@ -106,8 +111,18 @@ namespace avcbuilder1.tblForms
             yc.CONTROLAREA = areaId;
             yc.SUBSTATIONID = stationId;
             yc.EQUIPMENTID = elementId;
-            yc.YCH = "-1";
-            yc.CZH = "-1";
+
+            yc.YCH = ych_seed.ToString();
+            ych_seed++;
+
+            yc.CZH = stationId;
+            yc.REPLACED = false;
+            yc.ESTIMATED = false;
+            yc.NOTFRESH = false;
+            yc.MULTIPLEVALUE = 1;
+            yc.OFFSETVALUE = 0;
+            yc.CHANNEL = 1;
+            yc.REFRESHTIME = curTime;
             string sql = mysqlDAO.getInsertSql(yc);
             int r = dao.Execute(sql);
             sendMsg(string.Format("遥测信息 ID = {0} 名称 = {1} 设备ID = {2} 结果 = {3}", ID, Name, elementId, r), 4);
@@ -121,8 +136,19 @@ namespace avcbuilder1.tblForms
             yx.CONTROLAREA = areaId;
             yx.SUBSTATIONID = stationId;
             yx.EQUIPMENTID = elementId;
-            yx.YXH = "-1";
-            yx.CZH = "-1";
+            yx.YXH = yxh_seed.ToString();
+            yxh_seed++;
+            yx.YXVALUE = 1;
+
+            yx.CZH = stationId;
+            yx.REPLACED = false;
+            yx.ESTIMATORREPLACED = false;
+            yx.NOTFRESH = false;
+            yx.MULTIPLEVALUE = 1;
+            yx.OFFSETVALUE = 0;
+            yx.CHANNEL = 1;
+            yx.REFRESHTIME = curTime;         
+
             string sql = mysqlDAO.getInsertSql(yx);
             int r = dao.Execute(sql);
             sendMsg(string.Format("遥信信息 ID = {0} 名称 = {1} 设备ID = {2} 结果 = {3}", ID, Name, elementId, r), 4);
@@ -150,7 +176,7 @@ namespace avcbuilder1.tblForms
             tblyxvalue yx = new tblyxvalue();
             if (elementId == null)
             {
-                sendMsg("将删除旧遥测遥信表信息",2);
+                sendMsg("将删除旧遥测遥信表信息", 2);
 
                 string sql = mysqlDAO.getDeleteSql(yc, null);
                 int r = dao.Execute(sql);

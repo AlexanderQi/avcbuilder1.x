@@ -125,7 +125,7 @@ namespace avcbuilder1.tblForms
             try
             {
                 int n = gridView1.FocusedRowHandle;
-                if (n<0l)
+                if (n<0 )
                 {
                     MsgBox("空行不可复制.");
                     return;

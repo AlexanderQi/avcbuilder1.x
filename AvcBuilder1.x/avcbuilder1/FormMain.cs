@@ -221,7 +221,8 @@ namespace avcbuilder1
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            FormMain_BackColorChanged(this, null);
+            //FormMain_BackColorChanged(this, null);
+            this.HelpButton = true;
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace avcbuilder1
                 }
             }
 
-            if(barButtonItem_connect.Caption.Equals("断开..."))
+            if (barButtonItem_connect.Caption.Equals("断开..."))
             {
                 IniTreeTable();
                 panelControl_buttons.Enabled = false;
@@ -410,11 +411,6 @@ namespace avcbuilder1
             richTextBox1.HideSelection = false;
         }
 
-        private void FormMain_BackColorChanged(object sender, EventArgs e)
-        {
-            richTextBox1.BackColor = textEdit1.BackColor;
-            richTextBox1.ForeColor = textEdit1.ForeColor;
-        }
 
         private int indexOfFind = 0;
         private void simpleButton_find_Click(object sender, EventArgs e)
@@ -543,9 +539,9 @@ namespace avcbuilder1
         FormQueryAvcType ftype = null;
         private void simpleButton_vol_Click(object sender, EventArgs e)
         {
-            if(ftype == null)
+            if (ftype == null)
             {
-                
+
                 ftype = new FormQueryAvcType();
                 ftype.FormBorderStyle = FormBorderStyle.Sizable;
                 ftype.ControlBox = true;
@@ -554,7 +550,7 @@ namespace avcbuilder1
                 ftype.Ini();
             }
             if (sender == simpleButton_vol)
-                ftype.ShowModal("tblvoltagelevel",simpleButton_vol.ToolTip);
+                ftype.ShowModal("tblvoltagelevel", simpleButton_vol.ToolTip);
             else if (sender == simpleButton_trans)
                 ftype.ShowModal("tbltransformertype", simpleButton_trans.ToolTip);
             else if (sender == simpleButton_line)
@@ -566,11 +562,22 @@ namespace avcbuilder1
         FormDataTools fdt;
         private void simpleButton_tools_Click(object sender, EventArgs e)
         {
-            if(fdt == null)
+            if (fdt == null)
             {
                 fdt = new FormDataTools();
             }
             fdt.ShowDialog();
+        }
+
+        private void xtraTabControl2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void FormMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+                splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
         }
     }//class
 

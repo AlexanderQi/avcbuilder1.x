@@ -39,6 +39,11 @@ namespace avcbuilder1.tblForms
 
         private void autoMeasure()
         {
+            tblfeedcapacitor cap = new tblfeedcapacitor();
+            
+            //auto.ProcedureTblElement(new tblfeedtrans());
+            //auto.ProcedureTblElement(new tblfeedvoltageregulator());
+
             auto.ProcedureElement(new tblfeedcapacitor(), new tblfeedcapacitormeasure());
             auto.ProcedureElement(new tblfeedtrans(), new tblfeedtransmeasure());
             auto.ProcedureElement(new tblfeedvoltageregulator(), new tblfeedvoltageregulatormeasure());

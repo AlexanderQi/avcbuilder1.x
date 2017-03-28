@@ -262,7 +262,21 @@ namespace mysqlDao_v1
             return t;
         }
 
+        public static object fillPoco(object poco, DataRow row)
+        {
+            Type t = poco.GetType();
+            PropertyInfo[] props = t.GetProperties();
 
+            for (int i = 0; i < props.Length; i++) //复制数据到poco
+            {
+                if (props[i].PropertyType.IsArray) continue;
+                if (props[i].PropertyType.IsInterface) continue;  //interface 不处理
+                if (row.IsNull(props[i].Name)) continue;
+                var val = row[props[i].Name];
+                props[i].SetValue(poco, val, null);
+            }
+            return poco;
+        }
         /// <summary>
         /// 填充POCO 根据参数ROW
         /// </summary>

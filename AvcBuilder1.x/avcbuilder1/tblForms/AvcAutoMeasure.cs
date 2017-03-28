@@ -46,6 +46,79 @@ namespace avcbuilder1.tblForms
             this.dao = dao;
         }
 
+        /// <summary>
+        /// 自动生成Element表信息.
+        /// </summary>
+        /// <param name="poco"></param>
+        public void ProcedureTblCommnDetail(object poco, object DetialPoco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成基本信息..."+ myPoco.getTabName(DetialPoco), 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+
+            sql = mysqlDAO.getDeleteSql(DetialPoco, null);
+            dao.Execute(sql);
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                myPoco.setPropertyValue(DetialPoco, "ID", row["ID"]);
+                sql = mysqlDAO.getInsertSql(DetialPoco);
+                dao.Execute(sql);
+            }
+        }
+
+        public void ProcedureTblelement(object poco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成element...", 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+            tblelement e = new tblelement();
+            sql = mysqlDAO.getDeleteSql(e, null);
+            dao.Execute(sql);
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                e.ID = row["ID"].ToString();
+                e.NAME = row["NAME"].ToString();
+                e.FEEDID = row["FEEDID"].ToString();
+                e.PARENTID = e.FEEDID;
+                sql = mysqlDAO.getInsertSql(e);
+                dao.Execute(sql);
+            }
+        }
+        public void ProcedureState(object poco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成State...", 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+            tblelementstate e = new tblelementstate();
+            sql = mysqlDAO.getDeleteSql(e, null);
+            dao.Execute(sql);
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                e.ELEMENTID = row["ID"].ToString();
+                e.CONTROLSTATE = "建议";
+                sql = mysqlDAO.getInsertSql(e);
+                dao.Execute(sql);
+            }
+        }
+
+        public void ProcedureLimit(object poco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成Limit..", 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+            tblelementlimit e = new tblelementlimit();
+            sql = mysqlDAO.getDeleteSql(e, null);
+            dao.Execute(sql);
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                e.ELEMENTID = row["ID"].ToString();
+               ////todo
+                sql = mysqlDAO.getInsertSql(e);
+                dao.Execute(sql);
+            }
+        }
+
+
 
         public void ProcedureElement(object poco, object measurePoco)
         {
@@ -147,7 +220,7 @@ namespace avcbuilder1.tblForms
             yx.MULTIPLEVALUE = 1;
             yx.OFFSETVALUE = 0;
             yx.CHANNEL = 1;
-            yx.REFRESHTIME = curTime;         
+            yx.REFRESHTIME = curTime;
 
             string sql = mysqlDAO.getInsertSql(yx);
             int r = dao.Execute(sql);

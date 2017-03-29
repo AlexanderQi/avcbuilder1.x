@@ -17,6 +17,7 @@ namespace AvcDb.entities
         public string ID { get; set; }
         public string NAME { get; set; }
         public string FEEDID { get; set; }
+        public string VOLTAGELEVELID { get; set; }
         public string ALIASNAME { get; set; }
         public string DESCRIPTION { get; set; }
         public Nullable<long> ELEMENTSTYLE { get; set; }

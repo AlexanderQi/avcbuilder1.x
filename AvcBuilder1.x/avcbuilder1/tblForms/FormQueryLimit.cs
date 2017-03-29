@@ -117,11 +117,11 @@ namespace avcbuilder1.tblForms
                 }
                 if (gridCol.FieldName.Equals("PERIODBEGIN"))
                 {
-                    //gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                    //gridCol.ColumnEdit = repositoryItemTimeEdit1;
                 }
                 if (gridCol.FieldName.Equals("PERIODEND"))
                 {
-                   // gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                  //  gridCol.ColumnEdit = repositoryItemTimeEdit1;
                 }
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{

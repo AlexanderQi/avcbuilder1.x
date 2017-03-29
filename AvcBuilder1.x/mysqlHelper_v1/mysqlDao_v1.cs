@@ -389,7 +389,8 @@ namespace mysqlDao_v1
                                         //判断是否加单引号
                                         Type type = dt.Columns[i].DataType;
                                         var val = dr[i];
-                                        if (type == typeof(string) || type == typeof(DateTime) || type == typeof(Nullable<DateTime>))
+                                        if (type == typeof(string) || type == typeof(DateTime) || type == typeof(Nullable<DateTime>)
+                                            || type == typeof(TimeSpan) || type == typeof(Nullable<TimeSpan>))
                                         {
                                             sbSqlPart.Append("'").Append(val).Append("',");
                                         }

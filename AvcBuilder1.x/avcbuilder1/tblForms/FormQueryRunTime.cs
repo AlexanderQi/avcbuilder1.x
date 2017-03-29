@@ -149,7 +149,7 @@ namespace avcbuilder1.tblForms
             tblelementruntime sta = new tblelementruntime();
             if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
             {
-                MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
+               // MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
             }
             else
             {

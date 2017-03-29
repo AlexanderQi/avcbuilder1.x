@@ -137,5 +137,11 @@ namespace avcUnitTest
                 Console.WriteLine("failed");
         }
 
+        [TestMethod]
+        public void TestMethod7()
+        {
+            TimeSpan ts = new TimeSpan(1, 0, 0);
+            Console.WriteLine(ts.ToString());
+        }
     }
 }

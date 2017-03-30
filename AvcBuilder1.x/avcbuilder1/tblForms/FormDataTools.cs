@@ -55,7 +55,9 @@ namespace avcbuilder1.tblForms
             tblfeedcapacitor cap = new tblfeedcapacitor();
             tblfeedtrans trans = new tblfeedtrans();
             tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
+            tblfeeder f = new tblfeeder();
 
+            auto.ProcedureElement(f);
             auto.ProcedureElement(cap);
             auto.ProcedureElement(trans);
             auto.ProcedureElement(vol);
@@ -63,9 +65,16 @@ namespace avcbuilder1.tblForms
             auto.ProcedureState(cap);
             auto.ProcedureState(trans);
             auto.ProcedureState(vol);
-
-            tblfeeder f = new tblfeeder();
             auto.ProcedureState(f);
+
+            auto.ProcedureAction(cap);
+            auto.ProcedureAction(trans);
+            auto.ProcedureAction(vol);
+
+            auto.ProcedureRuntime(cap);
+            auto.ProcedureRuntime(trans);
+            auto.ProcedureRuntime(vol);
+
         }
 
         private void autoLimit()

@@ -110,6 +110,7 @@ namespace avcbuilder1.tblForms
                 if (gridCol.FieldName.Equals("ID"))
                 {
                     gridCol.Fixed = FixedStyle.Left;
+                    gridCol.OptionsColumn.AllowFocus = false;
                     gridCol.OptionsColumn.AllowEdit = false;
                 }
                 if (gridCol.FieldName.IndexOf("NAME")>=0)

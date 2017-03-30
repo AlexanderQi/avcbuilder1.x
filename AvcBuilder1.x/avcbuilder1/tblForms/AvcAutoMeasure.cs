@@ -127,10 +127,44 @@ namespace avcbuilder1.tblForms
             {
                 e.ID = row["ID"].ToString();
                 e.NAME = row["NAME"].ToString();
-                e.FEEDID = row["FEEDID"].ToString();
+                if (poco is tblfeeder)
+                    e.FEEDID = e.ID;
+                else
+                    e.FEEDID = row["FEEDID"].ToString();
                 e.VOLTAGELEVELID = row["VOLTAGELEVELID"].ToString();
                 e.PARENTID = e.FEEDID;
                 e.ELEMENTSTYLE = getElementStyle(poco);
+                sql = mysqlDAO.getInsertSql(e);
+                dao.Execute(sql);
+            }
+        }
+
+        public void ProcedureAction(object poco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成tblelementaction...", 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+            tblelementaction e = new tblelementaction();
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                e.ID = 0;
+                e.ELEMENTID = row["ID"].ToString();
+                e.ELEMENTSTYLE = getElementStyle(poco);
+                sql = mysqlDAO.getInsertSql(e);
+                dao.Execute(sql);
+            }
+        }
+
+        public void ProcedureRuntime(object poco)
+        {
+            sendMsg(myPoco.getTabName(poco) + " 生成tblelementruntime...", 0);
+            string sql = mysqlDAO.getQuerySql(poco, "");
+            DataTable pocoDt = dao.Query(sql);
+            tblelementruntime e = new tblelementruntime();
+            foreach (DataRow row in pocoDt.Rows)
+            {
+                e.ELEMENTID = row["ID"].ToString();
+                e.ELEMENTSTYLE = Convert.ToInt32(getElementStyle(poco));
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
             }

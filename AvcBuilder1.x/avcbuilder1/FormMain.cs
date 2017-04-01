@@ -344,6 +344,9 @@ namespace avcbuilder1
             //frm = new FormCardMeasure();
             //frm.ShowInControl(xtraTabPage_measure);
 
+            frm = new FormQueryCapaCtrl();
+            frm.ShowInControl(xtraTabPage_capaCt);
+
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
 
@@ -413,6 +416,9 @@ namespace avcbuilder1
                         {
                             foreach (XtraTabPage p in xtraTabControl_element.TabPages)
                                     p.PageEnabled = true;
+                            if (av.IdType != AvcIdType.CapId)
+                                xtraTabPage_capaCt.PageEnabled =false;
+                            
                             break;
                         }
                 }

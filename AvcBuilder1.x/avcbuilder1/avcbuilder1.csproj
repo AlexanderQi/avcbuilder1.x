@@ -381,6 +381,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryCapaCtrl.resx">
       <DependentUpon>FormQueryCapaCtrl.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormQueryCapaCtrl1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryElement.resx">
       <DependentUpon>FormQueryElement.cs</DependentUpon>
@@ -415,6 +417,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

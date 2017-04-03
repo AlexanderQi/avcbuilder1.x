@@ -397,6 +397,9 @@
     <EmbeddedResource Include="tblForms\FormQueryYT.resx">
       <DependentUpon>FormQueryYT.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryYX.resx">
+      <DependentUpon>FormQueryYX.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

@@ -344,6 +344,9 @@ namespace avcbuilder1
             //frm = new FormCardMeasure();
             //frm.ShowInControl(xtraTabPage_measure);
 
+            frm = new FormQueryCapaCtrl();
+            frm.ShowInControl(xtraTabPage_capaCt);
+
             frm = new FormQueryElement();
             frm.ShowInControl(xtraTabPage1_param);
 
@@ -383,6 +386,42 @@ namespace avcbuilder1
             if (AvcTreeFocusChanged != null)
             {
                 AvcTreeEventArgs av = newAvcTreeEventArgs();
+                switch (av.IdType)
+                {
+                    case AvcIdType.AreaId:
+                    case AvcIdType.FeedId:
+                    case AvcIdType.ServerId:
+                    case AvcIdType.StationId:
+                    case AvcIdType.Cap_itemId:
+                        {
+                            xtraTabPage1_param.Select();
+                            foreach (XtraTabPage p in xtraTabControl_element.TabPages)
+                                if (p != xtraTabPage1_param)
+                                    p.PageEnabled = false;
+                            if(av.IdType == AvcIdType.Cap_itemId)
+                            {
+                                xtraTabPage_yk.PageEnabled = true;
+                                xtraTabPage_yx.PageEnabled = true;
+                                xtraTabPage_num.PageEnabled = true;
+                                xtraTabPage1_time.PageEnabled = true;
+                            }
+                            if(av.IdType == AvcIdType.FeedId)
+                            {
+                                xtraTabPage_state.PageEnabled = true;
+                            }
+                            break;
+                        }
+              
+                    default:
+                        {
+                            foreach (XtraTabPage p in xtraTabControl_element.TabPages)
+                                    p.PageEnabled = true;
+                            if (av.IdType != AvcIdType.CapId)
+                                xtraTabPage_capaCt.PageEnabled =false;
+                            
+                            break;
+                        }
+                }
                 AvcTreeFocusChanged(this, av);
             }
         }

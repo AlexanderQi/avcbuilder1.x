@@ -31,21 +31,62 @@ namespace avcbuilder1.tblForms
                 dao = new mysqlDAO(FormConnectSrv.Instance.avc_conn);
                 dao.SetSqlForNewId(FormConnectSrv.sql4NewId);
             }
-            auto = new AvcAutoMeasure(dao);
+            auto = new AvcAutoProduce(dao);
             auto.ProduceMsg += Auto_ProduceMsg;
             
         }
-        AvcAutoMeasure auto;
+        AvcAutoProduce auto;
 
         private void autoMeasure()
         {
-            auto.ProcedureElement(new tblfeedcapacitor(), new tblfeedcapacitormeasure());
-            auto.ProcedureElement(new tblfeedtrans(), new tblfeedtransmeasure());
-            auto.ProcedureElement(new tblfeedvoltageregulator(), new tblfeedvoltageregulatormeasure());
+           
+            
+            //auto.ProcedureTblElement(new tblfeedtrans());
+            //auto.ProcedureTblElement(new tblfeedvoltageregulator());
+
+            auto.ProcedureMeasure(new tblfeedcapacitor(), new tblfeedcapacitormeasure());
+            auto.ProcedureMeasure(new tblfeedtrans(), new tblfeedtransmeasure());
+            auto.ProcedureMeasure(new tblfeedvoltageregulator(), new tblfeedvoltageregulatormeasure());
         }
 
+        private void autoBasic()
+        {
+            auto.DeleteBasic();
+            tblfeedcapacitor cap = new tblfeedcapacitor();
+            tblfeedtrans trans = new tblfeedtrans();
+            tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
+            tblfeeder f = new tblfeeder();
 
+            auto.ProcedureElement(f);
+            auto.ProcedureElement(cap);
+            auto.ProcedureElement(trans);
+            auto.ProcedureElement(vol);
 
+            auto.ProcedureState(cap);
+            auto.ProcedureState(trans);
+            auto.ProcedureState(vol);
+            auto.ProcedureState(f);
+
+            auto.ProcedureAction(cap);
+            auto.ProcedureAction(trans);
+            auto.ProcedureAction(vol);
+
+            auto.ProcedureRuntime(cap);
+            auto.ProcedureRuntime(trans);
+            auto.ProcedureRuntime(vol);
+
+        }
+
+        private void autoLimit()
+        {
+            auto.DeleteLimit();
+            tblfeedcapacitor cap = new tblfeedcapacitor();
+            tblfeedtrans trans = new tblfeedtrans();
+            tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
+            auto.ProcedureLimit(cap);
+            auto.ProcedureLimit(trans);
+            auto.ProcedureLimit(vol);
+        }
 
         private void Auto_ProduceMsg(object sender, AvcMsgEventArgs e)
         {
@@ -72,7 +113,7 @@ namespace avcbuilder1.tblForms
         {
             if (MsgBox("将会清空量测信息，且不可恢复,是否继续？", "提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
             listBoxControl1.Items.Clear();
-            AvcAutoMeasure am = new AvcAutoMeasure(dao);
+            AvcAutoProduce am = new AvcAutoProduce(dao);
             am.ProduceMsg += Auto_ProduceMsg;
             tblfeedcapacitormeasure m = new tblfeedcapacitormeasure();
             am.DeleteYCYXByElementId(null);
@@ -95,6 +136,46 @@ namespace avcbuilder1.tblForms
                 MsgBox(ex.Message);
             }
 
+        }
+
+        private void simpleButton3_Click(object sender, EventArgs e)
+        {
+            if (MsgBox("将会覆盖以下表信息(设备汇总,状态,动作次数,运行时间)，且不可恢复,是否继续？", "提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
+            try
+            {
+                listBoxControl1.Items.Clear();
+                Task task = new Task(new Action(autoBasic));
+                task.Start();
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message);
+            }
+        }
+
+        private void simpleButton4_Click(object sender, EventArgs e)
+        {
+            if (MsgBox("将会覆盖限值表信息，且不可恢复,是否继续？", "提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
+            try
+            {
+                listBoxControl1.Items.Clear();
+                Task task = new Task(new Action(autoLimit));
+                task.Start();
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message);
+            }
+        }
+
+        private void simpleButton5_Click(object sender, EventArgs e)
+        {
+            auto.DeleteBasic();
+        }
+
+        private void simpleButton6_Click(object sender, EventArgs e)
+        {
+            auto.DeleteLimit();
         }
     }
 }

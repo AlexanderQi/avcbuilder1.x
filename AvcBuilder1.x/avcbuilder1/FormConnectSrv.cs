@@ -132,6 +132,8 @@ namespace avcbuilder1
         {
             try
             {
+                avc_conn = getConnStrByUI();
+
                 Dao = new mysqlDAO(avc_conn);
                 Dao.TestConnect();
                 Dao.SetSqlForNewId(sql4NewId);
@@ -140,8 +142,11 @@ namespace avcbuilder1
             }
             catch (Exception ex)
             {
+
                 this.DialogResult = DialogResult.Cancel;
-                XtraMessageBox.Show(ex.Message);
+
+                if (XtraMessageBox.Show("数据库无法连接,请检查IP,用户名,密码,数据库名的正确性\n 查看错误细节请点确定否则取消.", "错误", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    XtraMessageBox.Show(ex.Message);
                 log.Error(ex.Message);
             }
             finally
@@ -210,6 +215,6 @@ namespace avcbuilder1
 
     public static class AvcBuilder_func
     {
- 
+
     }
 }

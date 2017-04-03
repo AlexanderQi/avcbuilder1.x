@@ -47,8 +47,8 @@ namespace avcbuilder1.tblForms
 
                 SetCaption(ae.ParentCaption + " ▶ " + ae.Caption);
                 AvcIdType targetType = (AvcIdType)(ae.tag);
-                return QueryAndAdd(ae.IdType, ae.Id,targetType);
-               
+                return QueryAndAdd(ae.IdType, ae.Id, targetType);
+
             }
             catch (Exception e)
             {
@@ -58,11 +58,10 @@ namespace avcbuilder1.tblForms
             }
 
         }
-
         public override void Ini()
         {
             base.Ini();
-           
+
             gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
@@ -73,7 +72,40 @@ namespace avcbuilder1.tblForms
             gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
-        
+        RepositoryItemLookUpEdit box_vol = new RepositoryItemLookUpEdit();
+        RepositoryItemLookUpEdit box_trans = new RepositoryItemLookUpEdit();
+        RepositoryItemComboBox box_trans_owner = new RepositoryItemComboBox();
+        RepositoryItemLookUpEdit box_tap = new RepositoryItemLookUpEdit();
+        private void IniRepositoryItem()
+        {
+            if (dao == null)
+            {
+                dao = FormConnectSrv.Instance.Dao;
+            }
+            string sql = "select ID 编号,NAME 名称 from tblvoltagelevel;";
+            DataTable dt_vol = dao.Query(sql);
+            box_vol.DataSource = dt_vol;
+            box_vol.DisplayMember = "名称";
+            box_vol.ValueMember = "编号";
+
+            sql = "select ID 编号,typename 名称 from tbltransformertype;";
+            DataTable dt_trans = dao.Query(sql);
+            box_trans.DataSource = dt_trans;
+            box_trans.DisplayMember = "名称";
+            box_trans.ValueMember = "编号";
+
+            sql = "select ID 编号,typename 名称 from tbltapchangertype;";
+            DataTable dt_tap = dao.Query(sql);
+            box_tap.DataSource = dt_tap;
+            box_tap.DisplayMember = "名称";
+            box_tap.ValueMember = "编号";
+
+            box_trans_owner.Items.Clear();
+            box_trans_owner.Items.Add("专用变");
+            box_trans_owner.Items.Add("公用变");
+
+        }
+
 
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
@@ -90,12 +122,14 @@ namespace avcbuilder1.tblForms
 
         private void Instance_OnAvcSrvConnected(object sender, EventArgs e)
         {
+            IniRepositoryItem();
             IniViewColumns();
             SimpleButton_Refresh_Click(null, null);
         }
 
         private void SimpleButton_Refresh_Click(object sender, EventArgs e)
         {
+            IniRepositoryItem();
             if (curSql != null)
             {
                 QueryBySql(curSql);
@@ -122,12 +156,12 @@ namespace avcbuilder1.tblForms
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
-                if(r>0 && DataChaged != null)
+                if (r > 0 && DataChaged != null)
                 {
                     DataChaged(this, null);
                 }
-                    
-                   
+
+
             }
             catch (Exception ex)
             {
@@ -165,10 +199,23 @@ namespace avcbuilder1.tblForms
                 {
                     gridCol.Visible = false;
                 }
-                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
-                //{
-                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
-                //}
+                if (gridCol.FieldName.ToUpper().Equals("VOLTAGELEVELID"))
+                {
+                    gridCol.ColumnEdit = box_vol;
+                }
+                if (gridCol.FieldName.Equals("TRANSFORMERTYPEID")) //变压器类型
+                {
+                    gridCol.ColumnEdit = box_trans;
+                    
+                }
+                if (gridCol.FieldName.Equals("SERVEMODE")) //变压器属性
+                {
+                    gridCol.ColumnEdit = box_trans_owner;
+                }
+                if (gridCol.FieldName.Equals("TAPCHANGERID")) //档位类型
+                {
+                    gridCol.ColumnEdit = box_tap;
+                }
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{
                 //    RepositoryItemComboBox box = new RepositoryItemComboBox();
@@ -262,7 +309,7 @@ namespace avcbuilder1.tblForms
                 }
             }
 
-            if(curPoco == null)
+            if (curPoco == null)
             {
                 MsgBox("Id类型错误,添加失败");
                 return DialogResult.None;

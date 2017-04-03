@@ -10,32 +10,27 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace avcbuilder1.tblForms
 {
-    public partial class FormQueryLimit : FormQueryBase
+    public partial class FormQueryCapaCtrl : avcbuilder1.tblForms.FormQueryBase
     {
-        public FormQueryLimit() : base()
+        public FormQueryCapaCtrl()
         {
             InitializeComponent();
         }
         public override void Ini()
         {
             base.Ini();
-            gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
+            //gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
-            FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
-            FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
             //gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             //gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
             gridView1.InitNewRow += GridView1_InitNewRow;
+            FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
+            FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
         }
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            string t = DateTime.Now.ToShortTimeString();
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["LIMITNAME"],gridView1.ViewCaption+"限值-"+ds.Tables[0].Rows.Count );
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["LIMITGROUPNAME"], gridView1.ViewCaption + "分组");
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["PERIODBEGIN"], t);
-            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["PERIODEND"], t);
+            gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ID"], curId);
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -61,6 +56,7 @@ namespace avcbuilder1.tblForms
         }
 
 
+
         private void SimpleButton_Save_Click(object sender, EventArgs e)
         {
 
@@ -68,17 +64,26 @@ namespace avcbuilder1.tblForms
             {
                 return;
             }
+
             string pkName = "ID";
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblelementlimit(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblelementaction(), pkName);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");
                 }
                 else
                     MsgBox(string.Format("操作成功， {0} 条记录。", r));
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
             }
             catch (Exception ex)
             {
@@ -95,34 +100,24 @@ namespace avcbuilder1.tblForms
                 dao = FormConnectSrv.Instance.Dao;
             }
             gridView1.BeginUpdate();
+            //GridColumn cur = AddGridColumn("ENAME", "设备名称");
+            //cur.Fixed = FixedStyle.Left;
+            //cur.BestFit();
 
-            DataTable dt = dao.GetFieldComment("tblelementlimit");
+            //更换中文列名
+            DataTable dt = dao.GetFieldComment("tblfeedcapacitorcontrol");
             foreach (DataRow dr in dt.Rows)
             {
                 GridColumn gridCol = AddGridColumn(dr[0].ToString(), dr[1].ToString());
-                if (gridCol.FieldName.Equals("ELEMENTID"))
-                {
-                    gridCol.Fixed = FixedStyle.Left;
-                    gridCol.OptionsColumn.AllowEdit = false;
-                    gridCol.OptionsColumn.AllowFocus = false;
-                }
+
                 if (gridCol.FieldName.Equals("ID"))
                 {
-                    gridCol.Fixed = FixedStyle.Left;
                     gridCol.Visible = false;
                 }
-                if (gridCol.FieldName.IndexOf("NAME") >= 0)
-                {
-                    gridCol.Fixed = FixedStyle.Left;
-                }
-                if (gridCol.FieldName.Equals("PERIODBEGIN"))
-                {
-                    //gridCol.ColumnEdit = repositoryItemTimeEdit1;
-                }
-                if (gridCol.FieldName.Equals("PERIODEND"))
-                {
-                  //  gridCol.ColumnEdit = repositoryItemTimeEdit1;
-                }
+                //if (gridCol.FieldName.Equals("LOCKSTARTTIME"))
+                //{
+                //    gridCol.ColumnEdit = new RepositoryItemTimeEdit();
+                //}
                 //else if (gridCol.FieldName.Equals("CONTROLSTATE"))
                 //{
                 //    RepositoryItemComboBox box = new RepositoryItemComboBox();
@@ -142,15 +137,14 @@ namespace avcbuilder1.tblForms
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;
-            tblelement ele = new tblelement();
-            tblelementlimit sta = new tblelementlimit();
+            tblfeedcapacitorcontrol sta = new tblfeedcapacitorcontrol();
             if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
             {
-                MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
+                //MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
             }
             else
             {
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
+                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ID", Id);
                 QueryBySql(curSql);
             }
         }
@@ -173,6 +167,14 @@ namespace avcbuilder1.tblForms
                 dao.Query(sql, ref dt);
                 gridControl1.DataSource = dt;
                 gridView1.BestFitColumns();
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                }
+                else
+                {
+                    gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+                }
                 SetButtonsEnable(true);
             }
             catch (Exception ex)
@@ -180,7 +182,6 @@ namespace avcbuilder1.tblForms
                 log.Error(ex);
                 MsgBox(ex.Message);
             }
-
         }
-    }//class
+    }
 }

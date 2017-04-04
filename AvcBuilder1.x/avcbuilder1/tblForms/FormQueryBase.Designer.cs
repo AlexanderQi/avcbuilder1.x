@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+           
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormQueryBase));
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
@@ -206,12 +207,12 @@
 
         #endregion
         protected DevExpress.XtraEditors.PanelControl panelControl1;
-        public DevExpress.XtraGrid.GridControl gridControl1;
+        protected DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.Utils.ImageCollection imageCollection1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Find;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_copy;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Refresh;
-        public DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        protected DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_Save;
         protected DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit1;
         protected DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit repositoryItemTimeEdit1;

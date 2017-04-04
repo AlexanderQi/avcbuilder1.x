@@ -112,7 +112,7 @@ namespace avcbuilder1.tblForms
             else if (poco is tblfeedsvg)
                 return 33;
             else if (poco is tblfeeder)
-                return 3;
+                return 37;
             else
                 return null;
         }

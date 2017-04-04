@@ -17,7 +17,7 @@ namespace AvcDb.entities
         public int ROWID { get; set; }
         public string NAME { get; set; }
         public string CAPTION { get; set; }
-        public Nullable<int> ID { get; set; }
+        public string ID { get; set; }
         public Nullable<int> TAG { get; set; }
         public string VOL { get; set; }
         public Nullable<int> STID { get; set; }

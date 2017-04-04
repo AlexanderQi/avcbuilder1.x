@@ -15,7 +15,7 @@ namespace avcbuilder1.tblForms
         public virtual event DataChangedHandle DataChaged;
 
 
-        protected FormQueryBase() : base()
+        protected FormQueryBase():base()
         {
             InitializeComponent();
         }

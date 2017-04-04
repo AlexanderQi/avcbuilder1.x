@@ -618,6 +618,17 @@ namespace avcbuilder1
             if (e.KeyCode == Keys.F12)
                 splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
         }
+
+        FormQueryTopo ftopo;
+        private void simpleButton_topo_Click(object sender, EventArgs e)
+        {
+            if(ftopo == null)
+            {
+                ftopo = new FormQueryTopo();
+                ftopo.Ini();
+            }
+            ftopo.ShowDialog();
+        }
     }//class
 
     public class AvcTreeEventArgs : EventArgs

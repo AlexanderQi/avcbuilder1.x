@@ -39,32 +39,32 @@
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(859, 15);
+            this.simpleButton1.Location = new System.Drawing.Point(754, 12);
+            this.simpleButton1.Size = new System.Drawing.Size(36, 22);
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // textEdit4
             // 
-            this.textEdit4.Size = new System.Drawing.Size(743, 24);
+            this.textEdit4.Size = new System.Drawing.Size(662, 20);
             // 
             // textEdit3
             // 
-            this.textEdit3.Size = new System.Drawing.Size(743, 24);
+            this.textEdit3.Size = new System.Drawing.Size(662, 20);
             // 
             // textEdit2
             // 
-            this.textEdit2.Size = new System.Drawing.Size(743, 24);
+            this.textEdit2.Size = new System.Drawing.Size(662, 20);
             // 
             // textEdit1
             // 
-            this.textEdit1.Size = new System.Drawing.Size(743, 24);
+            this.textEdit1.Size = new System.Drawing.Size(662, 20);
             // 
             // simpleButton2
             // 
             this.simpleButton2.Enabled = false;
-            this.simpleButton2.Location = new System.Drawing.Point(15, 153);
-            this.simpleButton2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.simpleButton2.Location = new System.Drawing.Point(13, 121);
             this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(113, 30);
+            this.simpleButton2.Size = new System.Drawing.Size(99, 23);
             this.simpleButton2.TabIndex = 2;
             this.simpleButton2.Text = "下载管理机点表";
             // 
@@ -73,19 +73,18 @@
             this.memoEdit1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.memoEdit1.Location = new System.Drawing.Point(15, 191);
-            this.memoEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.memoEdit1.Location = new System.Drawing.Point(13, 148);
             this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(888, 490);
+            this.memoEdit1.Size = new System.Drawing.Size(777, 382);
             this.memoEdit1.TabIndex = 3;
             // 
             // FormFtpTX
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
-            this.ClientSize = new System.Drawing.Size(917, 697);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.ClientSize = new System.Drawing.Size(802, 542);
             this.Controls.Add(this.memoEdit1);
             this.Controls.Add(this.simpleButton2);
-            this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FormFtpTX";
             this.Controls.SetChildIndex(this.simpleButton2, 0);
             this.Controls.SetChildIndex(this.memoEdit1, 0);

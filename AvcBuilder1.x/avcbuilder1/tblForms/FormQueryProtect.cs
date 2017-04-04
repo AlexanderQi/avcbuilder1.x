@@ -135,7 +135,7 @@ namespace avcbuilder1.tblForms
 
         string curSql = null;
         string curId = null;
-        string curCaption = null;
+        //string curCaption = null;
         public override void QueryById(string Id, AvcIdType IdType)
         {
             curId = Id;

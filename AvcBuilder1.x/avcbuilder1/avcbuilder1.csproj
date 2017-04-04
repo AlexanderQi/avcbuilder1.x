@@ -314,6 +314,12 @@
     <Compile Include="tblForms\FormQueryState.Designer.cs">
       <DependentUpon>FormQueryState.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\FormQueryTopo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormQueryTopo.Designer.cs">
+      <DependentUpon>FormQueryTopo.cs</DependentUpon>
+    </Compile>
     <Compile Include="tblForms\FormQueryYC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -337,6 +343,12 @@
     </Compile>
     <Compile Include="tblForms\FormQueryYX.Designer.cs">
       <DependentUpon>FormQueryYX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tblForms\FormTopoSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormTopoSelect.Designer.cs">
+      <DependentUpon>FormTopoSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="tblForms\PocoFactory.cs" />
     <EmbeddedResource Include="FormMain.resx">
@@ -402,6 +414,9 @@
     <EmbeddedResource Include="tblForms\FormQueryState.resx">
       <DependentUpon>FormQueryState.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormQueryTopo.resx">
+      <DependentUpon>FormQueryTopo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormQueryYC.resx">
       <DependentUpon>FormQueryYC.cs</DependentUpon>
     </EmbeddedResource>
@@ -414,10 +429,12 @@
     <EmbeddedResource Include="tblForms\FormQueryYX.resx">
       <DependentUpon>FormQueryYX.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormTopoSelect.resx">
+      <DependentUpon>FormTopoSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

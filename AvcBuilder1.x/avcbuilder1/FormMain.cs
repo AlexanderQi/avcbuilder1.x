@@ -394,10 +394,11 @@ namespace avcbuilder1
                     case AvcIdType.StationId:
                     case AvcIdType.Cap_itemId:
                         {
-                            xtraTabPage1_param.Select();
+                            //xtraTabPage1_param.Select();
                             foreach (XtraTabPage p in xtraTabControl_element.TabPages)
                                 if (p != xtraTabPage1_param)
                                     p.PageEnabled = false;
+
                             if(av.IdType == AvcIdType.Cap_itemId)
                             {
                                 xtraTabPage_yk.PageEnabled = true;
@@ -405,7 +406,7 @@ namespace avcbuilder1
                                 xtraTabPage_num.PageEnabled = true;
                                 xtraTabPage1_time.PageEnabled = true;
                             }
-                            if(av.IdType == AvcIdType.FeedId)
+                            if(av.IdType == AvcIdType.FeedId || av.IdType == AvcIdType.StationId || av.IdType == AvcIdType.AreaId)
                             {
                                 xtraTabPage_state.PageEnabled = true;
                             }

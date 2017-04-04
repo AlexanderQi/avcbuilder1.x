@@ -312,23 +312,29 @@ namespace avcbuilder1.tblForms
 
         public void ProcedureMeasure(object poco, object measurePoco)
         {
-            sendMsg(myPoco.getTabName(poco) + "自动生成量测...", 0);
-            string sql = mysqlDAO.getQuerySql(poco, "");
+            string tblName = myPoco.getTabName(poco);
+            sendMsg(tblName + "自动生成量测...", 0);
+            string sql = string.Format( @"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+left join tblfeeder f on t.FEEDID=f.ID 
+left join tblsubstation ss on f.SUBSTATIONID = ss.ID
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;",tblName);
             DataTable dt = dao.Query(sql);
             foreach (DataRow row in dt.Rows)
             {
                 string ename = row["NAME"].ToString();
                 string eid = row["ID"].ToString();
+                string aid = row["AID"].ToString();
+                string sid = row["SID"].ToString();
                 sendMsg(ename + "开始添加量测...", 1);
-                WriteMeasure(ename, eid, measurePoco);
-
+                WriteMeasure(ename, eid, aid,sid, measurePoco);
             }
             dao.SaveData(dt, poco, "ID");
+            sendMsg(tblName + "自动生成量测结束", 0);
         }
 
 
 
-        private void WriteMeasure(string elementName, string eid, object measurePoco)
+        private void WriteMeasure(string elementName, string eid, string aid, string sid, object measurePoco)
         {
             DeleteByElementId(measurePoco, eid);
             DeleteYCYXByElementId(eid);
@@ -351,11 +357,11 @@ namespace avcbuilder1.tblForms
                 string cfn_chinese = elementName + "-" + row[1].ToString().Replace("编号", "");
                 if (cfn.IndexOf("YCID") >= 0)
                 {
-                    WriteYC(int_ycyxid, cfn_chinese, "1", "1", eid);
+                    WriteYC(int_ycyxid, cfn_chinese, aid, sid, eid);
                 }
                 else if (cfn.IndexOf("YXID") >= 0)
                 {
-                    WriteYX(int_ycyxid, cfn_chinese, "1", "1", eid);
+                    WriteYX(int_ycyxid, cfn_chinese, aid, sid, eid);
                 }
 
                 int_ycyxid++;
@@ -377,14 +383,14 @@ namespace avcbuilder1.tblForms
 
             yc.YCH = ych_seed.ToString();
             ych_seed++;
-
-            yc.CZH = stationId;
+            yc.YCVALUE = 0.0f;
+            yc.CZH = "1";
             yc.REPLACED = false;
             yc.ESTIMATED = false;
             yc.NOTFRESH = false;
             yc.MULTIPLEVALUE = 1;
             yc.OFFSETVALUE = 0;
-            yc.CHANNEL = 1;
+            yc.CHANNEL = 99;
             yc.REFRESHTIME = curTime;
             string sql = mysqlDAO.getInsertSql(yc);
             int r = dao.Execute(sql);
@@ -403,13 +409,13 @@ namespace avcbuilder1.tblForms
             yxh_seed++;
             yx.YXVALUE = 1;
 
-            yx.CZH = stationId;
+            yx.CZH = "1";
             yx.REPLACED = false;
             yx.ESTIMATORREPLACED = false;
             yx.NOTFRESH = false;
             yx.MULTIPLEVALUE = 1;
             yx.OFFSETVALUE = 0;
-            yx.CHANNEL = 1;
+            yx.CHANNEL = 99;
             yx.REFRESHTIME = curTime;
 
             string sql = mysqlDAO.getInsertSql(yx);
@@ -441,21 +447,23 @@ namespace avcbuilder1.tblForms
             {
                 sendMsg("将删除旧遥测遥信表信息", 2);
 
-                string sql = mysqlDAO.getDeleteSql(yc, null);
+                string sql = mysqlDAO.getDeleteSql(yc, "CHANNEL = 99");
                 int r = dao.Execute(sql);
-                sendMsg("删除旧遥测表信息 " + r, 2);
-                sql = mysqlDAO.getDeleteSql(yx, null);
+                sendMsg("删除自动生成的旧遥测表信息 " + r, 2);
+                sql = mysqlDAO.getDeleteSql(yx, "CHANNEL = 99");
                 r = dao.Execute(sql);
-                sendMsg("删除旧遥信表信息 " + r, 2);
+                sendMsg("删除自动生成的旧遥信表信息 " + r, 2);
             }
             else
             {
                 sendMsg("将删除旧遥测遥信表信息 设备ID =" + elementId, 2);
 
-                string sql = mysqlDAO.getDeleteSql(yc, "EQUIPMENTID", elementId);
+                string ws = string.Format("EQUIPMENTID = {0} AND CHANNEL = 99", elementId);
+                string sql = mysqlDAO.getDeleteSql(yc,ws);
+               
                 int r = dao.Execute(sql);
                 sendMsg("删除旧遥测表信息 " + r, 2);
-                sql = mysqlDAO.getDeleteSql(yx, "EQUIPMENTID", elementId);
+                sql = mysqlDAO.getDeleteSql(yx, ws);
                 r = dao.Execute(sql);
                 sendMsg("删除旧遥信表信息 " + r, 2);
 

@@ -56,6 +56,8 @@ namespace avcbuilder1.tblForms
             tblfeedtrans trans = new tblfeedtrans();
             tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
             tblfeeder f = new tblfeeder();
+            tblsubstation st = new tblsubstation();
+            tblsubcontrolarea sa = new tblsubcontrolarea();
 
             auto.ProcedureElement(f);
             auto.ProcedureElement(cap);
@@ -66,6 +68,8 @@ namespace avcbuilder1.tblForms
             auto.ProcedureState(trans);
             auto.ProcedureState(vol);
             auto.ProcedureState(f);
+            auto.ProcedureState(st);
+            auto.ProcedureState(sa);
 
             auto.ProcedureAction(cap);
             auto.ProcedureAction(trans);

@@ -24,14 +24,14 @@ namespace avcbuilder1.tblForms
             FormMain.Instance.AvcSrvConnected += Instance_OnAvcSrvConnected;
             FormMain.Instance.AvcSrvDisconnected += Instance_OnAvcSrvDisconnected;
             gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-           // gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            // gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
             gridView1.InitNewRow += GridView1_InitNewRow;
         }
 
         private void GridView1_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gridView1.SetRowCellValue(e.RowHandle, gridView1.Columns["ELEMENTID"], curId);
-          
+
         }
 
         private void Instance_OnAvcSrvDisconnected(object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace avcbuilder1.tblForms
             SetButtonsEnable(false);
             if (ds != null && ds.Tables.Count > 0)
                 ds.Tables[0].Clear();
-            
+
         }
 
         private void Instance_OnAvcSrvConnected(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Refresh_Click(object sender, EventArgs e)
         {
-            if(curSql != null)
+            if (curSql != null)
             {
                 QueryBySql(curSql);
             }
@@ -58,7 +58,7 @@ namespace avcbuilder1.tblForms
 
         private void SimpleButton_Save_Click(object sender, EventArgs e)
         {
-            
+
             if (MsgBox("确定保存到数据库吗,原有数据将会被覆盖?", "保存提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
                 return;
@@ -148,16 +148,11 @@ namespace avcbuilder1.tblForms
         {
             curId = Id;
             tblelementstate sta = new tblelementstate();
-            if (IdType == AvcIdType.FeedId || IdType == AvcIdType.StationId || IdType == AvcIdType.AreaId || IdType == AvcIdType.ServerId)
-            {
-              //  MsgBox("你选择的是管理单位，请选择馈线下的具体设备。");
-            }
-            else
-            {
-                //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.ID=" + Id);
-                curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
-                QueryBySql(curSql);
-            }
+
+            //curSql = mysqlDao_v1.mysqlDAO.getLeftJoinQuerySql(ele, sta, "ID,NAME", "*", "ID", "ELEMENTID", "L.ID=" + Id);
+            curSql = mysqlDao_v1.mysqlDAO.getQuerySql(sta, "ELEMENTID", Id);
+            QueryBySql(curSql);
+
         }
 
 
@@ -178,7 +173,7 @@ namespace avcbuilder1.tblForms
                 dao.Query(sql, ref dt);
                 gridControl1.DataSource = dt;
                 gridView1.BestFitColumns();
-                if(dt.Rows.Count == 0)
+                if (dt.Rows.Count == 0)
                 {
                     gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
                 }

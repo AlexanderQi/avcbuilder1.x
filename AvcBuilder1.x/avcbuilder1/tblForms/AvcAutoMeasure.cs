@@ -213,7 +213,7 @@ namespace avcbuilder1.tblForms
                 e.ELEMENTID = row["ID"].ToString();
                 e.LIMITNAME = row["NAME"].ToString();
                 e.ISTEMP = false;
-                e.LIMITKIND = "L-Vol";
+                e.LIMITKIND = "电压";
                 e.ELEMENTSTYLE = getElementStyle(poco);
 
                 int vollevel = int.Parse(row["VOLTAGELEVELID"].ToString());
@@ -242,17 +242,17 @@ namespace avcbuilder1.tblForms
                     e.H_LIMIT = 10500;
                     e.HH_LIMIT = 10600;
                 }
-                e.LIMITGROUPNAME = "[电压21-0点谷限值]";
+                e.LIMITGROUPNAME = "[21-0点]";
                 e.PERIODBEGIN = new TimeSpan(21, 0, 0);
                 e.PERIODEND = new TimeSpan(23, 59, 59);
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
-                e.LIMITGROUPNAME = "[电压0-8点谷限值]";
+                e.LIMITGROUPNAME = "[0-8点]";
                 e.PERIODBEGIN = new TimeSpan(0, 0, 0);
                 e.PERIODEND = new TimeSpan(8, 0, 0);
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
-                e.LIMITGROUPNAME = "[电压8-21点峰限值]";
+                e.LIMITGROUPNAME = "[8-21点]";
                 if (vollevel == 1)
                 {
                     e.L_LIMIT = 205;
@@ -283,8 +283,8 @@ namespace avcbuilder1.tblForms
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
 
-                e.LIMITKIND = "L-Cos";
-                e.LIMITGROUPNAME = "[Cos限值]";
+                e.LIMITKIND = "功率因数";
+                e.LIMITGROUPNAME = "[0-24点]";
                 e.LL_LIMIT = 0.999f;
                 e.L_LIMIT = 0.999f;
                 e.H_LIMIT = 0.999f;
@@ -294,8 +294,8 @@ namespace avcbuilder1.tblForms
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
 
-                e.LIMITKIND = "L-Num";
-                e.LIMITGROUPNAME = "[日动作次数限值]";
+                e.LIMITKIND = "动作次数";
+                e.LIMITGROUPNAME = "[0-24点]";
                 e.LL_LIMIT = 20;
                 e.L_LIMIT = 20;
                 e.H_LIMIT = 20;

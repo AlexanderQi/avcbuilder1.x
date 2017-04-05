@@ -400,13 +400,16 @@ namespace mysqlDao_v1
                                         }
                                     }
                                 }//FOR
-                                sbSqlPart.Remove(sbSqlPart.Length - 1, 1);//删除最后多余的逗号
-                                string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(), pkName);
-                                //if (sql.IndexOf(pkName) < 0)//检查sql是否包含主键，不包含则退出。
-                                //{
-                                //    return -2;
-                                //}
-                                sbSqlCommand.Append(sql);
+                                if (sbSqlPart.Length > 0)
+                                {
+                                    sbSqlPart.Remove(sbSqlPart.Length - 1, 1);//删除最后多余的逗号
+                                    string sql = mysqlDAO.getUpdateSqlById(EntityModel, sbSqlPart.ToString(), dr[pkName].ToString(), pkName);
+                                    //if (sql.IndexOf(pkName) < 0)//检查sql是否包含主键，不包含则退出。
+                                    //{
+                                    //    return -2;
+                                    //}
+                                    sbSqlCommand.Append(sql);
+                                }
                                 break;
                             }//case
                         case DataRowState.Deleted:

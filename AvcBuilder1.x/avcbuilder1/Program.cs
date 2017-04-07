@@ -18,7 +18,7 @@ namespace avcbuilder1
         static void RegCheck()
         {
             string str = "SOFTWARE\\avcbuilder";
-            RegistryKey key = Registry.LocalMachine;
+            RegistryKey key = Registry.CurrentUser;
 
             try
             {

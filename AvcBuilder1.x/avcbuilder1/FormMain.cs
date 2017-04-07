@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using log4net;
-using System.Configuration;
 using mysqlDao_v1;
 using DevExpress.XtraEditors;
-using System.Collections;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraBars;
 using avcbuilder1.tblForms;
@@ -312,10 +306,16 @@ namespace avcbuilder1
         public static FormQueryElement FormElement;
         public void IniForms()
         {
+            FormZJXT fzjxt = new FormZJXT();
+            fzjxt.ShowInControl(xtraTabPage_zjxt);
+
             FormFtpKZQ fkzq = new FormFtpKZQ();
             fkzq.ShowInControl(xtraTabPage_control);
             FormFtpTX ftx = new FormFtpTX();
             ftx.ShowInControl(xtraTabPage_communication);
+
+           
+            //fzjxt.
 
             FormElement = new FormQueryElement();
             FormElement.Ini();

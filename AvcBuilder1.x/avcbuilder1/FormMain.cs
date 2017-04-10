@@ -145,10 +145,15 @@ namespace avcbuilder1
                 sql = "select ID,NAME,SUBSTATIONID as PID from tblfeeder;";
                 LoadTbl(sql, 3, "馈线", AvcIdType.FeedId, "tblfeeder");
 
-                sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
-                LoadTbl(sql, 4, "线路电容器", AvcIdType.CapId, "tblfeedcapacitor");
-                sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=2";
-                LoadTbl(sql, 5, "配电电容器", AvcIdType.CapId, "tblfeedcapacitor");
+
+                sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t";
+                LoadTbl(sql, 4, "电容器", AvcIdType.CapId, "tblfeedcapacitor");
+
+                //sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID=4";
+                //LoadTbl(sql, 4, "线路电容器", AvcIdType.CapId, "tblfeedcapacitor");
+
+                //sql = "select ID,NAME,FEEDID as PID from tblfeedcapacitor t where t.VOLTAGELEVELID = 2 or t.VOLTAGELEVELID = 1";
+                //LoadTbl(sql, 5, "配电电容器", AvcIdType.CapId, "tblfeedcapacitor");
 
                 sql = "select ID,NAME,FEEDCAPACITORID as PID from tblfeedcapacitoritem";
                 LoadTbl(sql, 8, "电容器子组", AvcIdType.Cap_itemId, "tblfeedcapacitoritem");

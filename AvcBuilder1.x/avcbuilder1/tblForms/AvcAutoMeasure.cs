@@ -71,7 +71,7 @@ namespace avcbuilder1.tblForms
             tblelement e = new tblelement();
             string sql = mysqlDAO.getDeleteSql(e, null);
             dao.Execute(sql);
-            sendMsg("清空tblelement表",0);
+            sendMsg("清空tblelement表", 0);
 
             tblelementaction ea = new tblelementaction();
             sql = mysqlDAO.getDeleteSql(ea, null);
@@ -92,7 +92,7 @@ namespace avcbuilder1.tblForms
         public void DeleteLimit()
         {
             tblelementlimit l = new tblelementlimit();
-            string sql = mysqlDAO.getDeleteSql(l,null);
+            string sql = mysqlDAO.getDeleteSql(l, null);
             dao.Execute(sql);
             sendMsg("清空tblelementlimit表", 0);
         }
@@ -206,7 +206,7 @@ namespace avcbuilder1.tblForms
             sendMsg(myPoco.getTabName(poco) + " 生成Limit..", 0);
             string sql = mysqlDAO.getQuerySql(poco, "");
             DataTable pocoDt = dao.Query(sql);
-            
+
             foreach (DataRow row in pocoDt.Rows)
             {
                 tblelementlimit e = new tblelementlimit();
@@ -308,16 +308,66 @@ namespace avcbuilder1.tblForms
             }//for
         }
 
+        public void DeleteYKYT()
+        {
+            sendMsg("清除设备（自动生成的）遥控遥调信息...", 0);
+            string sql = "delete from tblytparam where CHANNEL= 99;";
+            dao.Execute(sql);
+            sql = "delete from tblykparam where CHANNEL= 99;";
+            dao.Execute(sql);
+        }
+
+        public void ProcedureYKYT(object poco)
+        {
+            sendMsg("生成设备遥控遥调参数...", 0);
+            string tblName = myPoco.getTabName(poco);
+            sendMsg(tblName + "自动生成遥控遥调基本信息...", 0);
+            string sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+left join tblfeeder f on t.FEEDID=f.ID 
+left join tblsubstation ss on f.SUBSTATIONID = ss.ID
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
+
+            DataTable dt = dao.Query(sql);
+            string yt_sql_templet = @"insert into tblytparam(ID,YTKIND,CONTROLAREA,STATIONID,CMDELEMENTID,CZH,YTH,NAME,CHANNEL) 
+values({0},'{1}',{2},{3},{4},{5},{6},'{7}',99,);";
+            string yk_sql_templet = @"insert into tblykparam(ID,YKKIND,CONTROLAREA,STATIONID,CMDELEMENTID,
+UPPER_CZH, UPPER_YKYTH, LOWER_CZH, LOWER_YKYTH, NAME, CHANNEL) 
+values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,);";
+            string str_id = dao.getNewId();
+            int int_id = int.Parse(str_id);
+            int yth = 1000;
+            int ykh = 1000;
+            foreach (DataRow row in dt.Rows)
+            {
+                string ename = row["NAME"].ToString();
+                string eid = row["ID"].ToString();
+                string aid = row["AID"].ToString();
+                string sid = row["SID"].ToString();
+                if (poco.GetType() == typeof(tblfeedcapacitor))
+                {
+                    string yt_sql = string.Format(yt_sql_templet, int_id++, "工作模式", aid, sid, eid, 1, yth++, ename + "-工作模式");
+                    dao.Equals(yt_sql);
+                    yt_sql = string.Format(yt_sql_templet, int_id++, "目标功率因数", aid, sid, eid, 1, yth++, ename + "-目标功率因数");
+                    dao.Equals(yt_sql);
+                }
+                else {
+                    string yk_sql = string.Format(yk_sql_templet, int_id++,"遥控",aid,sid,eid,ykh++,ename+"-遥控");
+                    dao.Equals(yk_sql);
+                }
+            }
+            //dao.SaveData(dt, poco, "ID");
+            sendMsg(tblName + "自动生成遥控遥调结束", 0);
+        }
 
 
         public void ProcedureMeasure(object poco, object measurePoco)
         {
             string tblName = myPoco.getTabName(poco);
             sendMsg(tblName + "自动生成量测...", 0);
-            string sql = string.Format( @"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+            string sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
 left join tblfeeder f on t.FEEDID=f.ID 
 left join tblsubstation ss on f.SUBSTATIONID = ss.ID
-left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;",tblName);
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
             DataTable dt = dao.Query(sql);
             foreach (DataRow row in dt.Rows)
             {
@@ -326,7 +376,7 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;",tblName);
                 string aid = row["AID"].ToString();
                 string sid = row["SID"].ToString();
                 sendMsg(ename + "开始添加量测...", 1);
-                WriteMeasure(ename, eid, aid,sid, measurePoco);
+                WriteMeasure(ename, eid, aid, sid, measurePoco);
             }
             dao.SaveData(dt, poco, "ID");
             sendMsg(tblName + "自动生成量测结束", 0);
@@ -459,8 +509,8 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;",tblName);
                 sendMsg("将删除旧遥测遥信表信息 设备ID =" + elementId, 2);
 
                 string ws = string.Format("EQUIPMENTID = {0} AND CHANNEL = 99", elementId);
-                string sql = mysqlDAO.getDeleteSql(yc,ws);
-               
+                string sql = mysqlDAO.getDeleteSql(yc, ws);
+
                 int r = dao.Execute(sql);
                 sendMsg("删除旧遥测表信息 " + r, 2);
                 sql = mysqlDAO.getDeleteSql(yx, ws);

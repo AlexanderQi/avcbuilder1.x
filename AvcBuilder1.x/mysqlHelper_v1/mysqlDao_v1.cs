@@ -582,7 +582,7 @@ namespace mysqlDao_v1
         /// 获取查询语句
         /// </summary>
         /// <param name="poco"></param>
-        /// <param name="String_After_WHERE"> sql语句中WHERE关键字后面的语句，不包括“WHERE" 本身</param>
+        /// <param name="String_After_WHERE"> sql语句中WHERE关键字后面的语句，不包括“WHERE" 本身,可以设置为NULL表示没有WHERE子语句。</param>
         /// <returns></returns>
         public static string getQuerySql(object poco, string String_After_WHERE)
         {
@@ -614,7 +614,7 @@ namespace mysqlDao_v1
         /// </summary>
         /// <param name="poco"></param>
         /// <param name="String_After_SET">sql update语句中SET关键字后面的语句，不包括“SET" 本身</param>
-        /// <param name="String_After_WHERE">...</param>
+        /// <param name="String_After_WHERE">sql语句中WHERE关键字后面的语句，不包括“WHERE" 本身,可以设置为NULL表示没有WHERE子语句。</param>
         /// <returns></returns>
         public static string getUpdateSql(object poco, string String_After_SET, string String_After_WHERE)
         {

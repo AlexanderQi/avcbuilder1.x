@@ -13,11 +13,18 @@ namespace avcbuilder1.tblForms
         public FormFtpKZQ()
         {
             InitializeComponent();
-            simpleButton_save.Visible = false;
-            simpleButton_f5.Enabled = false;
+            ButtonEnable(false);
+            textEdit1.Text = "192.168.0.230";
             simpleButton_connect.Click += simpleButton1_Click;
         }
 
+        private void ButtonEnable(bool b)
+        {
+            xtraTabControl1.Enabled =
+            simpleButton_save.Enabled = 
+            simpleButton_f5.Enabled =
+            simpleButton_reboot.Enabled = simpleButton_rezjxt.Enabled = simpleButton_re104.Enabled = b;
+        }
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {

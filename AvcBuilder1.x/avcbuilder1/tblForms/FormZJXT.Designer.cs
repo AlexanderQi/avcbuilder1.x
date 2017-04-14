@@ -53,22 +53,22 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(697, 41);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(697, 34);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // simpleButton_refresh
             // 
             this.simpleButton_refresh.Location = new System.Drawing.Point(3, 3);
             this.simpleButton_refresh.Name = "simpleButton_refresh";
-            this.simpleButton_refresh.Size = new System.Drawing.Size(75, 32);
+            this.simpleButton_refresh.Size = new System.Drawing.Size(75, 25);
             this.simpleButton_refresh.TabIndex = 0;
             this.simpleButton_refresh.Text = "刷新";
             this.simpleButton_refresh.Click += new System.EventHandler(this.simpleButton_refresh_Click);
             // 
             // checkEdit1
             // 
-            this.checkEdit1.Location = new System.Drawing.Point(91, 10);
-            this.checkEdit1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 3);
+            this.checkEdit1.Location = new System.Drawing.Point(91, 6);
+            this.checkEdit1.Margin = new System.Windows.Forms.Padding(10, 6, 3, 3);
             this.checkEdit1.Name = "checkEdit1";
             this.checkEdit1.Properties.Caption = "自动刷新";
             this.checkEdit1.Size = new System.Drawing.Size(85, 22);
@@ -86,10 +86,10 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 41);
+            this.gridControl1.Location = new System.Drawing.Point(0, 34);
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(697, 427);
+            this.gridControl1.Size = new System.Drawing.Size(697, 434);
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});

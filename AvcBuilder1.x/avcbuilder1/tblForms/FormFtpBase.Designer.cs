@@ -28,187 +28,112 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.textEdit4 = new DevExpress.XtraEditors.TextEdit();
-            this.textEdit3 = new DevExpress.XtraEditors.TextEdit();
-            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFtpBase));
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
-            this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
+            this.simpleButton_connect = new DevExpress.XtraEditors.SimpleButton();
+            this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+            this.simpleButton_f5 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton_save = new DevExpress.XtraEditors.SimpleButton();
+            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             this.SuspendLayout();
             // 
-            // layoutControl1
+            // flowLayoutPanel1
             // 
-            this.layoutControl1.Controls.Add(this.simpleButton1);
-            this.layoutControl1.Controls.Add(this.textEdit4);
-            this.layoutControl1.Controls.Add(this.textEdit3);
-            this.layoutControl1.Controls.Add(this.textEdit2);
-            this.layoutControl1.Controls.Add(this.textEdit1);
-            this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControl1.Name = "layoutControl1";
-            this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(864, 116);
-            this.layoutControl1.TabIndex = 0;
-            this.layoutControl1.Text = "layoutControl1";
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Controls.Add(this.labelControl1);
+            this.flowLayoutPanel1.Controls.Add(this.textEdit1);
+            this.flowLayoutPanel1.Controls.Add(this.simpleButton_connect);
+            this.flowLayoutPanel1.Controls.Add(this.simpleButton_f5);
+            this.flowLayoutPanel1.Controls.Add(this.simpleButton_save);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(715, 34);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // simpleButton1
+            // labelControl1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(813, 12);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(39, 22);
-            this.simpleButton1.StyleController = this.layoutControl1;
-            this.simpleButton1.TabIndex = 8;
-            this.simpleButton1.Text = "连接";
-            // 
-            // textEdit4
-            // 
-            this.textEdit4.EditValue = "";
-            this.textEdit4.Location = new System.Drawing.Point(87, 84);
-            this.textEdit4.Name = "textEdit4";
-            this.textEdit4.Properties.NullText = "请输入密码";
-            this.textEdit4.Properties.PasswordChar = '*';
-            this.textEdit4.Size = new System.Drawing.Size(722, 20);
-            this.textEdit4.StyleController = this.layoutControl1;
-            this.textEdit4.TabIndex = 7;
-            // 
-            // textEdit3
-            // 
-            this.textEdit3.Location = new System.Drawing.Point(87, 60);
-            this.textEdit3.Name = "textEdit3";
-            this.textEdit3.Size = new System.Drawing.Size(722, 20);
-            this.textEdit3.StyleController = this.layoutControl1;
-            this.textEdit3.TabIndex = 6;
-            // 
-            // textEdit2
-            // 
-            this.textEdit2.Location = new System.Drawing.Point(87, 36);
-            this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(722, 20);
-            this.textEdit2.StyleController = this.layoutControl1;
-            this.textEdit2.TabIndex = 5;
+            this.labelControl1.Location = new System.Drawing.Point(10, 6);
+            this.labelControl1.Margin = new System.Windows.Forms.Padding(10, 6, 3, 3);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(65, 18);
+            this.labelControl1.TabIndex = 0;
+            this.labelControl1.Text = "设备地址:";
             // 
             // textEdit1
             // 
-            this.textEdit1.Location = new System.Drawing.Point(87, 12);
+            this.textEdit1.Location = new System.Drawing.Point(81, 3);
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(722, 20);
-            this.textEdit1.StyleController = this.layoutControl1;
-            this.textEdit1.TabIndex = 4;
+            this.textEdit1.Size = new System.Drawing.Size(228, 24);
+            this.textEdit1.TabIndex = 1;
             // 
-            // layoutControlGroup1
+            // simpleButton_connect
             // 
-            this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.layoutControlItem4,
-            this.layoutControlItem5});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(864, 116);
-            this.layoutControlGroup1.TextVisible = false;
+            this.simpleButton_connect.ImageIndex = 2;
+            this.simpleButton_connect.ImageList = this.imageCollection1;
+            this.simpleButton_connect.Location = new System.Drawing.Point(315, 3);
+            this.simpleButton_connect.Name = "simpleButton_connect";
+            this.simpleButton_connect.Size = new System.Drawing.Size(74, 25);
+            this.simpleButton_connect.TabIndex = 2;
+            this.simpleButton_connect.Text = "连接";
             // 
-            // layoutControlItem1
+            // imageCollection1
             // 
-            this.layoutControlItem1.Control = this.textEdit1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(801, 24);
-            this.layoutControlItem1.Text = "设备地址：";
-            this.layoutControlItem1.TextLocation = DevExpress.Utils.Locations.Left;
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(72, 14);
+            this.imageCollection1.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection1.ImageStream")));
+            this.imageCollection1.InsertGalleryImage("refresh2_16x16.png", "images/actions/refresh2_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/actions/refresh2_16x16.png"), 0);
+            this.imageCollection1.Images.SetKeyName(0, "refresh2_16x16.png");
+            this.imageCollection1.InsertGalleryImage("save_16x16.png", "images/save/save_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/save/save_16x16.png"), 1);
+            this.imageCollection1.Images.SetKeyName(1, "save_16x16.png");
+            this.imageCollection1.InsertGalleryImage("feature_16x16.png", "images/support/feature_16x16.png", DevExpress.Images.ImageResourceCache.Default.GetImage("images/support/feature_16x16.png"), 2);
+            this.imageCollection1.Images.SetKeyName(2, "feature_16x16.png");
             // 
-            // layoutControlItem2
+            // simpleButton_f5
             // 
-            this.layoutControlItem2.Control = this.textEdit2;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 24);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(801, 24);
-            this.layoutControlItem2.Text = "通信端口号：";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(72, 14);
+            this.simpleButton_f5.ImageIndex = 0;
+            this.simpleButton_f5.ImageList = this.imageCollection1;
+            this.simpleButton_f5.Location = new System.Drawing.Point(395, 3);
+            this.simpleButton_f5.Name = "simpleButton_f5";
+            this.simpleButton_f5.Size = new System.Drawing.Size(75, 25);
+            this.simpleButton_f5.TabIndex = 3;
+            this.simpleButton_f5.Text = "刷新";
             // 
-            // layoutControlItem3
+            // simpleButton_save
             // 
-            this.layoutControlItem3.Control = this.textEdit3;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 48);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(801, 24);
-            this.layoutControlItem3.Text = "用户名：";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(72, 14);
-            // 
-            // layoutControlItem4
-            // 
-            this.layoutControlItem4.Control = this.textEdit4;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 72);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(801, 24);
-            this.layoutControlItem4.Text = "密码：";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(72, 14);
-            // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.simpleButton1;
-            this.layoutControlItem5.Location = new System.Drawing.Point(801, 0);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(43, 96);
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
+            this.simpleButton_save.ImageIndex = 1;
+            this.simpleButton_save.ImageList = this.imageCollection1;
+            this.simpleButton_save.Location = new System.Drawing.Point(476, 3);
+            this.simpleButton_save.Name = "simpleButton_save";
+            this.simpleButton_save.Size = new System.Drawing.Size(75, 25);
+            this.simpleButton_save.TabIndex = 4;
+            this.simpleButton_save.Text = "保存";
             // 
             // FormFtpBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.ClientSize = new System.Drawing.Size(864, 524);
-            this.Controls.Add(this.layoutControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.ClientSize = new System.Drawing.Size(715, 300);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FormFtpBase";
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
-            this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private DevExpress.XtraLayout.LayoutControl layoutControl1;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        protected DevExpress.XtraEditors.SimpleButton simpleButton1;
-        protected DevExpress.XtraEditors.TextEdit textEdit4;
-        protected DevExpress.XtraEditors.TextEdit textEdit3;
-        protected DevExpress.XtraEditors.TextEdit textEdit2;
-        protected DevExpress.XtraEditors.TextEdit textEdit1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private DevExpress.Utils.ImageCollection imageCollection1;
+        public DevExpress.XtraEditors.SimpleButton simpleButton_f5;
+        public DevExpress.XtraEditors.SimpleButton simpleButton_save;
+        public DevExpress.XtraEditors.SimpleButton simpleButton_connect;
+        public DevExpress.XtraEditors.TextEdit textEdit1;
     }
 }

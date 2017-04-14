@@ -28,70 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton_load = new DevExpress.XtraEditors.SimpleButton();
             this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // simpleButton1
+            // simpleButton_load
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(754, 12);
-            this.simpleButton1.Size = new System.Drawing.Size(36, 22);
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
-            // 
-            // textEdit4
-            // 
-            this.textEdit4.Size = new System.Drawing.Size(662, 20);
-            // 
-            // textEdit3
-            // 
-            this.textEdit3.Size = new System.Drawing.Size(662, 20);
-            // 
-            // textEdit2
-            // 
-            this.textEdit2.Size = new System.Drawing.Size(662, 20);
-            // 
-            // textEdit1
-            // 
-            this.textEdit1.Size = new System.Drawing.Size(662, 20);
-            // 
-            // simpleButton2
-            // 
-            this.simpleButton2.Enabled = false;
-            this.simpleButton2.Location = new System.Drawing.Point(13, 121);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(99, 23);
-            this.simpleButton2.TabIndex = 2;
-            this.simpleButton2.Text = "下载管理机点表";
+            this.simpleButton_load.Enabled = false;
+            this.simpleButton_load.Location = new System.Drawing.Point(11, 40);
+            this.simpleButton_load.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.simpleButton_load.Name = "simpleButton_load";
+            this.simpleButton_load.Size = new System.Drawing.Size(113, 25);
+            this.simpleButton_load.TabIndex = 2;
+            this.simpleButton_load.Text = "下载管理机点表";
             // 
             // memoEdit1
             // 
             this.memoEdit1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.memoEdit1.Location = new System.Drawing.Point(13, 148);
+            this.memoEdit1.Location = new System.Drawing.Point(0, 73);
+            this.memoEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(777, 382);
+            this.memoEdit1.Size = new System.Drawing.Size(698, 325);
             this.memoEdit1.TabIndex = 3;
             // 
             // FormFtpTX
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.ClientSize = new System.Drawing.Size(802, 542);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.ClientSize = new System.Drawing.Size(698, 398);
             this.Controls.Add(this.memoEdit1);
-            this.Controls.Add(this.simpleButton2);
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Controls.Add(this.simpleButton_load);
+            this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.Name = "FormFtpTX";
-            this.Controls.SetChildIndex(this.simpleButton2, 0);
+            this.Controls.SetChildIndex(this.simpleButton_load, 0);
             this.Controls.SetChildIndex(this.memoEdit1, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).EndInit();
             this.ResumeLayout(false);
 
@@ -99,7 +71,7 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton_load;
         private DevExpress.XtraEditors.MemoEdit memoEdit1;
     }
 }

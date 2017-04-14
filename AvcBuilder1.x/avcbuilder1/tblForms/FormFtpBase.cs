@@ -13,6 +13,8 @@ namespace avcbuilder1.tblForms
         public FormFtpBase()
         {
             InitializeComponent();
+            //simpleButton_save.Enabled = false;
+            //simpleButton_f5.Enabled = false;
         }
     }
 }

@@ -319,9 +319,6 @@ namespace avcbuilder1
             FormFtpTX ftx = new FormFtpTX();
             ftx.ShowInControl(xtraTabPage_communication);
 
-           
-            //fzjxt.
-
             FormElement = new FormQueryElement();
             FormElement.Ini();
             FormElement.DataChaged += FormElement_DataChaged;

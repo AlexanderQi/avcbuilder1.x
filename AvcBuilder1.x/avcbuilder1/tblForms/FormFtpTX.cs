@@ -13,6 +13,9 @@ namespace avcbuilder1.tblForms
         public FormFtpTX()
         {
             InitializeComponent();
+            simpleButton_save.Visible = false;
+            simpleButton_f5.Enabled = false;
+            simpleButton_connect.Click += simpleButton1_Click;
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)

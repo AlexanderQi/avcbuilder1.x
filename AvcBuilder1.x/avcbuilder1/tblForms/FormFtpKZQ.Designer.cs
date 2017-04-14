@@ -28,124 +28,136 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
+            this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPage_zjxtcfg = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEdit_zjxtcfg = new DevExpress.XtraEditors.MemoEdit();
+            this.xtraTabPage1_104cfg = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEdit_104cfg = new DevExpress.XtraEditors.MemoEdit();
+            this.xtraTabPage_zjxtlog = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEdit_zjxtlog = new DevExpress.XtraEditors.MemoEdit();
+            this.xtraTabPage_104log = new DevExpress.XtraTab.XtraTabPage();
+            this.memoEdit_104log = new DevExpress.XtraEditors.MemoEdit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
+            this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage_zjxtcfg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_zjxtcfg.Properties)).BeginInit();
+            this.xtraTabPage1_104cfg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_104cfg.Properties)).BeginInit();
+            this.xtraTabPage_zjxtlog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_zjxtlog.Properties)).BeginInit();
+            this.xtraTabPage_104log.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_104log.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // simpleButton1
+            // xtraTabControl1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(740, 12);
-            this.simpleButton1.Size = new System.Drawing.Size(35, 22);
-            this.simpleButton1.TabIndex = 5;
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.xtraTabControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xtraTabControl1.Location = new System.Drawing.Point(0, 34);
+            this.xtraTabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabControl1.Name = "xtraTabControl1";
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage_zjxtcfg;
+            this.xtraTabControl1.Size = new System.Drawing.Size(887, 444);
+            this.xtraTabControl1.TabIndex = 2;
+            this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPage_zjxtcfg,
+            this.xtraTabPage1_104cfg,
+            this.xtraTabPage_zjxtlog,
+            this.xtraTabPage_104log});
             // 
-            // textEdit4
+            // xtraTabPage_zjxtcfg
             // 
-            this.textEdit4.Size = new System.Drawing.Size(648, 20);
+            this.xtraTabPage_zjxtcfg.Controls.Add(this.memoEdit_zjxtcfg);
+            this.xtraTabPage_zjxtcfg.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage_zjxtcfg.Name = "xtraTabPage_zjxtcfg";
+            this.xtraTabPage_zjxtcfg.Size = new System.Drawing.Size(885, 402);
+            this.xtraTabPage_zjxtcfg.Text = "专家系统配置";
             // 
-            // textEdit3
+            // memoEdit_zjxtcfg
             // 
-            this.textEdit3.Size = new System.Drawing.Size(648, 20);
+            this.memoEdit_zjxtcfg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEdit_zjxtcfg.Location = new System.Drawing.Point(0, 0);
+            this.memoEdit_zjxtcfg.Name = "memoEdit_zjxtcfg";
+            this.memoEdit_zjxtcfg.Size = new System.Drawing.Size(885, 402);
+            this.memoEdit_zjxtcfg.TabIndex = 0;
             // 
-            // textEdit2
+            // xtraTabPage1_104cfg
             // 
-            this.textEdit2.Size = new System.Drawing.Size(648, 20);
+            this.xtraTabPage1_104cfg.Controls.Add(this.memoEdit_104cfg);
+            this.xtraTabPage1_104cfg.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.xtraTabPage1_104cfg.Name = "xtraTabPage1_104cfg";
+            this.xtraTabPage1_104cfg.Size = new System.Drawing.Size(885, 402);
+            this.xtraTabPage1_104cfg.Text = "104接口配置";
             // 
-            // textEdit1
+            // memoEdit_104cfg
             // 
-            this.textEdit1.Size = new System.Drawing.Size(648, 20);
+            this.memoEdit_104cfg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEdit_104cfg.Location = new System.Drawing.Point(0, 0);
+            this.memoEdit_104cfg.Name = "memoEdit_104cfg";
+            this.memoEdit_104cfg.Size = new System.Drawing.Size(885, 402);
+            this.memoEdit_104cfg.TabIndex = 0;
             // 
-            // simpleButton6
+            // xtraTabPage_zjxtlog
             // 
-            this.simpleButton6.Location = new System.Drawing.Point(557, 118);
-            this.simpleButton6.Name = "simpleButton6";
-            this.simpleButton6.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton6.TabIndex = 4;
-            this.simpleButton6.Text = "进程守护日志";
+            this.xtraTabPage_zjxtlog.Controls.Add(this.memoEdit_zjxtlog);
+            this.xtraTabPage_zjxtlog.Name = "xtraTabPage_zjxtlog";
+            this.xtraTabPage_zjxtlog.Size = new System.Drawing.Size(885, 402);
+            this.xtraTabPage_zjxtlog.Text = "专家系统日志";
             // 
-            // simpleButton4
+            // memoEdit_zjxtlog
             // 
-            this.simpleButton4.Location = new System.Drawing.Point(421, 118);
-            this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton4.TabIndex = 3;
-            this.simpleButton4.Text = "实时库同步日志";
+            this.memoEdit_zjxtlog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEdit_zjxtlog.Location = new System.Drawing.Point(0, 0);
+            this.memoEdit_zjxtlog.Name = "memoEdit_zjxtlog";
+            this.memoEdit_zjxtlog.Size = new System.Drawing.Size(885, 402);
+            this.memoEdit_zjxtlog.TabIndex = 0;
             // 
-            // simpleButton5
+            // xtraTabPage_104log
             // 
-            this.simpleButton5.Location = new System.Drawing.Point(285, 118);
-            this.simpleButton5.Name = "simpleButton5";
-            this.simpleButton5.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton5.TabIndex = 2;
-            this.simpleButton5.Text = "历史数据备份日志";
+            this.xtraTabPage_104log.Controls.Add(this.memoEdit_104log);
+            this.xtraTabPage_104log.Name = "xtraTabPage_104log";
+            this.xtraTabPage_104log.Size = new System.Drawing.Size(885, 402);
+            this.xtraTabPage_104log.Text = "104接口日志";
             // 
-            // simpleButton3
+            // memoEdit_104log
             // 
-            this.simpleButton3.Location = new System.Drawing.Point(149, 118);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton3.TabIndex = 1;
-            this.simpleButton3.Text = "104接口日志";
-            // 
-            // simpleButton2
-            // 
-            this.simpleButton2.Location = new System.Drawing.Point(13, 118);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(132, 23);
-            this.simpleButton2.TabIndex = 0;
-            this.simpleButton2.Text = "专家系统日志";
-            // 
-            // memoEdit1
-            // 
-            this.memoEdit1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.memoEdit1.Location = new System.Drawing.Point(12, 147);
-            this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(763, 346);
-            this.memoEdit1.TabIndex = 5;
+            this.memoEdit_104log.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoEdit_104log.Location = new System.Drawing.Point(0, 0);
+            this.memoEdit_104log.Name = "memoEdit_104log";
+            this.memoEdit_104log.Size = new System.Drawing.Size(885, 402);
+            this.memoEdit_104log.TabIndex = 0;
             // 
             // FormFtpKZQ
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.ClientSize = new System.Drawing.Size(787, 505);
-            this.Controls.Add(this.memoEdit1);
-            this.Controls.Add(this.simpleButton6);
-            this.Controls.Add(this.simpleButton4);
-            this.Controls.Add(this.simpleButton5);
-            this.Controls.Add(this.simpleButton2);
-            this.Controls.Add(this.simpleButton3);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.ClientSize = new System.Drawing.Size(887, 478);
+            this.Controls.Add(this.xtraTabControl1);
+            this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
             this.Name = "FormFtpKZQ";
-            this.Controls.SetChildIndex(this.simpleButton3, 0);
-            this.Controls.SetChildIndex(this.simpleButton2, 0);
-            this.Controls.SetChildIndex(this.simpleButton5, 0);
-            this.Controls.SetChildIndex(this.simpleButton4, 0);
-            this.Controls.SetChildIndex(this.simpleButton6, 0);
-            this.Controls.SetChildIndex(this.memoEdit1, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).EndInit();
+            this.Controls.SetChildIndex(this.xtraTabControl1, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
+            this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage_zjxtcfg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_zjxtcfg.Properties)).EndInit();
+            this.xtraTabPage1_104cfg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_104cfg.Properties)).EndInit();
+            this.xtraTabPage_zjxtlog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_zjxtlog.Properties)).EndInit();
+            this.xtraTabPage_104log.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_104log.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private DevExpress.XtraEditors.SimpleButton simpleButton6;
-        private DevExpress.XtraEditors.SimpleButton simpleButton4;
-        private DevExpress.XtraEditors.SimpleButton simpleButton5;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraEditors.MemoEdit memoEdit1;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage_zjxtcfg;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage1_104cfg;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage_zjxtlog;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage_104log;
+        private DevExpress.XtraEditors.MemoEdit memoEdit_zjxtcfg;
+        private DevExpress.XtraEditors.MemoEdit memoEdit_104cfg;
+        private DevExpress.XtraEditors.MemoEdit memoEdit_zjxtlog;
+        private DevExpress.XtraEditors.MemoEdit memoEdit_104log;
     }
 }

@@ -20,7 +20,7 @@ namespace avcbuilder1.tblForms
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            MsgBox("通信管理机地址或用户名密码错误，请检查。");
+            MsgBox("通信管理机地址或网络异常，请检查。");
         }
     }
 }

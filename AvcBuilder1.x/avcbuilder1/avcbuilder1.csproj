@@ -363,6 +363,7 @@
     <EmbeddedResource Include="FormConnectSrv.resx">
       <DependentUpon>FormConnectSrv.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -458,6 +459,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\myRemoteLib_v1\myRemoteLib_v1.csproj">
+      <Project>{a7042e10-8dd6-4930-89e1-62cd7fdaf0c8}</Project>
+      <Name>myRemoteLib_v1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\mysqlHelper_v1\mysqlDao_v1.csproj">
       <Project>{e7951712-9171-4222-becb-4574c86a9937}</Project>
       <Name>mysqlDao_v1</Name>

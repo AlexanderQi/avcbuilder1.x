@@ -15,6 +15,7 @@ namespace myRemoteLib_v1
         string ftpUserID;
         string ftpPassword;
         string ftpURI;
+        public string errMsg;
         ILog log;
         /// <summary>
         /// 连接FTP
@@ -68,8 +69,14 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
                 return false;
+            }
+            finally
+            {
+                if (fs != null)
+                    fs.Close();
             }
         }
 
@@ -80,17 +87,19 @@ namespace myRemoteLib_v1
         /// <param name="fileName"></param>
         public bool Download(string filePath, string fileName)
         {
-            FtpWebRequest reqFTP;
+            FtpWebRequest reqFTP = null;
+            FileStream outputStream = null;
+            Stream ftpStream = null;
             try
             {
-                FileStream outputStream = new FileStream(filePath + "\\" + fileName, FileMode.Create);
+                outputStream = new FileStream(filePath + "\\" + fileName, FileMode.Create);
 
                 reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI + fileName));
                 reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-                Stream ftpStream = response.GetResponseStream();
+               ftpStream = response.GetResponseStream();
                 long cl = response.ContentLength;
                 int bufferSize = 2048;
                 int readCount;
@@ -110,8 +119,16 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
                 return false;
+            }
+            finally
+            {
+                if (outputStream != null)
+                    outputStream.Close();
+                if (ftpStream != null)
+                    ftpStream.Close();
             }
         }
 
@@ -145,6 +162,7 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
                 return false;
             }
@@ -178,6 +196,7 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
             }
         }
@@ -220,6 +239,7 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 downloadFiles = null;
                 log.Error(ex);
                 return downloadFiles;
@@ -241,6 +261,7 @@ namespace myRemoteLib_v1
                 reqFTP.UseBinary = true;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.Method = WebRequestMethods.Ftp.ListDirectory;
+
                 WebResponse response = reqFTP.GetResponse();
                 StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default);
 
@@ -271,12 +292,33 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 downloadFiles = null;
                 if (ex.Message.Trim() != "远程服务器返回错误: (550) 文件不可用(例如，未找到文件，无法访问文件)。")
                 {
                     log.Error(ex);
                 }
                 return downloadFiles;
+            }
+        }
+
+        public bool ftpPing()
+        {
+            FtpWebRequest reqFTP;
+            try
+            {
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(ftpURI));
+                reqFTP.UseBinary = true;
+                reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
+                reqFTP.Method = WebRequestMethods.Ftp.ListDirectory;
+                WebResponse response = reqFTP.GetResponse();
+                response.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+                return false;
             }
         }
 
@@ -349,7 +391,7 @@ namespace myRemoteLib_v1
         /// 创建文件夹
         /// </summary>
         /// <param name="dirName"></param>
-        public void MakeDir(string dirName)
+        public bool MakeDir(string dirName)
         {
             FtpWebRequest reqFTP;
             try
@@ -364,10 +406,13 @@ namespace myRemoteLib_v1
 
                 ftpStream.Close();
                 response.Close();
+                return true;
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
+                return false;
             }
         }
 
@@ -395,6 +440,7 @@ namespace myRemoteLib_v1
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
             }
             return fileSize;
@@ -405,7 +451,7 @@ namespace myRemoteLib_v1
         /// </summary>
         /// <param name="currentFilename"></param>
         /// <param name="newFilename"></param>
-        public void ReName(string currentFilename, string newFilename)
+        public bool ReName(string currentFilename, string newFilename)
         {
             FtpWebRequest reqFTP;
             try
@@ -420,10 +466,13 @@ namespace myRemoteLib_v1
 
                 ftpStream.Close();
                 response.Close();
+                return true;
             }
             catch (Exception ex)
             {
+                errMsg = ex.Message;
                 log.Error(ex);
+                return false;
             }
         }
 
@@ -441,10 +490,10 @@ namespace myRemoteLib_v1
         /// 切换当前目录
         /// </summary>
         /// <param name="DirectoryName"></param>
-        /// <param name="IsRoot">true 绝对路径   false 相对路径</param>
-        public void GotoDirectory(string DirectoryName, bool IsRoot)
+        /// <param name="IsAbsolute">true 绝对路径   false 相对路径</param>
+        public void GotoDirectory(string DirectoryName, bool IsAbsolute)
         {
-            if (IsRoot)
+            if (IsAbsolute)
             {
                 ftpRemotePath = DirectoryName;
             }

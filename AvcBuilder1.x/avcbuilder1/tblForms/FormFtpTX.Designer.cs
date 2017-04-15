@@ -36,10 +36,9 @@
             // simpleButton_load
             // 
             this.simpleButton_load.Enabled = false;
-            this.simpleButton_load.Location = new System.Drawing.Point(11, 40);
-            this.simpleButton_load.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.simpleButton_load.Location = new System.Drawing.Point(10, 32);
             this.simpleButton_load.Name = "simpleButton_load";
-            this.simpleButton_load.Size = new System.Drawing.Size(113, 25);
+            this.simpleButton_load.Size = new System.Drawing.Size(99, 22);
             this.simpleButton_load.TabIndex = 2;
             this.simpleButton_load.Text = "下载管理机点表";
             // 
@@ -48,19 +47,18 @@
             this.memoEdit1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.memoEdit1.Location = new System.Drawing.Point(0, 73);
-            this.memoEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.memoEdit1.Location = new System.Drawing.Point(0, 57);
             this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(698, 325);
+            this.memoEdit1.Size = new System.Drawing.Size(611, 253);
             this.memoEdit1.TabIndex = 3;
             // 
             // FormFtpTX
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
-            this.ClientSize = new System.Drawing.Size(698, 398);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.ClientSize = new System.Drawing.Size(611, 310);
             this.Controls.Add(this.memoEdit1);
             this.Controls.Add(this.simpleButton_load);
-            this.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FormFtpTX";
             this.Controls.SetChildIndex(this.simpleButton_load, 0);
             this.Controls.SetChildIndex(this.memoEdit1, 0);

@@ -477,6 +477,9 @@
   <ItemGroup>
     <Content Include="EditModel.ico" />
     <Content Include="ICON\EditModel.ico" />
+    <Content Include="tool\plink.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

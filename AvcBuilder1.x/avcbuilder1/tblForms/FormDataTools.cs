@@ -92,6 +92,17 @@ namespace avcbuilder1.tblForms
             auto.ProcedureLimit(vol);
         }
 
+        private void autoYKYT()
+        {
+            auto.DeleteYKYT();
+            tblfeedcapacitor cap = new tblfeedcapacitor();
+            tblfeedtrans trans = new tblfeedtrans();
+            tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
+            auto.ProcedureYKYT(cap);
+            auto.ProcedureYKYT(trans);
+            auto.ProcedureYKYT(vol);
+        }
+
         private void Auto_ProduceMsg(object sender, AvcMsgEventArgs e)
         {
             this.Invoke(AsyncShowMsg, e.Msg);            
@@ -180,6 +191,26 @@ namespace avcbuilder1.tblForms
         private void simpleButton6_Click(object sender, EventArgs e)
         {
             auto.DeleteLimit();
+        }
+
+        private void simpleButton7_Click(object sender, EventArgs e)
+        {
+            auto.DeleteYKYT();
+        }
+
+        private void simpleButton8_Click(object sender, EventArgs e)
+        {
+            if (MsgBox("将会重新生成遥控遥调信息，是否继续？", "提示", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
+            try
+            {
+                listBoxControl1.Items.Clear();
+                Task task = new Task(new Action(autoYKYT));
+                task.Start();
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message);
+            }
         }
     }
 }

@@ -250,7 +250,7 @@ namespace mysqlDao_v1
                 else
                 {
                     string comment = dr[1].ToString().Trim();
-                    int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；', ':', '：' });
+                    int p = comment.IndexOfAny(new char[] { ',', '.', ';', '\n', '\t', ' ', '。', '，', '；' });
                     if (p > 0)
                     {
                         comment = comment.Substring(0, p);

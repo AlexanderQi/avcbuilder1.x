@@ -329,10 +329,10 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
 
             DataTable dt = dao.Query(sql);
             string yt_sql_templet = @"insert into tblytparam(ID,YTKIND,CONTROLAREA,STATIONID,CMDELEMENTID,CZH,YTH,NAME,CHANNEL) 
-values({0},'{1}',{2},{3},{4},{5},{6},'{7}',99,);";
+values({0},'{1}',{2},{3},{4},{5},{6},'{7}',99);";
             string yk_sql_templet = @"insert into tblykparam(ID,YKKIND,CONTROLAREA,STATIONID,CMDELEMENTID,
 UPPER_CZH, UPPER_YKYTH, LOWER_CZH, LOWER_YKYTH, NAME, CHANNEL) 
-values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,);";
+values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99);";
             string str_id = dao.getNewId();
             int int_id = int.Parse(str_id);
             int yth = 1000;
@@ -346,13 +346,13 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,);";
                 if (poco.GetType() == typeof(tblfeedcapacitor))
                 {
                     string yt_sql = string.Format(yt_sql_templet, int_id++, "工作模式", aid, sid, eid, 1, yth++, ename + "-工作模式");
-                    dao.Equals(yt_sql);
+                    dao.Execute(yt_sql);
                     yt_sql = string.Format(yt_sql_templet, int_id++, "目标功率因数", aid, sid, eid, 1, yth++, ename + "-目标功率因数");
-                    dao.Equals(yt_sql);
+                    dao.Execute(yt_sql);
                 }
                 else {
                     string yk_sql = string.Format(yk_sql_templet, int_id++,"遥控",aid,sid,eid,ykh++,ename+"-遥控");
-                    dao.Equals(yk_sql);
+                    dao.Execute(yk_sql);
                 }
             }
             //dao.SaveData(dt, poco, "ID");

@@ -18,7 +18,7 @@ namespace avcbuilder1.tblForms
         {
             InitializeComponent();
             ButtonEnable(false);
-            textEdit1.Text = "192.168.1.195";  //"192.168.0.230";
+            textEdit1.Text =  "192.168.0.230"; //"192.168.1.195"; 
             simpleButton_connect.Click += simpleButton1_Click;
             simpleButton_f5.Click += SimpleButton_f5_Click;
             simpleButton_save.Click += SimpleButton_save_Click;
@@ -82,10 +82,10 @@ namespace avcbuilder1.tblForms
         string pwdownload = "softcore";
 
         string path_zjxt = @"/home/softcore/bin/zjxt";
-        string path_104 = @"/home/softcore/bin/jk104";
+        string path_104 = @"/home/softcore/bin/JK104";
         string ip = "";
         string path_down = "d:";
-        string cfgzjxt = "c3.xml";
+        string cfgzjxt = "c3p0-config-zjxt2.xml";
         string cfg104 = "cfg.txt";
         string[] files = null;
         FtpWeb ftp = null;
@@ -191,7 +191,7 @@ namespace avcbuilder1.tblForms
             StreamReader sr = null;
             try
             {
-                sr = new StreamReader(fn, Encoding.UTF8);
+                sr = new StreamReader(fn, Encoding.GetEncoding("GBK"));
                 memo.Text = sr.ReadToEnd();
                 sr.Close();
                 return true;

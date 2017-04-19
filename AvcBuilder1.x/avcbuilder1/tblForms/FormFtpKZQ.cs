@@ -96,7 +96,7 @@ namespace avcbuilder1.tblForms
         FtpWeb ftp = null;
 
         string log_file_zjxt = "zjxt2.log";
-        string log_path_zjxt = @"/home/softcore/bin/zjxt/log";
+        string log_path_zjxt = @"/home/softcore/log/zjxt2";
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
@@ -167,7 +167,7 @@ namespace avcbuilder1.tblForms
         {
             if (ftp == null) return;
             FolderBrowserDialog bd = new FolderBrowserDialog();
-            bd.Description = "选择日志存放路径:";
+            bd.Description = "选择 "+log_file_zjxt+" 日志存放路径:";
             if (bd.ShowDialog() != DialogResult.OK) return;
             ftp.GotoDirectory(log_path_zjxt,true);
             bool b = ftp.Download(bd.SelectedPath, log_file_zjxt);
@@ -196,7 +196,7 @@ namespace avcbuilder1.tblForms
             StreamReader sr = null;
             try
             {
-                sr = new StreamReader(fn, Encoding.GetEncoding("GBK"));
+                sr = new StreamReader(fn, Encoding.UTF8); //Encoding.GetEncoding("GBK")
                 memo.Text = sr.ReadToEnd();
                 sr.Close();
                 return true;

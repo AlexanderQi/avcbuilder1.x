@@ -51,36 +51,34 @@
             this.flowLayoutPanel1.Controls.Add(this.simpleButton_save);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(626, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(715, 39);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(9, 4);
-            this.labelControl1.Margin = new System.Windows.Forms.Padding(9, 4, 3, 2);
+            this.labelControl1.Location = new System.Drawing.Point(10, 5);
+            this.labelControl1.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(52, 14);
+            this.labelControl1.Size = new System.Drawing.Size(65, 18);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "设备地址:";
             // 
             // textEdit1
             // 
-            this.textEdit1.Location = new System.Drawing.Point(67, 3);
-            this.textEdit1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 2);
+            this.textEdit1.Location = new System.Drawing.Point(81, 4);
+            this.textEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(200, 20);
+            this.textEdit1.Size = new System.Drawing.Size(229, 24);
             this.textEdit1.TabIndex = 1;
             // 
             // simpleButton_connect
             // 
             this.simpleButton_connect.ImageIndex = 2;
             this.simpleButton_connect.ImageList = this.imageCollection1;
-            this.simpleButton_connect.Location = new System.Drawing.Point(273, 2);
-            this.simpleButton_connect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleButton_connect.Location = new System.Drawing.Point(316, 3);
             this.simpleButton_connect.Name = "simpleButton_connect";
-            this.simpleButton_connect.Size = new System.Drawing.Size(65, 22);
+            this.simpleButton_connect.Size = new System.Drawing.Size(74, 28);
             this.simpleButton_connect.TabIndex = 2;
             this.simpleButton_connect.Text = "连接";
             // 
@@ -98,10 +96,9 @@
             // 
             this.simpleButton_f5.ImageIndex = 0;
             this.simpleButton_f5.ImageList = this.imageCollection1;
-            this.simpleButton_f5.Location = new System.Drawing.Point(344, 2);
-            this.simpleButton_f5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleButton_f5.Location = new System.Drawing.Point(396, 3);
             this.simpleButton_f5.Name = "simpleButton_f5";
-            this.simpleButton_f5.Size = new System.Drawing.Size(66, 22);
+            this.simpleButton_f5.Size = new System.Drawing.Size(75, 28);
             this.simpleButton_f5.TabIndex = 3;
             this.simpleButton_f5.Text = "刷新";
             // 
@@ -109,19 +106,18 @@
             // 
             this.simpleButton_save.ImageIndex = 1;
             this.simpleButton_save.ImageList = this.imageCollection1;
-            this.simpleButton_save.Location = new System.Drawing.Point(416, 2);
-            this.simpleButton_save.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.simpleButton_save.Location = new System.Drawing.Point(477, 3);
             this.simpleButton_save.Name = "simpleButton_save";
-            this.simpleButton_save.Size = new System.Drawing.Size(94, 22);
+            this.simpleButton_save.Size = new System.Drawing.Size(107, 28);
             this.simpleButton_save.TabIndex = 4;
             this.simpleButton_save.Text = "保存并下装";
             // 
             // FormFtpBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-            this.ClientSize = new System.Drawing.Size(626, 233);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.ClientSize = new System.Drawing.Size(715, 300);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FormFtpBase";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();

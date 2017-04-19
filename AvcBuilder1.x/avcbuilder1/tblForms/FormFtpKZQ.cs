@@ -26,6 +26,7 @@ namespace avcbuilder1.tblForms
             simpleButton_reboot.Click += SimpleButton_reboot_Click;
         }
 
+        Process cmd = null;
         private void SimpleButton_reboot_Click(object sender, EventArgs e)
         {
             //plink.exe -ssh -pw moxa root@192.168.0.230 "sh /home/softcore/sh/stopAll.sh;"
@@ -39,15 +40,19 @@ namespace avcbuilder1.tblForms
             string linuxcmd = "reboot";
             string linuxcmd_test = "echo this os will reboot | wall";
             string args = string.Format("-ssh -pw moxa root@{0} \"{1}\"",ip,linuxcmd);
-            Process cmd = null;
+            
             try
             {
-                cmd = new Process();
-                cmd.StartInfo.Arguments = args;
-                cmd.StartInfo.FileName = fn;
-                cmd.StartInfo.CreateNoWindow = true; //对于控制台程序可以不打开控制台窗口。
-                cmd.StartInfo.UseShellExecute = false; //同时不能用shell执行，否则控制台窗口就会被打开。
+                if (cmd == null)
+                {
+                    cmd = new Process();
+                    cmd.StartInfo.Arguments = args;
+                    cmd.StartInfo.FileName = fn;
+                    cmd.StartInfo.CreateNoWindow = true; //对于控制台程序可以不打开控制台窗口。
+                    cmd.StartInfo.UseShellExecute = false; //同时不能用shell执行，否则控制台窗口就会被打开。
+                }
                 cmd.Start();
+                cmd.WaitForExit();
                 MsgBox("重启指令已发送.");
                 ip = "";
             }

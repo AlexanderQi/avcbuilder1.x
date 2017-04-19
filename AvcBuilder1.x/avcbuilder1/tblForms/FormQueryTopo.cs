@@ -21,6 +21,7 @@ namespace avcbuilder1.tblForms
         {
             base.Ini();
             //gridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None;
+           
             simpleButton_Save.Click += SimpleButton_Save_Click;
             simpleButton_Refresh.Click += SimpleButton_Refresh_Click;
             gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -41,6 +42,7 @@ namespace avcbuilder1.tblForms
             string fid = lookUpEdit1.EditValue.ToString();
             //tblgraphtopoterminal gt = new tblgraphtopoterminal();
             QueryById(fid, AvcIdType.FeedId);
+            simpleButton_copy.Enabled = false;
         }
 
         private void FormQueryTopo_Shown(object sender, EventArgs e)

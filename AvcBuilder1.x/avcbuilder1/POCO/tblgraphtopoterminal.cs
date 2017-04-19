@@ -24,8 +24,8 @@ namespace AvcDb.entities
         public Nullable<int> LINKCOUNT { get; set; }
         public string LINKS { get; set; }
         public Nullable<int> EQUIPCOUNT { get; set; }
-        public Nullable<int> GRAPHID { get; set; }
-        public Nullable<int> FEEDID { get; set; }
+        public string GRAPHID { get; set; }
+        public string FEEDID { get; set; }
         public string LINK { get; set; }
         public string LINKFOOT { get; set; }
         public Nullable<int> PARENTID { get; set; }

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using myRemoteLib_v1;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace avcbuilder1.tblForms
 {
@@ -52,7 +53,8 @@ namespace avcbuilder1.tblForms
                     cmd.StartInfo.UseShellExecute = false; //同时不能用shell执行，否则控制台窗口就会被打开。
                 }
                 cmd.Start();
-                cmd.WaitForExit();
+                Thread.Sleep(5000);
+               // cmd.WaitForExit();
                 MsgBox("重启指令已发送.");
                 ip = "";
             }

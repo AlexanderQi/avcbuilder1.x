@@ -19,7 +19,7 @@ namespace avcbuilder1.tblForms
         {
             InitializeComponent();
             ButtonEnable(false);
-            textEdit1.Text =  "192.168.0.112"; //"192.168.1.195"; 
+            textEdit1.Text =  "192.168.0.230"; //"192.168.1.195"; 
             ip = textEdit1.Text;
             simpleButton_connect.Click += simpleButton1_Click;
             simpleButton_f5.Click += SimpleButton_f5_Click;
@@ -39,7 +39,7 @@ namespace avcbuilder1.tblForms
                 MsgBox("缺少组件，无法执行.");
                 return;
             }
-            string rootpw = "root";
+            string rootpw = "moxa";
             string linuxcmd = "reboot";
             //string linuxcmd_test = "echo this os will reboot | wall";
             string args = string.Format("-ssh -pw {2} root@{0} \"{1}\"", ip, linuxcmd, rootpw);

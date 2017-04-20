@@ -20,7 +20,7 @@ namespace avcbuilder1.tblForms
             InitializeComponent();
             ButtonEnable(false);
             textEdit1.Text =  "192.168.0.230"; //"192.168.1.195"; 
-            ip = textEdit1.Text;
+           // ip = textEdit1.Text;
             simpleButton_connect.Click += simpleButton1_Click;
             simpleButton_f5.Click += SimpleButton_f5_Click;
             simpleButton_save.Click += SimpleButton_save_Click;
@@ -104,10 +104,11 @@ namespace avcbuilder1.tblForms
 
         private void ButtonEnable(bool b)
         {
+            simpleButton_reboot.Enabled = 
             xtraTabControl1.Enabled =
             simpleButton_save.Enabled =
             simpleButton_f5.Enabled = simpleButton_log.Enabled =b;
-           // simpleButton_reboot.Enabled = 
+           // 
             if (!b)
             {
                 memoEdit_zjxtcfg.Text = "";

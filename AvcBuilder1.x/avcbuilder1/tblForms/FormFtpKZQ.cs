@@ -19,7 +19,8 @@ namespace avcbuilder1.tblForms
         {
             InitializeComponent();
             ButtonEnable(false);
-            textEdit1.Text =  "192.168.0.230"; //"192.168.1.195"; 
+            textEdit1.Text =  "192.168.0.112"; //"192.168.1.195"; 
+            ip = textEdit1.Text;
             simpleButton_connect.Click += simpleButton1_Click;
             simpleButton_f5.Click += SimpleButton_f5_Click;
             simpleButton_save.Click += SimpleButton_save_Click;
@@ -38,9 +39,10 @@ namespace avcbuilder1.tblForms
                 MsgBox("缺少组件，无法执行.");
                 return;
             }
+            string rootpw = "root";
             string linuxcmd = "reboot";
-            string linuxcmd_test = "echo this os will reboot | wall";
-            string args = string.Format("-ssh -pw moxa root@{0} \"{1}\"",ip,linuxcmd);
+            //string linuxcmd_test = "echo this os will reboot | wall";
+            string args = string.Format("-ssh -pw {2} root@{0} \"{1}\"", ip, linuxcmd, rootpw);
             
             try
             {
@@ -49,17 +51,28 @@ namespace avcbuilder1.tblForms
                     cmd = new Process();
                     cmd.StartInfo.Arguments = args;
                     cmd.StartInfo.FileName = fn;
+                    cmd.StartInfo.RedirectStandardInput = true;
+                    cmd.StartInfo.RedirectStandardOutput = true;
+                    cmd.StartInfo.RedirectStandardError = true;
                     cmd.StartInfo.CreateNoWindow = true; //对于控制台程序可以不打开控制台窗口。
                     cmd.StartInfo.UseShellExecute = false; //同时不能用shell执行，否则控制台窗口就会被打开。
+
+                    cmd.EnableRaisingEvents = true;
+                    cmd.Exited += Cmd_Exited;
+                    cmd.OutputDataReceived += Cmd_OutputDataReceived ;
+                    cmd.ErrorDataReceived += Cmd_ErrorDataReceived;
                 }
                 cmd.Start();
-                Thread.Sleep(5000);
-               // cmd.WaitForExit();
-                MsgBox("重启指令已发送.");
+                cmd.BeginOutputReadLine();
+                cmd.BeginErrorReadLine();
+                cmd.WaitForExit();
+                //Thread.Sleep(5000);         
                 ip = "";
             }
             catch (Exception ex)
             {
+                if (cmd != null)
+                    cmd.Kill();
                 MsgBox(ex.Message);
             }
             finally
@@ -69,12 +82,32 @@ namespace avcbuilder1.tblForms
             }
         }
 
+        private void Cmd_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data == null) return;
+            string str = e.Data;
+            if (str.IndexOf("conn") >= 0) //plink 第一次登录ssh服务器时,会询问是否接受公钥,等屁话一大堆,必须回复y/n,否则挂起主线程.
+            {
+                cmd.StandardInput.Write("y\r");
+            }
+        }
+
+        private void Cmd_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+
+        }
+
+        private void Cmd_Exited(object sender, EventArgs e)
+        {
+            MsgBox("重启指令已发送.");
+        }
+
         private void ButtonEnable(bool b)
         {
             xtraTabControl1.Enabled =
             simpleButton_save.Enabled =
-            simpleButton_f5.Enabled = simpleButton_log.Enabled =
-            simpleButton_reboot.Enabled = b;
+            simpleButton_f5.Enabled = simpleButton_log.Enabled =b;
+           // simpleButton_reboot.Enabled = 
             if (!b)
             {
                 memoEdit_zjxtcfg.Text = "";

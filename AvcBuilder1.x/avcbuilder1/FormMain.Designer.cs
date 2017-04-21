@@ -91,6 +91,7 @@
             this.simpleButton_topo = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabControl_Main = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage_zjxt = new DevExpress.XtraTab.XtraTabPage();
+            this.simpleButton_ykyt = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTrackBar1)).BeginInit();
@@ -724,6 +725,7 @@
             this.flowLayoutPanel1.Controls.Add(this.simpleButton_trans);
             this.flowLayoutPanel1.Controls.Add(this.simpleButton_tools);
             this.flowLayoutPanel1.Controls.Add(this.simpleButton_topo);
+            this.flowLayoutPanel1.Controls.Add(this.simpleButton_ykyt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -833,6 +835,20 @@
             this.xtraTabPage_zjxt.Name = "xtraTabPage_zjxt";
             this.xtraTabPage_zjxt.Size = new System.Drawing.Size(1118, 571);
             this.xtraTabPage_zjxt.Text = "专家系统";
+            // 
+            // simpleButton_ykyt
+            // 
+            this.simpleButton_ykyt.AutoSize = true;
+            this.simpleButton_ykyt.ImageIndex = 9;
+            this.simpleButton_ykyt.ImageList = this.imageCollection1;
+            this.simpleButton_ykyt.Location = new System.Drawing.Point(236, 3);
+            this.simpleButton_ykyt.Margin = new System.Windows.Forms.Padding(21, 3, 2, 3);
+            this.simpleButton_ykyt.Name = "simpleButton_ykyt";
+            this.simpleButton_ykyt.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_ykyt.Size = new System.Drawing.Size(28, 27);
+            this.simpleButton_ykyt.TabIndex = 11;
+            this.simpleButton_ykyt.ToolTip = "遥控试验";
+            this.simpleButton_ykyt.Click += new System.EventHandler(this.simpleButton_ykyt_Click);
             // 
             // FormMain
             // 
@@ -951,6 +967,7 @@
         private DevExpress.XtraTab.XtraTabPage xtraTabPage_capaCt;
         protected DevExpress.XtraEditors.SimpleButton simpleButton_topo;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage_zjxt;
+        protected DevExpress.XtraEditors.SimpleButton simpleButton_ykyt;
     }
 }
 

@@ -632,6 +632,17 @@ namespace avcbuilder1
             }
             ftopo.ShowDialog();
         }
+
+        FormYkYtExpri fykyt;
+        private void simpleButton_ykyt_Click(object sender, EventArgs e)
+        {
+            if(fykyt == null)
+            {
+                fykyt = new FormYkYtExpri();
+                fykyt.Ini();
+            }
+            fykyt.ShowDialog();
+        }
     }//class
 
     public class AvcTreeEventArgs : EventArgs

@@ -350,6 +350,12 @@
     <Compile Include="tblForms\FormTopoSelect.Designer.cs">
       <DependentUpon>FormTopoSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="tblForms\FormYkYtExpri.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tblForms\FormYkYtExpri.Designer.cs">
+      <DependentUpon>FormYkYtExpri.cs</DependentUpon>
+    </Compile>
     <Compile Include="tblForms\FormZJXT.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -437,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormTopoSelect.resx">
       <DependentUpon>FormTopoSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tblForms\FormYkYtExpri.resx">
+      <DependentUpon>FormYkYtExpri.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tblForms\FormZJXT.resx">
       <DependentUpon>FormZJXT.cs</DependentUpon>

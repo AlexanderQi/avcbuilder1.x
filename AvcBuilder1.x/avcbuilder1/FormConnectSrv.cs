@@ -162,6 +162,7 @@ namespace avcbuilder1
 
         private void comboBoxEdit1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBoxEdit1.SelectedIndex == -1) return;
             string cn = comboBoxEdit1.Properties.Items[comboBoxEdit1.SelectedIndex] as string;
             avc_conn = ConfigurationManager.ConnectionStrings[cn].ConnectionString;
             ShowInfo(avc_conn);

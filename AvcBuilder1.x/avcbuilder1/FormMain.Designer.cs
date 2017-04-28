@@ -89,9 +89,9 @@
             this.simpleButton_trans = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton_tools = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton_topo = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton_ykyt = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabControl_Main = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage_zjxt = new DevExpress.XtraTab.XtraTabPage();
-            this.simpleButton_ykyt = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTrackBar1)).BeginInit();
@@ -815,6 +815,20 @@
             this.simpleButton_topo.ToolTip = "拓扑工具";
             this.simpleButton_topo.Click += new System.EventHandler(this.simpleButton_topo_Click);
             // 
+            // simpleButton_ykyt
+            // 
+            this.simpleButton_ykyt.AutoSize = true;
+            this.simpleButton_ykyt.ImageIndex = 9;
+            this.simpleButton_ykyt.ImageList = this.imageCollection1;
+            this.simpleButton_ykyt.Location = new System.Drawing.Point(236, 3);
+            this.simpleButton_ykyt.Margin = new System.Windows.Forms.Padding(21, 3, 2, 3);
+            this.simpleButton_ykyt.Name = "simpleButton_ykyt";
+            this.simpleButton_ykyt.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.simpleButton_ykyt.Size = new System.Drawing.Size(28, 27);
+            this.simpleButton_ykyt.TabIndex = 11;
+            this.simpleButton_ykyt.ToolTip = "遥控试验";
+            this.simpleButton_ykyt.Click += new System.EventHandler(this.simpleButton_ykyt_Click);
+            // 
             // xtraTabControl_Main
             // 
             this.xtraTabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -836,20 +850,6 @@
             this.xtraTabPage_zjxt.Size = new System.Drawing.Size(1118, 571);
             this.xtraTabPage_zjxt.Text = "专家系统";
             // 
-            // simpleButton_ykyt
-            // 
-            this.simpleButton_ykyt.AutoSize = true;
-            this.simpleButton_ykyt.ImageIndex = 9;
-            this.simpleButton_ykyt.ImageList = this.imageCollection1;
-            this.simpleButton_ykyt.Location = new System.Drawing.Point(236, 3);
-            this.simpleButton_ykyt.Margin = new System.Windows.Forms.Padding(21, 3, 2, 3);
-            this.simpleButton_ykyt.Name = "simpleButton_ykyt";
-            this.simpleButton_ykyt.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_ykyt.Size = new System.Drawing.Size(28, 27);
-            this.simpleButton_ykyt.TabIndex = 11;
-            this.simpleButton_ykyt.ToolTip = "遥控试验";
-            this.simpleButton_ykyt.Click += new System.EventHandler(this.simpleButton_ykyt_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -867,7 +867,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AVC Builder 0.91";
+            this.Text = "AVC Builder 0.92";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyUp);

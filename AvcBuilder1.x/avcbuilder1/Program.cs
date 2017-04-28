@@ -29,12 +29,12 @@ namespace avcbuilder1
                     key.Close();
                     key.OpenSubKey(str);
                 }
-                object v = software.GetValue("xstart");
+                object v = software.GetValue("x2start");
                 DateTime d;
                 if (v == null)
                 {
                     d = DateTime.Now;
-                    software.SetValue("xstart", d);
+                    software.SetValue("x2start", d);
                 }
                 else
                 {
@@ -42,7 +42,7 @@ namespace avcbuilder1
                 }
                 //MessageBox.Show("软件注册于" + d);
                 TimeSpan ts = DateTime.Now - d;
-                if(ts.Days > 30)
+                if(ts.Days > 99)
                 {
                     MessageBox.Show("软件注册已过期.");
                     Environment.Exit(0);

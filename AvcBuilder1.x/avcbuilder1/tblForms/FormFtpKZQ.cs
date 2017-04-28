@@ -26,7 +26,59 @@ namespace avcbuilder1.tblForms
             simpleButton_save.Click += SimpleButton_save_Click;
             simpleButton_log.Click += SimpleButton_log_Click;
             simpleButton_reboot.Click += SimpleButton_reboot_Click;
+            simpleButton_upXJXT.Click += SimpleButton_upXJXT_Click;
         }
+
+        private void SimpleButton_upXJXT_Click(object sender, EventArgs e)
+        {
+            if (ftp == null) return;
+            FolderBrowserDialog bd = new FolderBrowserDialog();
+            bd.Description = "选择区域控制器更新文件路径:";
+            if (bd.ShowDialog() != DialogResult.OK) return;
+            
+            bool b = true;
+            string zjxt_filename = bd.SelectedPath + "\\zjxt2.jar";
+            string jk_filename = bd.SelectedPath + "\\iec104.jar";
+            string sh_filename = bd.SelectedPath + "\\run_zjxt.sh";
+            int num_update = 0;
+            if (File.Exists(zjxt_filename))  //路径下有专家系统文件
+            {
+                ftp.GotoDirectory(ftp_path_zjxt, true);
+                b = ftp.Upload(zjxt_filename);
+                num_update++;
+                if (b)
+                    MsgBox("专家系统更新成功");
+                else
+                    MsgBox(ftp.errMsg);
+            }
+            if (File.Exists(jk_filename))  //路径下接口文件
+            {
+                ftp.GotoDirectory(ftp_path_104, true);
+                b = ftp.Upload(jk_filename);
+                num_update++;
+                if (b)
+                    MsgBox("接口更新成功");
+                else
+                    MsgBox(ftp.errMsg);
+            }
+            if (File.Exists(sh_filename))  //路径下启动脚本文件
+            {
+                ftp.GotoDirectory(ftp_path_sh, true);
+                b = ftp.Upload(sh_filename);
+                num_update++;
+                if (b)
+                    MsgBox("启动程序更新成功");
+                else
+                    MsgBox(ftp.errMsg);
+            }
+            if(num_update == 0)
+            {
+                MsgBox(string.Format("路径:{0} 没有区域控制器更新文件", bd.SelectedPath));
+            }
+
+        }
+
+  
 
         Process cmd = null;
         private void SimpleButton_reboot_Click(object sender, EventArgs e)
@@ -104,10 +156,12 @@ namespace avcbuilder1.tblForms
 
         private void ButtonEnable(bool b)
         {
+            simpleButton_upXJXT.Enabled =
             simpleButton_reboot.Enabled = 
             xtraTabControl1.Enabled =
             simpleButton_save.Enabled =
             simpleButton_f5.Enabled = simpleButton_log.Enabled =b;
+            
            // 
             if (!b)
             {
@@ -122,17 +176,22 @@ namespace avcbuilder1.tblForms
         string userdownload = "avc";
         string pwdownload = "softcore";
 
-        string path_zjxt = @"/home/softcore/bin/zjxt";
-        string path_104 = @"/home/softcore/bin/JK104";
+        string ftp_path_zjxt = @"/home/softcore/bin/zjxt";
+        string ftp_path_104 = @"/home/softcore/bin/JK104";
+        string ftp_path_sh = @"/home/softcore/sh";
+
         string ip = "";
-        string path_down = "d:";
+        string local_path_down = "d:";
         string cfgzjxt = "c3p0-config-zjxt2.xml";
         string cfg104 = "cfg.txt";
         string[] files = null;
         FtpWeb ftp = null;
 
-        string log_file_zjxt = "zjxt2.log";
-        string log_path_zjxt = @"/home/softcore/log/zjxt2";
+        string file_zjxt = "zjxt2.jar";
+        string file_jk = "iec104.jar";
+
+        string zjxt_log = "zjxt2.log";
+        string ftp_path_zjxt_log = @"/home/softcore/log/zjxt2";
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
@@ -142,7 +201,7 @@ namespace avcbuilder1.tblForms
                 return;
             }
             ip = textEdit1.Text;
-            ftp = new FtpWeb(ip, path_zjxt, userdownload, pwdownload);
+            ftp = new FtpWeb(ip, ftp_path_zjxt, userdownload, pwdownload);
             bool b = ftp.ftpPing();
             if (b)
             {
@@ -160,10 +219,10 @@ namespace avcbuilder1.tblForms
         private void SimpleButton_f5_Click(object sender, EventArgs e)
         {
             if (ftp == null) return;
-            ftp.GotoDirectory(path_zjxt, true);
-            downloadFile(ftp, path_down, cfgzjxt, memoEdit_zjxtcfg);
-            ftp.GotoDirectory(path_104, true);
-            downloadFile(ftp, path_down, cfg104, memoEdit_104cfg);
+            ftp.GotoDirectory(ftp_path_zjxt, true);
+            downloadFile(ftp, local_path_down, cfgzjxt, memoEdit_zjxtcfg);
+            ftp.GotoDirectory(ftp_path_104, true);
+            downloadFile(ftp, local_path_down, cfg104, memoEdit_104cfg);
         }
 
         private void SimpleButton_save_Click(object sender, EventArgs e)
@@ -171,11 +230,11 @@ namespace avcbuilder1.tblForms
             string sourcefile = null;
             if(xtraTabControl1.SelectedTabPageIndex == 0)
             {
-                sourcefile = path_down + "\\" + cfgzjxt;
+                sourcefile = local_path_down + "\\" + cfgzjxt;
                 bool b = saveFile(sourcefile, memoEdit_zjxtcfg);
                 if (b)
                 {
-                    ftp.GotoDirectory(path_zjxt, true);
+                    ftp.GotoDirectory(ftp_path_zjxt, true);
                     b =  ftp.Upload(sourcefile);
                     if (!b)
                         MsgBox(ftp.errMsg);
@@ -185,11 +244,11 @@ namespace avcbuilder1.tblForms
             }
             else
             {
-                sourcefile = path_down + "\\" + cfg104;
+                sourcefile = local_path_down + "\\" + cfg104;
                 bool b = saveFile(sourcefile, memoEdit_104cfg);
                 if (b)
                 {
-                    ftp.GotoDirectory(path_104, true);
+                    ftp.GotoDirectory(ftp_path_104, true);
                     b = ftp.Upload(sourcefile);
                     if (!b)
                         MsgBox(ftp.errMsg);
@@ -203,10 +262,10 @@ namespace avcbuilder1.tblForms
         {
             if (ftp == null) return;
             FolderBrowserDialog bd = new FolderBrowserDialog();
-            bd.Description = "选择 "+log_file_zjxt+" 日志存放路径:";
+            bd.Description = "选择 "+zjxt_log+" 日志存放路径:";
             if (bd.ShowDialog() != DialogResult.OK) return;
-            ftp.GotoDirectory(log_path_zjxt,true);
-            bool b = ftp.Download(bd.SelectedPath, log_file_zjxt);
+            ftp.GotoDirectory(ftp_path_zjxt_log,true);
+            bool b = ftp.Download(bd.SelectedPath, zjxt_log);
             if (b)
                 MsgBox("日志已保存在 " + bd.SelectedPath);
             else

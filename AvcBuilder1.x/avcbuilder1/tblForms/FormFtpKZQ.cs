@@ -123,14 +123,7 @@ namespace avcbuilder1.tblForms
             }
             catch (Exception ex)
             {
-                if (cmd != null)
-                    cmd.Kill();
                 MsgBox(ex.Message);
-            }
-            finally
-            {
-                if (cmd != null)
-                    cmd.Close();
             }
         }
 
@@ -138,6 +131,11 @@ namespace avcbuilder1.tblForms
         {
             if (e.Data == null) return;
             string str = e.Data;
+            if(str.IndexOf("Host") >= 0)
+            {
+                MsgBox(str);
+                return;
+            }
             if (str.IndexOf("conn") >= 0) //plink 第一次登录ssh服务器时,会询问是否接受公钥,等屁话一大堆,必须回复y/n,否则挂起主线程.
             {
                 cmd.StandardInput.Write("y\r");
@@ -152,6 +150,9 @@ namespace avcbuilder1.tblForms
         private void Cmd_Exited(object sender, EventArgs e)
         {
             MsgBox("重启指令已发送.");
+            //if (cmd != null)
+            //    cmd.Close();
+            cmd = null;
         }
 
         private void ButtonEnable(bool b)
@@ -192,10 +193,12 @@ namespace avcbuilder1.tblForms
 
         string zjxt_log = "zjxt2.log";
         string ftp_path_zjxt_log = @"/home/softcore/log/zjxt2";
+        string jk_log = "iec104.log";
+        string ftp_path_jk_log = @"/home/softcore/log/iec104";
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            if (ip.Equals(textEdit1.Text.Trim()))
+            if (ip.Equals(textEdit1.Text.Trim()) && ftp != null)
             {
                 MsgBox("已经连接.");
                 return;
@@ -262,14 +265,18 @@ namespace avcbuilder1.tblForms
         {
             if (ftp == null) return;
             FolderBrowserDialog bd = new FolderBrowserDialog();
-            bd.Description = "选择 "+zjxt_log+" 日志存放路径:";
+            bd.Description = "选择日志存放路径:";
             if (bd.ShowDialog() != DialogResult.OK) return;
             ftp.GotoDirectory(ftp_path_zjxt_log,true);
             bool b = ftp.Download(bd.SelectedPath, zjxt_log);
-            if (b)
-                MsgBox("日志已保存在 " + bd.SelectedPath);
-            else
+            if (!b)
                 MsgBox(ftp.errMsg);
+            ftp.GotoDirectory(ftp_path_jk_log, true);
+            b = ftp.Download(bd.SelectedPath, jk_log);
+            if (!b)
+                MsgBox(ftp.errMsg);
+            else
+                MsgBox("日志已保存在 " + bd.SelectedPath);
         }
 
         private void downloadFile(FtpWeb ftp, string path,string fn, DevExpress.XtraEditors.MemoEdit memo)

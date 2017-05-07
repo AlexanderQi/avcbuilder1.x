@@ -16,7 +16,7 @@ namespace AvcDb.entities
     {
         public string YTCODE { get; set; }
         public string YTKIND { get; set; }
-        public Nullable<int> CONTROLAREA { get; set; }
+        public string CONTROLAREA { get; set; }
         public int ID { get; set; }
         public string NAME { get; set; }
         public string STATIONID { get; set; }

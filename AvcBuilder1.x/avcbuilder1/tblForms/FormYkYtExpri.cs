@@ -18,6 +18,7 @@ namespace avcbuilder1.tblForms
         mysqlDAO dao = null;
         public FormYkYtExpri()
         {
+            StartPosition = FormStartPosition.CenterScreen;
             log = LogManager.GetLogger("log");
             InitializeComponent();
             listBoxControl_yk.SelectedIndexChanged += ListBoxControl_yk_SelectedIndexChanged;
@@ -89,6 +90,7 @@ namespace avcbuilder1.tblForms
             try
             {
                 dao.Execute(sql);
+                MsgBox("命令已保存.");
             }
             catch (Exception ex)
             {
@@ -108,6 +110,7 @@ namespace avcbuilder1.tblForms
             try
             {
                 dao.Execute(sql);
+                MsgBox("命令已保存.");
             }
             catch (Exception ex)
             {
@@ -123,15 +126,20 @@ namespace avcbuilder1.tblForms
             DataRow dr = dtyt.Rows[i];
             mysqlDAO.fillPoco(curyt, dr);
             curcmd_yt.CMDELEMENTID = curyt.CMDELEMENTID;
-            curcmd_yt.CONTROLAREA = curyt.CONTROLAREA;
+            curcmd_yt.CONTROLAREA = int.Parse(curyt.CONTROLAREA);
             curcmd_yt.CHANNEL = curyt.CHANNEL;
             curcmd_yt.CZH = int.Parse(curyt.CZH);
             curcmd_yt.YKYTH = int.Parse(curyt.YTH);
             curcmd_yt.DEALTAG = 0;
             curcmd_yt.CMDDATETIME = DateTime.Now;
+            curcmd_yt.YKYTTYPE = 1;
+            curcmd_yk.ID = ++cmdid_index;
+            curcmd_yk.SCHEMEID = curcmd_yk.ID;
+            curcmd_yk.SCHEMEINDEX = 0;
             showCmd();
         }
 
+        int cmdid_index = 60000;
         private void ListBoxControl_yk_SelectedIndexChanged(object sender, EventArgs e)
         {
             int i = listBoxControl_yk.SelectedIndex;
@@ -143,6 +151,10 @@ namespace avcbuilder1.tblForms
             curcmd_yk.CHANNEL = curyk.CHANNEL;
             curcmd_yk.DEALTAG = 0;
             curcmd_yk.CMDDATETIME = DateTime.Now;
+            curcmd_yk.YKYTTYPE = 0;
+            curcmd_yk.ID = ++cmdid_index;
+            curcmd_yk.SCHEMEID = curcmd_yk.ID;
+            curcmd_yk.SCHEMEINDEX = 0;      
             showCmd();
         }
 
@@ -182,6 +194,7 @@ namespace avcbuilder1.tblForms
                 listBoxControl_yt.BeginUpdate();
                 listBoxControl_yt.DisplayMember = "NAME";
                 listBoxControl_yt.ValueMember = "ID";
+                listBoxControl_yt.DataSource = null;
                 listBoxControl_yt.DataSource = dtyt;
                 listBoxControl_yt.EndUpdate();
             }

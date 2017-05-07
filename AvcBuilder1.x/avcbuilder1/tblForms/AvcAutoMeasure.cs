@@ -137,6 +137,7 @@ namespace avcbuilder1.tblForms
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
             }
+            sendMsg(" 生成element 完成", 0);
         }
 
         public void ProcedureAction(object poco)
@@ -168,6 +169,7 @@ namespace avcbuilder1.tblForms
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
             }
+            sendMsg( "生成tblelementruntime 完成", 0);
         }
 
         public void ProcedureState(object poco)
@@ -199,11 +201,12 @@ namespace avcbuilder1.tblForms
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
             }
+            sendMsg("生成State 完成", 0);
         }
 
         public void ProcedureLimit(object poco)
         {
-            sendMsg(myPoco.getTabName(poco) + " 生成Limit..", 0);
+            sendMsg(myPoco.getTabName(poco) + " 生成限值...", 0);
             string sql = mysqlDAO.getQuerySql(poco, "");
             DataTable pocoDt = dao.Query(sql);
 
@@ -304,8 +307,8 @@ namespace avcbuilder1.tblForms
                 e.PERIODEND = new TimeSpan(23, 59, 59);
                 sql = mysqlDAO.getInsertSql(e);
                 dao.Execute(sql);
-
             }//for
+            sendMsg("自动生成限值完成", 0);
         }
 
         public void DeleteYKYT()
@@ -315,6 +318,7 @@ namespace avcbuilder1.tblForms
             dao.Execute(sql);
             sql = "delete from tblykparam where CHANNEL= 99;";
             dao.Execute(sql);
+            sendMsg("清除完成.", 0);
         }
 
         public void ProcedureYKYT(object poco)
@@ -331,8 +335,8 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
             string yt_sql_templet = @"insert into tblytparam(ID,YTKIND,CONTROLAREA,STATIONID,CMDELEMENTID,CZH,YTH,NAME,CHANNEL) 
 values({0},'{1}',{2},{3},{4},{5},{6},'{7}',99);";
             string yk_sql_templet = @"insert into tblykparam(ID,YKKIND,CONTROLAREA,STATIONID,CMDELEMENTID,
-UPPER_CZH, UPPER_YKYTH, LOWER_CZH, LOWER_YKYTH, NAME, CHANNEL) 
-values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99);";
+UPPER_CZH, UPPER_YKYTH, LOWER_CZH, LOWER_YKYTH, NAME, CHANNEL,UPPER_YKYTVALUE,LOWER_YKYTVALUE) 
+values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,1,0);";
             string str_id = dao.getNewId();
             int int_id = int.Parse(str_id);
             int yth = 1000;
@@ -356,7 +360,7 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99);";
                 }
             }
             //dao.SaveData(dt, poco, "ID");
-            sendMsg(tblName + "自动生成遥控遥调结束", 0);
+            sendMsg(tblName + "自动生成遥控遥调 完成", 0);
         }
 
 
@@ -379,7 +383,7 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
                 WriteMeasure(ename, eid, aid, sid, measurePoco);
             }
             dao.SaveData(dt, poco, "ID");
-            sendMsg(tblName + "自动生成量测结束", 0);
+            sendMsg(tblName + "自动生成量测完成", 0);
         }
 
 
@@ -418,7 +422,7 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
             }
             sql = mysqlDAO.getInsertSql(measurePoco);
             int r = dao.Execute(sql);
-            sendMsg(eid + " 执行结果 " + r, 2);
+            sendMsg(eid + " 执行完成，记录数： " + r, 2);
         }
 
         private DateTime curTime = DateTime.Now;
@@ -502,7 +506,7 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
                 sendMsg("删除自动生成的旧遥测表信息 " + r, 2);
                 sql = mysqlDAO.getDeleteSql(yx, "CHANNEL = 99");
                 r = dao.Execute(sql);
-                sendMsg("删除自动生成的旧遥信表信息 " + r, 2);
+                sendMsg("删除自动生成的旧遥信表信息 记录数：" + r, 2);
             }
             else
             {
@@ -515,7 +519,7 @@ left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
                 sendMsg("删除旧遥测表信息 " + r, 2);
                 sql = mysqlDAO.getDeleteSql(yx, ws);
                 r = dao.Execute(sql);
-                sendMsg("删除旧遥信表信息 " + r, 2);
+                sendMsg("删除旧遥信表信息 记录数：" + r, 2);
 
             }
         }

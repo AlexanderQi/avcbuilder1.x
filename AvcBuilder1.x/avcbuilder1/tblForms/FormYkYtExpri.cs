@@ -69,6 +69,7 @@ namespace avcbuilder1.tblForms
 
         private void RadioButton1_Click(object sender, EventArgs e)
         {
+            if (listBoxControl_yk.ItemCount == 0) return;
             if (radioButton_up.Checked)
             {
                 curcmd_yk.CZH = int.Parse(curyk.UPPER_CZH);

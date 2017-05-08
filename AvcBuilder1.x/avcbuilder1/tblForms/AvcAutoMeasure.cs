@@ -351,7 +351,13 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,1,0);";
                 {
                     string yt_sql = string.Format(yt_sql_templet, int_id++, "工作模式", aid, sid, eid, 1, yth++, ename + "-工作模式");
                     dao.Execute(yt_sql);
-                    yt_sql = string.Format(yt_sql_templet, int_id++, "目标功率因数", aid, sid, eid, 1, yth++, ename + "-目标功率因数");
+                    yt_sql = string.Format(yt_sql_templet, int_id++, "功率因数目标值", aid, sid, eid, 1, yth++, ename + "-功率因数目标值");
+                    dao.Execute(yt_sql);
+                    yt_sql = string.Format(yt_sql_templet, int_id++, "电压上限值", aid, sid, eid, 1, yth++, ename + "-电压上限值");
+                    dao.Execute(yt_sql);
+                    yt_sql = string.Format(yt_sql_templet, int_id++, "电压下限值", aid, sid, eid, 1, yth++, ename + "-电压下限值");
+                    dao.Execute(yt_sql);
+                    yt_sql = string.Format(yt_sql_templet, int_id++, "电压目标值", aid, sid, eid, 1, yth++, ename + "-电压目标值");
                     dao.Execute(yt_sql);
                 }
                 else {

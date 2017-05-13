@@ -374,10 +374,21 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,1,0);";
         {
             string tblName = myPoco.getTabName(poco);
             sendMsg(tblName + "自动生成量测...", 0);
-            string sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+            string sql = null;
+            if(measurePoco.GetType() != typeof(tblfeedcapacitoritemmeasure)) { 
+                sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
 left join tblfeeder f on t.FEEDID=f.ID 
 left join tblsubstation ss on f.SUBSTATIONID = ss.ID
 left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
+            }
+            else
+            {
+                sql = @"select t.ID,t.NAME,c.FEEDID,f.SUBSTATIONID SID,ar.ID AID from tblfeedcapacitoritem t 
+left join tblfeedcapacitor c on t.FEEDCAPACITORID = c.ID
+left join tblfeeder f on c.FEEDID = f.ID 
+left join tblsubstation ss on f.SUBSTATIONID = ss.ID
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;";
+            }
             DataTable dt = dao.Query(sql);
             foreach (DataRow row in dt.Rows)
             {

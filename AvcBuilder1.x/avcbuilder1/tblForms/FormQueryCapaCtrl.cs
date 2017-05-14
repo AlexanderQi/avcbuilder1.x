@@ -69,7 +69,7 @@ namespace avcbuilder1.tblForms
             //此处应该做必填项检查。
             try
             {
-                int r = dao.SaveData(ds.Tables[0], new tblelementaction(), pkName);
+                int r = dao.SaveData(ds.Tables[0], new tblfeedcapacitorcontrol(), pkName);
                 if (r < 0)
                 {
                     MsgBox("发生错误，保存失败");

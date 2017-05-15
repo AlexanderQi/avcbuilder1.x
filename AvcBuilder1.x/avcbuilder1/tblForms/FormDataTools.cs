@@ -96,7 +96,9 @@ namespace avcbuilder1.tblForms
             tblfeedcapacitor cap = new tblfeedcapacitor();
             tblfeedtrans trans = new tblfeedtrans();
             tblfeedvoltageregulator vol = new tblfeedvoltageregulator();
+            tblfeedcapacitoritem capi = new tblfeedcapacitoritem();
             auto.ProcedureYKYT(cap);
+            auto.ProcedureYKYT(capi);
             auto.ProcedureYKYT(trans);
             auto.ProcedureYKYT(vol);
         }

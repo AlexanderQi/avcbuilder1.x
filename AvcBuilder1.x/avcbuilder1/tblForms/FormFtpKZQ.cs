@@ -19,7 +19,7 @@ namespace avcbuilder1.tblForms
         {
             InitializeComponent();
             ButtonEnable(false);
-            textEdit1.Text =  "192.168.0.230"; //"192.168.1.195"; 
+            textEdit1.Text =  "192.168.3.230"; //"192.168.1.195"; 
            // ip = textEdit1.Text;
             simpleButton_connect.Click += simpleButton1_Click;
             simpleButton_f5.Click += SimpleButton_f5_Click;
@@ -27,7 +27,10 @@ namespace avcbuilder1.tblForms
             simpleButton_log.Click += SimpleButton_log_Click;
             simpleButton_reboot.Click += SimpleButton_reboot_Click;
             simpleButton_upXJXT.Click += SimpleButton_upXJXT_Click;
+            check_channel.CheckStateChanged += Check_channel_CheckStateChanged;
         }
+
+        
 
         private void SimpleButton_upXJXT_Click(object sender, EventArgs e)
         {
@@ -81,6 +84,7 @@ namespace avcbuilder1.tblForms
   
 
         Process cmd = null;
+        
         private void SimpleButton_reboot_Click(object sender, EventArgs e)
         {
             //plink.exe -ssh -pw moxa root@192.168.0.230 "sh /home/softcore/sh/stopAll.sh;"
@@ -91,10 +95,10 @@ namespace avcbuilder1.tblForms
                 MsgBox("缺少组件，无法执行.");
                 return;
             }
-            string rootpw = "moxa";
+            
             string linuxcmd = "reboot";
             //string linuxcmd_test = "echo this os will reboot | wall";
-            string args = string.Format("-ssh -pw {2} root@{0} \"{1}\"", ip, linuxcmd, rootpw);
+            string args = string.Format("-ssh -pw {2} root@{0} \"{1}\"", ip, linuxcmd, pw_root_login);
             
             try
             {
@@ -171,12 +175,27 @@ namespace avcbuilder1.tblForms
             }
         }
 
-        string user = "softcore";
-        string pw = "softcore";
+        //string user = "softcore";
+        //string pw = "softcore";
 
-        string userdownload = "avc";
-        string pwdownload = "softcore";
+        private void Check_channel_CheckStateChanged(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            if (check_channel.Checked)
+            {
+                 pw_root_login = "moxa";
+                 pw_avc_down = "softcore";
+            }else
+            {
+                pw_root_login = "Moxa12017";
+                pw_avc_down = "Softcore2017";
+            }
+        }
 
+        string pw_root_login = "moxa";
+        string pw_avc_down = "softcore";
+
+        string user_avc_down = "avc";
         string ftp_path_zjxt = @"/home/softcore/bin/zjxt";
         string ftp_path_104 = @"/home/softcore/bin/JK104";
         string ftp_path_sh = @"/home/softcore/sh";
@@ -204,7 +223,7 @@ namespace avcbuilder1.tblForms
                 return;
             }
             ip = textEdit1.Text;
-            ftp = new FtpWeb(ip, ftp_path_zjxt, userdownload, pwdownload);
+            ftp = new FtpWeb(ip, ftp_path_zjxt, user_avc_down, pw_avc_down);
             bool b = ftp.ftpPing();
             if (b)
             {

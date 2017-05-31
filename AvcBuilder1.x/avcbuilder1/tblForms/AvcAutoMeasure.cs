@@ -326,11 +326,21 @@ namespace avcbuilder1.tblForms
             sendMsg("生成设备遥控遥调参数...", 0);
             string tblName = myPoco.getTabName(poco);
             sendMsg(tblName + "自动生成遥控遥调基本信息...", 0);
-            string sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+            string sql = null;
+            if (poco.GetType() != typeof(tblfeedcapacitoritem))
+            {
+                sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
 left join tblfeeder f on t.FEEDID=f.ID 
 left join tblsubstation ss on f.SUBSTATIONID = ss.ID
 left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
-
+            }else
+            {
+                sql = @"select t.ID,t.NAME,c.FEEDID,f.SUBSTATIONID SID,ar.ID AID from tblfeedcapacitoritem t 
+left join tblfeedcapacitor c on t.FEEDCAPACITORID = c.ID
+left join tblfeeder f on c.FEEDID = f.ID 
+left join tblsubstation ss on f.SUBSTATIONID = ss.ID
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;";
+            }
             DataTable dt = dao.Query(sql);
             string yt_sql_templet = @"insert into tblytparam(ID,YTKIND,CONTROLAREA,STATIONID,CMDELEMENTID,CZH,YTH,NAME,CHANNEL) 
 values({0},'{1}',{2},{3},{4},{5},{6},'{7}',99);";
@@ -361,7 +371,7 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,1,0);";
                     dao.Execute(yt_sql);
                 }
                 else {
-                    string yk_sql = string.Format(yk_sql_templet, int_id++,"遥控",aid,sid,eid,ykh++,ename+"-遥控");
+                    string yk_sql = string.Format(yk_sql_templet, int_id++,"遥控",aid,sid,eid,ykh++,ename+"-开关遥控");
                     dao.Execute(yk_sql);
                 }
             }
@@ -374,10 +384,21 @@ values({0},'{1}',{2},{3},{4},1,{5},1,{5},'{6}',99,1,0);";
         {
             string tblName = myPoco.getTabName(poco);
             sendMsg(tblName + "自动生成量测...", 0);
-            string sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
+            string sql = null;
+            if(measurePoco.GetType() != typeof(tblfeedcapacitoritemmeasure)) { 
+                sql = string.Format(@"select t.ID,t.NAME,t.FEEDID,f.SUBSTATIONID SID,ar.ID AID from {0} t 
 left join tblfeeder f on t.FEEDID=f.ID 
 left join tblsubstation ss on f.SUBSTATIONID = ss.ID
 left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;", tblName);
+            }
+            else
+            {
+                sql = @"select t.ID,t.NAME,c.FEEDID,f.SUBSTATIONID SID,ar.ID AID from tblfeedcapacitoritem t 
+left join tblfeedcapacitor c on t.FEEDCAPACITORID = c.ID
+left join tblfeeder f on c.FEEDID = f.ID 
+left join tblsubstation ss on f.SUBSTATIONID = ss.ID
+left join tblsubcontrolarea ar on ar.ID = ss.SUBCONTROLAREAID;";
+            }
             DataTable dt = dao.Query(sql);
             foreach (DataRow row in dt.Rows)
             {

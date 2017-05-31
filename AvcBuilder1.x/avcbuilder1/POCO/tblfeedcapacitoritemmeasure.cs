@@ -16,6 +16,6 @@ namespace AvcDb.entities
     {
         public string ID { get; set; }
         public Nullable<int> SWITCHYXID { get; set; }
-        public string SWITCHID { get; set; }
+       // public string SWITCHID { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace avcbuilder1
                 }
                 //MessageBox.Show("软件注册于" + d);
                 TimeSpan ts = DateTime.Now - d;
-                if(ts.Days > 99)
+                if(ts.Days > 180)
                 {
                     MessageBox.Show("软件注册已过期.");
                     Environment.Exit(0);

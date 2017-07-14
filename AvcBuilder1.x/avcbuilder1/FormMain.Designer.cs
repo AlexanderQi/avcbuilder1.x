@@ -247,28 +247,32 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Size = new System.Drawing.Size(980, 0);
+            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.barDockControlTop.Size = new System.Drawing.Size(1120, 0);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 476);
-            this.barDockControlBottom.Size = new System.Drawing.Size(980, 28);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 648);
+            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1120, 0);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 476);
+            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 648);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(980, 0);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 476);
+            this.barDockControlRight.Location = new System.Drawing.Point(1120, 0);
+            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 648);
             // 
             // barButtonItem_connect
             // 
@@ -374,29 +378,33 @@
             // 
             // xtraTabPage_communication
             // 
+            this.xtraTabPage_communication.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_communication.Name = "xtraTabPage_communication";
             this.xtraTabPage_communication.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-            this.xtraTabPage_communication.Size = new System.Drawing.Size(978, 443);
+            this.xtraTabPage_communication.Size = new System.Drawing.Size(1118, 571);
             this.xtraTabPage_communication.Text = "通信管理机";
             // 
             // xtraTabPage_control
             // 
+            this.xtraTabPage_control.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_control.Name = "xtraTabPage_control";
-            this.xtraTabPage_control.Size = new System.Drawing.Size(978, 443);
+            this.xtraTabPage_control.Size = new System.Drawing.Size(1118, 571);
             this.xtraTabPage_control.Text = "区域控制器";
             // 
             // xtraTabPage1
             // 
             this.xtraTabPage1.Controls.Add(this.splitContainer1);
             this.xtraTabPage1.Controls.Add(this.panelControl_buttons);
+            this.xtraTabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(978, 442);
+            this.xtraTabPage1.Size = new System.Drawing.Size(1118, 606);
             this.xtraTabPage1.Text = "数据中心";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 26);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 33);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -406,8 +414,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(978, 416);
-            this.splitContainer1.SplitterDistance = 257;
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 573);
+            this.splitContainer1.SplitterDistance = 293;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
             // treeList1
@@ -421,6 +430,7 @@
             this.treeList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeList1.ImageIndexFieldName = "IMAGEINDEX";
             this.treeList1.Location = new System.Drawing.Point(0, 0);
+            this.treeList1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.treeList1.MenuManager = this.barManager1;
             this.treeList1.Name = "treeList1";
             this.treeList1.OptionsBehavior.AutoChangeParent = false;
@@ -437,7 +447,7 @@
             this.treeList1.ParentFieldName = "PID";
             this.treeList1.RowHeight = 30;
             this.treeList1.SelectImageList = this.imageCollection1;
-            this.treeList1.Size = new System.Drawing.Size(257, 416);
+            this.treeList1.Size = new System.Drawing.Size(293, 573);
             this.treeList1.StateImageList = this.imageCollection1;
             this.treeList1.TabIndex = 0;
             this.treeList1.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeList1_FocusedNodeChanged);
@@ -499,6 +509,7 @@
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -512,18 +523,19 @@
             this.splitContainer2.Panel2.Controls.Add(this.xtraTabControl2);
             this.splitContainer2.Panel2Collapsed = true;
             this.splitContainer2.Panel2MinSize = 30;
-            this.splitContainer2.Size = new System.Drawing.Size(717, 416);
+            this.splitContainer2.Size = new System.Drawing.Size(820, 573);
             this.splitContainer2.SplitterDistance = 200;
-            this.splitContainer2.SplitterWidth = 5;
+            this.splitContainer2.SplitterWidth = 6;
             this.splitContainer2.TabIndex = 0;
             // 
             // xtraTabControl_element
             // 
             this.xtraTabControl_element.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl_element.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControl_element.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl_element.Name = "xtraTabControl_element";
             this.xtraTabControl_element.SelectedTabPage = this.xtraTabPage1_param;
-            this.xtraTabControl_element.Size = new System.Drawing.Size(717, 416);
+            this.xtraTabControl_element.Size = new System.Drawing.Size(820, 573);
             this.xtraTabControl_element.TabIndex = 0;
             this.xtraTabControl_element.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1_param,
@@ -541,85 +553,94 @@
             // 
             // xtraTabPage1_param
             // 
+            this.xtraTabPage1_param.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_param.Name = "xtraTabPage1_param";
-            this.xtraTabPage1_param.Size = new System.Drawing.Size(715, 382);
+            this.xtraTabPage1_param.Size = new System.Drawing.Size(818, 531);
             this.xtraTabPage1_param.Text = "基本信息";
             // 
             // xtraTabPage_state
             // 
+            this.xtraTabPage_state.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_state.Name = "xtraTabPage_state";
-            this.xtraTabPage_state.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_state.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_state.Text = "状态";
             // 
             // xtraTabPage_limit
             // 
+            this.xtraTabPage_limit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_limit.Name = "xtraTabPage_limit";
-            this.xtraTabPage_limit.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_limit.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_limit.Text = "限值";
             // 
             // xtraTabPage_protect
             // 
+            this.xtraTabPage_protect.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_protect.Name = "xtraTabPage_protect";
-            this.xtraTabPage_protect.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_protect.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_protect.Text = "保护";
             // 
             // xtraTabPage_yc
             // 
+            this.xtraTabPage_yc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yc.Name = "xtraTabPage_yc";
-            this.xtraTabPage_yc.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_yc.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_yc.Text = "遥测";
             // 
             // xtraTabPage_yx
             // 
+            this.xtraTabPage_yx.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yx.Name = "xtraTabPage_yx";
-            this.xtraTabPage_yx.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_yx.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_yx.Text = "遥信";
             // 
             // xtraTabPage_yk
             // 
+            this.xtraTabPage_yk.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yk.Name = "xtraTabPage_yk";
-            this.xtraTabPage_yk.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_yk.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_yk.Text = "遥控";
             // 
             // xtraTabPage_yt
             // 
+            this.xtraTabPage_yt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_yt.Name = "xtraTabPage_yt";
-            this.xtraTabPage_yt.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_yt.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_yt.Text = "遥调";
             // 
             // xtraTabPage_num
             // 
+            this.xtraTabPage_num.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_num.Name = "xtraTabPage_num";
-            this.xtraTabPage_num.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_num.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_num.Text = "动作次数";
             // 
             // xtraTabPage1_time
             // 
+            this.xtraTabPage1_time.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage1_time.Name = "xtraTabPage1_time";
-            this.xtraTabPage1_time.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage1_time.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage1_time.Text = "运行时间";
             // 
             // xtraTabPage_measure
             // 
-            this.xtraTabPage_measure.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage_measure.Name = "xtraTabPage_measure";
-            this.xtraTabPage_measure.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_measure.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_measure.Text = "量测关联";
             // 
             // xtraTabPage_capaCt
             // 
-            this.xtraTabPage_capaCt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage_capaCt.Name = "xtraTabPage_capaCt";
-            this.xtraTabPage_capaCt.Size = new System.Drawing.Size(715, 384);
+            this.xtraTabPage_capaCt.Size = new System.Drawing.Size(818, 496);
             this.xtraTabPage_capaCt.Text = "控制器信息";
             // 
             // xtraTabControl2
             // 
             this.xtraTabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl2.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControl2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl2.Name = "xtraTabControl2";
             this.xtraTabControl2.SelectedTabPage = this.xtraTabPage_Info;
-            this.xtraTabControl2.Size = new System.Drawing.Size(131, 36);
+            this.xtraTabControl2.Size = new System.Drawing.Size(150, 46);
             this.xtraTabControl2.TabIndex = 0;
             this.xtraTabControl2.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage_Info});
@@ -628,8 +649,9 @@
             // 
             this.xtraTabPage_Info.Controls.Add(this.richTextBox1);
             this.xtraTabPage_Info.Controls.Add(this.panelControl1);
+            this.xtraTabPage_Info.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabPage_Info.Name = "xtraTabPage_Info";
-            this.xtraTabPage_Info.Size = new System.Drawing.Size(129, 2);
+            this.xtraTabPage_Info.Size = new System.Drawing.Size(148, 4);
             this.xtraTabPage_Info.Text = "信息";
             // 
             // richTextBox1
@@ -637,11 +659,12 @@
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Font = new System.Drawing.Font("Tahoma", 11F);
-            this.richTextBox1.Location = new System.Drawing.Point(0, 29);
+            this.richTextBox1.Location = new System.Drawing.Point(0, 37);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(129, 0);
+            this.richTextBox1.Size = new System.Drawing.Size(148, 0);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
@@ -652,8 +675,9 @@
             this.panelControl1.Controls.Add(this.textEdit1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(129, 29);
+            this.panelControl1.Size = new System.Drawing.Size(148, 37);
             this.panelControl1.TabIndex = 5;
             // 
             // simpleButton_find
@@ -664,18 +688,20 @@
             this.simpleButton_find.ImageIndex = 11;
             this.simpleButton_find.ImageList = this.imageCollection1;
             this.simpleButton_find.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.simpleButton_find.Location = new System.Drawing.Point(214, 4);
+            this.simpleButton_find.Location = new System.Drawing.Point(245, 5);
+            this.simpleButton_find.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.simpleButton_find.Name = "simpleButton_find";
-            this.simpleButton_find.Size = new System.Drawing.Size(21, 19);
+            this.simpleButton_find.Size = new System.Drawing.Size(24, 24);
             this.simpleButton_find.TabIndex = 5;
             this.simpleButton_find.Click += new System.EventHandler(this.simpleButton_find_Click);
             // 
             // textEdit1
             // 
-            this.textEdit1.Location = new System.Drawing.Point(5, 4);
+            this.textEdit1.Location = new System.Drawing.Point(6, 5);
+            this.textEdit1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textEdit1.MenuManager = this.barManager1;
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(207, 20);
+            this.textEdit1.Size = new System.Drawing.Size(237, 24);
             this.textEdit1.TabIndex = 4;
             this.textEdit1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox1_KeyDown);
             // 
@@ -686,8 +712,9 @@
             this.panelControl_buttons.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl_buttons.Enabled = false;
             this.panelControl_buttons.Location = new System.Drawing.Point(0, 0);
+            this.panelControl_buttons.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelControl_buttons.Name = "panelControl_buttons";
-            this.panelControl_buttons.Size = new System.Drawing.Size(978, 26);
+            this.panelControl_buttons.Size = new System.Drawing.Size(1118, 33);
             this.panelControl_buttons.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -701,9 +728,8 @@
             this.flowLayoutPanel1.Controls.Add(this.simpleButton_ykyt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(978, 26);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1118, 33);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // simpleButton_vol
@@ -712,11 +738,11 @@
             this.simpleButton_vol.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.simpleButton_vol.ImageIndex = 20;
             this.simpleButton_vol.ImageList = this.imageCollection1;
-            this.simpleButton_vol.Location = new System.Drawing.Point(5, 2);
-            this.simpleButton_vol.Margin = new System.Windows.Forms.Padding(5, 2, 2, 2);
+            this.simpleButton_vol.Location = new System.Drawing.Point(6, 3);
+            this.simpleButton_vol.Margin = new System.Windows.Forms.Padding(6, 3, 2, 3);
             this.simpleButton_vol.Name = "simpleButton_vol";
             this.simpleButton_vol.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_vol.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_vol.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_vol.TabIndex = 5;
             this.simpleButton_vol.ToolTip = "电压等级设置";
             this.simpleButton_vol.Click += new System.EventHandler(this.simpleButton_vol_Click);
@@ -727,11 +753,11 @@
             this.simpleButton_line.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.simpleButton_line.ImageIndex = 23;
             this.simpleButton_line.ImageList = this.imageCollection1;
-            this.simpleButton_line.Location = new System.Drawing.Point(35, 2);
-            this.simpleButton_line.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.simpleButton_line.Location = new System.Drawing.Point(38, 3);
+            this.simpleButton_line.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.simpleButton_line.Name = "simpleButton_line";
             this.simpleButton_line.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_line.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_line.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_line.TabIndex = 8;
             this.simpleButton_line.ToolTip = "线路类型设置";
             // 
@@ -740,11 +766,11 @@
             this.simpleButton_tap.AutoSize = true;
             this.simpleButton_tap.ImageIndex = 22;
             this.simpleButton_tap.ImageList = this.imageCollection1;
-            this.simpleButton_tap.Location = new System.Drawing.Point(65, 2);
-            this.simpleButton_tap.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.simpleButton_tap.Location = new System.Drawing.Point(70, 3);
+            this.simpleButton_tap.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.simpleButton_tap.Name = "simpleButton_tap";
             this.simpleButton_tap.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_tap.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_tap.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_tap.TabIndex = 7;
             this.simpleButton_tap.ToolTip = "分接头档位类型";
             // 
@@ -753,11 +779,11 @@
             this.simpleButton_trans.AutoSize = true;
             this.simpleButton_trans.ImageIndex = 21;
             this.simpleButton_trans.ImageList = this.imageCollection1;
-            this.simpleButton_trans.Location = new System.Drawing.Point(95, 2);
-            this.simpleButton_trans.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.simpleButton_trans.Location = new System.Drawing.Point(102, 3);
+            this.simpleButton_trans.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.simpleButton_trans.Name = "simpleButton_trans";
             this.simpleButton_trans.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_trans.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_trans.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_trans.TabIndex = 6;
             this.simpleButton_trans.ToolTip = "变压器类型设置";
             // 
@@ -766,11 +792,11 @@
             this.simpleButton_tools.AutoSize = true;
             this.simpleButton_tools.ImageIndex = 25;
             this.simpleButton_tools.ImageList = this.imageCollection1;
-            this.simpleButton_tools.Location = new System.Drawing.Point(141, 2);
-            this.simpleButton_tools.Margin = new System.Windows.Forms.Padding(18, 2, 2, 2);
+            this.simpleButton_tools.Location = new System.Drawing.Point(153, 3);
+            this.simpleButton_tools.Margin = new System.Windows.Forms.Padding(21, 3, 2, 3);
             this.simpleButton_tools.Name = "simpleButton_tools";
             this.simpleButton_tools.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_tools.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_tools.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_tools.TabIndex = 9;
             this.simpleButton_tools.ToolTip = "自动化工具";
             this.simpleButton_tools.Click += new System.EventHandler(this.simpleButton_tools_Click);
@@ -780,11 +806,11 @@
             this.simpleButton_topo.AutoSize = true;
             this.simpleButton_topo.ImageIndex = 19;
             this.simpleButton_topo.ImageList = this.imageCollection1;
-            this.simpleButton_topo.Location = new System.Drawing.Point(171, 2);
-            this.simpleButton_topo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.simpleButton_topo.Location = new System.Drawing.Point(185, 3);
+            this.simpleButton_topo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.simpleButton_topo.Name = "simpleButton_topo";
             this.simpleButton_topo.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_topo.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_topo.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_topo.TabIndex = 10;
             this.simpleButton_topo.ToolTip = "拓扑工具";
             this.simpleButton_topo.Click += new System.EventHandler(this.simpleButton_topo_Click);
@@ -794,11 +820,11 @@
             this.simpleButton_ykyt.AutoSize = true;
             this.simpleButton_ykyt.ImageIndex = 9;
             this.simpleButton_ykyt.ImageList = this.imageCollection1;
-            this.simpleButton_ykyt.Location = new System.Drawing.Point(217, 2);
-            this.simpleButton_ykyt.Margin = new System.Windows.Forms.Padding(18, 2, 2, 2);
+            this.simpleButton_ykyt.Location = new System.Drawing.Point(236, 3);
+            this.simpleButton_ykyt.Margin = new System.Windows.Forms.Padding(21, 3, 2, 3);
             this.simpleButton_ykyt.Name = "simpleButton_ykyt";
             this.simpleButton_ykyt.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            this.simpleButton_ykyt.Size = new System.Drawing.Size(26, 22);
+            this.simpleButton_ykyt.Size = new System.Drawing.Size(28, 27);
             this.simpleButton_ykyt.TabIndex = 11;
             this.simpleButton_ykyt.ToolTip = "遥控试验";
             this.simpleButton_ykyt.Click += new System.EventHandler(this.simpleButton_ykyt_Click);
@@ -807,9 +833,10 @@
             // 
             this.xtraTabControl_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl_Main.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControl_Main.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.xtraTabControl_Main.Name = "xtraTabControl_Main";
             this.xtraTabControl_Main.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl_Main.Size = new System.Drawing.Size(980, 476);
+            this.xtraTabControl_Main.Size = new System.Drawing.Size(1120, 648);
             this.xtraTabControl_Main.TabIndex = 0;
             this.xtraTabControl_Main.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -819,16 +846,15 @@
             // 
             // xtraTabPage_zjxt
             // 
-            this.xtraTabPage_zjxt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.xtraTabPage_zjxt.Name = "xtraTabPage_zjxt";
-            this.xtraTabPage_zjxt.Size = new System.Drawing.Size(978, 443);
+            this.xtraTabPage_zjxt.Size = new System.Drawing.Size(1118, 571);
             this.xtraTabPage_zjxt.Text = "专家系统";
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 504);
+            this.ClientSize = new System.Drawing.Size(1120, 648);
             this.Controls.Add(this.xtraTabControl_Main);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
@@ -838,9 +864,10 @@
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AVC Builder 0.931";
+            this.Text = "AVC Builder 0.932";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyUp);
